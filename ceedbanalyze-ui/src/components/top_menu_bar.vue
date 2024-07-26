@@ -34,21 +34,20 @@
     </div>
 </template>
 <script setup>
-import { ref ,defineEmits,defineProps } from 'vue';
-const isLoggedIn = ref(false);
-const userAvatar = ref('');
+import { ref } from 'vue';
 const input = ref('');
 const props = defineProps({
     activeMenu: String,
+    isLoggedIn: Boolean,
+    userAvatar: String
 });
-const emit = defineEmits(['update:activeMenu']);
+const emit = defineEmits(['update:activeMenu', 'login']);
 function activateMenu(menu) {
     emit('update:activeMenu', menu);
 }
 function login() {
   // 模拟登录逻辑
-  isLoggedIn.value = true;
-  userAvatar.value = 'https://example.com/user-avatar.png'; // 假设的用户头像URL
+  emit('login');
 }
 </script>
 <style scoped>

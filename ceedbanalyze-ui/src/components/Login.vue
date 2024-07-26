@@ -4,32 +4,39 @@
           <img src="" alt="介绍图片">
           <p>这里是介绍内容。</p>
         </div>
+        
         <div class="right-section">
+          <button class="close-button" @click="closeLogin">×</button> 
           <div class="tabs">
             <button :class="{ active: isLogin }" @click="isLogin = true">登录</button>
             <button :class="{ active: !isLogin }" @click="isLogin = false">注册</button>
+                    
           </div>
           <form @submit.prevent="login" v-if="isLogin">
             <div class="login-model">
-              <label for="username">用户名:</label>
-              <input type="text" id="username" v-model="username" required>
+              <label for="username"></label>
+              <input type="text" id="username" v-model="username" placeholder="请输入用户名" required>
             </div>
             <div class="login-model">
-              <label for="password">密码:</label>
-              <input type="password" id="password" v-model="password" required>
+              <label for="password"></label>
+              <input type="password" id="password" v-model="password" placeholder="请输入密码" required>
             </div>
-            <button type="submit">登录</button>
+            <button type="submit" class="login-button">登录</button>
           </form>
           <form @submit.prevent="register" v-else>
-            <div>
-              <label for="new-username">用户名:</label>
-              <input type="text" id="new-username" v-model="newUsername" required>
+            <div class="register-model">
+              <label for="new-username"></label>
+              <input type="text" id="new-username" v-model="newUsername" placeholder="请输入用户名"  required>
             </div>
-            <div>
-              <label for="new-password">密码:</label>
-              <input type="password" id="new-password" v-model="newPassword" required>
+            <div class="register-model">
+              <label for="new-password"></label>
+              <input type="password" id="new-password" v-model="newPassword" placeholder="请输入密码" required>
             </div>
-            <button type="submit">注册</button>
+            <div class="register-model">
+            <label for="confirm-password"></label>
+           <input type="password" id="confirm-password" v-model="confirmPassword" placeholder="请再次输入密码" required>
+            </div>
+            <button type="submit" class="register-button">注册</button>
           </form>
         </div>
       </div>
@@ -43,7 +50,7 @@
   const password = ref('');
   const newUsername = ref('');
   const newPassword = ref('');
-  
+  const confirmPassword = ref('');
   const login = () => {
     // 登录逻辑
     console.log('用户名:', username.value);
@@ -55,11 +62,33 @@
     console.log('新用户名:', newUsername.value);
     console.log('新密码:', newPassword.value);
   };
+
+  const emits = defineEmits(['close']);
+const closeLogin = () => {
+  emits('close');
+}; 
   </script>
   
   <style scoped>
-  .login-model {
+  .close-button {
+    left: 90%;
+    position: relative;
+  }
+
+  .login-model ,.register-model{
     margin-bottom: 20px;
+    
+  }
+  .login-button,.register-button {
+    width: 80%;
+    position: relative;
+    left:7%;
+  }
+  .login-model input,.register-model input{
+    width:80%;
+    height: 30px;
+    position: relative;
+    left:5%;
   }
   .login-modal {
     position: fixed;
@@ -97,7 +126,6 @@
   
   .right-section {
     flex: 1;
-    padding: 20px;
   }
   
   .tabs {
