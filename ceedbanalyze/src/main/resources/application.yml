@@ -1,6 +1,6 @@
 spring:
   application:
-    name=ceedbanalyze
+    name: ceedbanalyze
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/big_event
@@ -13,4 +13,4 @@ spring:
 
 mybatis:
   configuration:
-    map-underscore-to-camel-case: true   #??????????????
+    map-underscore-to-camel-case: true   
