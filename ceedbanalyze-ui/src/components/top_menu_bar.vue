@@ -14,13 +14,11 @@
         class="search-input"
       />
       <el-button
-        type="primary"
-        icon="el-icon-search"
+        icon="Search"
         size="large"
         @click="handleSearch"
         class="search-button"
       >
-        搜索
       </el-button>
     </div>
         <!-- 登录之后显示用户头像 -->
@@ -61,12 +59,16 @@ function login() {
 .search-bar {
   display: flex;
   align-items: center;
+  background-color: #ccc;
 }
 
 .search-input {
   flex: 1;
 }
-
+.search-input:focus {
+  outline: none;
+  box-shadow: none;
+}
 
 .img-item img {
   width: 100px;

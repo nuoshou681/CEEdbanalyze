@@ -19,6 +19,7 @@
     </div>
 
     <div class="more-detal"></div>
+    <FooterBar/>
     </div>
  
   </template>
@@ -27,6 +28,7 @@
   import { ref } from 'vue';
   import top_menu_bar from '@/components/top_menu_bar.vue';
   import Login from '@/components/Login.vue';
+  import FooterBar from '@/components/FooterBar.vue';
   const activeMenu = ref('major');
   function updateActiveMenu(menu) {
   activeMenu.value = menu;
@@ -70,4 +72,5 @@ function login() {
   position: relative;
   left: 150px;
   }
+ 
   </style>

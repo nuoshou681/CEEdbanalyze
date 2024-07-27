@@ -19,6 +19,7 @@
     <div class="more_option">
   
     </div> 
+    <FooterBar/>
     </div>
   </template>
   
@@ -27,6 +28,7 @@
   const activeMenu = ref('home');
   import top_menu_bar from '@/components/top_menu_bar.vue';
   import Login from '@/components/Login.vue';
+  import FooterBar from '@/components/FooterBar.vue';
   const isLoggedIn = ref(false);
   const userAvatar = ref('');
 function updateActiveMenu(menu) {
