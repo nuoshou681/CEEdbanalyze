@@ -2,9 +2,9 @@
         <div class="top_group">
       <div class="top-nav">
         <div class="img-item"><img src="../img/高考通.png" alt=""></div>
-        <router-link to="/" class="nav-item" :class="{ active: activeMenu === 'home' }" @click="activateMenu('home')">首页</router-link>
-        <router-link to="/major" class="nav-item" :class="{ active: activeMenu === 'major' } " @click="activateMenu('major')">查专业</router-link>
+        <router-link to="/" class="nav-item" :class="{ active: activeMenu === 'home' }" @click="activateMenu('home')">首页</router-link>        
         <router-link to="/school" class="nav-item" :class="{ active: activeMenu === 'school' }"  @click="activateMenu('school')">查学校</router-link>
+        <router-link to="/major" class="nav-item" :class="{ active: activeMenu === 'major' } " @click="activateMenu('major')">查专业</router-link>
         <router-link to="/analyse" class="nav-item" :class="{ active: activeMenu === 'analyse' }" @click="activateMenu('analyse')">高考志愿分析</router-link>
         <div class="search-bar">
       <el-input
