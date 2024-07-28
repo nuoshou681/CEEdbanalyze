@@ -3,21 +3,21 @@
       <div class="top-nav">
         <div class="img-item"><img src="../img/高考通.png" alt=""></div>
         <router-link to="/" class="nav-item" :class="{ active: activeMenu === 'home' }" @click="activateMenu('home')">首页</router-link>        
-        <router-link to="/school" class="nav-item" :class="{ active: activeMenu === 'school' }"  @click="activateMenu('school')">查学校</router-link>
+        <router-link to="/school/detail" class="nav-item" :class="{ active: activeMenu === 'school' }"  @click="activateMenu('school')">查学校</router-link>
         <router-link to="/major" class="nav-item" :class="{ active: activeMenu === 'major' } " @click="activateMenu('major')">查专业</router-link>
         <router-link to="/analyse" class="nav-item" :class="{ active: activeMenu === 'analyse' }" @click="activateMenu('analyse')">高考志愿分析</router-link>
-        <div class="search-bar">
+        <div class="search-box">
       <el-input
         v-model="input"
         placeholder="查学校，查专业"
         size="large"
-        class="search-input"
+        class="search-txt"
       />
       <el-button
         icon="Search"
         size="large"
         @click="handleSearch"
-        class="search-button"
+        class="search-btn"
       >
       </el-button>
     </div>
@@ -48,26 +48,13 @@ function login() {
   emit('login');
 }
 </script>
-<style scoped>
+<style>
 .nav-item.active {
   color: #42b983; /* 示例: 激活状态的文本颜色 */
   font-weight: bold;
 }
 .top_group {
   background-color: #f5f5f5;
-}
-.search-bar {
-  display: flex;
-  align-items: center;
-  background-color: #ccc;
-}
-
-.search-input {
-  flex: 1;
-}
-.search-input:focus {
-  outline: none;
-  box-shadow: none;
 }
 
 .img-item img {
@@ -87,24 +74,43 @@ function login() {
   color: #333;
   margin: 0 15px;
 }
+			    .search-box {
+			        font-family: FontAwesome;
+			        background: #ffffff;
+			        height: 50px;
+			        border: 10px;
+			        border-radius: 20px;
+			        padding: 10px;
+			        opacity: 1;
+                    width: 310px;
+                    padding: 0 6px;
+			    }
+			    .search-btn {
+			        
+			        font-family: FontAwesome;
+			        font-size: 25px;
+			        color: black;
+			        float: right;
+			        width: 40px;
+			        height: 40px;	
+			        border: 10px;
+			        border-radius: 40%;
+              margin-top: 5px;
+			        background: #ffffff;
+			        display: flex;
+			        justify-content: center;
+			        align-items: center;
+			        text-decoration: none;
+			    }
+			
+			    .search-txt {
+			        outline: none;
+			        padding-left: 15px;
+              margin-top: 5px;
+			        font-size: 16px;
+			        line-height: 40px;
+			        width: 250px;
+		          height:40px;
 
-.search-box {
-  border: 1px solid #ccc;
-  padding: 5px 10px;
-  border-radius: 15px;
-  outline: none;
-}
-
-.login-btn {
-  padding: 5px 15px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.login-btn:hover {
-  background-color: #0056b3;
-}
+			    }
 </style>

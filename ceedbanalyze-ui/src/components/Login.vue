@@ -1,7 +1,6 @@
 <template>
       <div class="modal-content">
         <div class="left-section">
-          <img src="" alt="介绍图片">
           <p>这里是介绍内容。</p>
         </div>
         
@@ -112,17 +111,15 @@ const closeLogin = () => {
     position: fixed;
     left: 30%;
     top:20%;
+    z-index: 100;
   }
   
   .left-section {
     flex: 1;
     padding: 20px;
+    background-color: #007bff;
   }
   
-  .left-section img {
-    max-width: 100%;
-    height: auto;
-  }
   
   .right-section {
     flex: 1;
