@@ -8,7 +8,12 @@
       <majordetail/>
     </el-scrollbar>
     <div class="major-search">
-
+      <div class="search-container">
+    <input type="text" placeholder="输入院校名称">
+    <button type="submit">搜索</button>
+    
+</div>
+     <searchMajor/>
     </div>
     <el-scrollbar height="600px">
       <p v-for="item in 20" :key="item" class="scrollbar-demo-item">{{ item }}</p>
@@ -26,6 +31,7 @@ import top_menu_bar from '@/components/top_menu_bar.vue';
 import Login from '@/components/Login.vue';
 import FooterBar from '@/components/FooterBar.vue';
 import majordetail from './major/majordetail.vue';
+import searchMajor from '@/components/searchMajor.vue';
 const activeMenu = ref('major');
 function updateActiveMenu(menu) {
   activeMenu.value = menu;
@@ -43,7 +49,7 @@ function login() {
 .major-search {
   background-color: blanchedalmond;
   width: 400px;
-  height: 140px;
+  height: 300px;
 }
 
 .major-list {
@@ -64,6 +70,7 @@ function login() {
   color: #42b983;
   /* 示例: 激活状态的文本颜色 */
   font-weight: bold;
+
 }
 
 .page_main {
@@ -84,4 +91,30 @@ function login() {
   background: var(--el-color-primary-light-9);
   color: var(--el-color-primary);
 }
+.search-container {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            border: 2px solid orange;
+            border-radius: 5px;
+            overflow: hidden;
+            width: 300px;
+        }
+        .search-container input {
+            border: none;
+            padding: 10px;
+            flex: 1;
+            font-size: 14px;
+        }
+        .search-container input:focus {
+            outline: none;
+        }
+        .search-container button {
+            background-color: orange;
+            border: none;
+            padding: 10px 20px;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+        }
 </style>

@@ -16,7 +16,9 @@
     <div class="search-container">
     <input type="text" placeholder="输入院校名称">
     <button type="submit">搜索</button>
+    
 </div>
+   <searchSchool/>
   </div>
 
 <el-scrollbar height="600px">
@@ -37,6 +39,7 @@
   import Login from '@/components/Login.vue';
   import FooterBar from '@/components/FooterBar.vue';
   import schoolindex from './school/schoolindex.vue';
+  import searchSchool from '@/components/searchSchool.vue';
   const activeMenu = ref('school');
   function updateActiveMenu(menu) {
   activeMenu.value = menu;
@@ -71,8 +74,8 @@ function login() {
   color: var(--el-color-primary);
 }
 .school-search{
-    width:200px;
-    height: 140px;
+    width:380px;
+    height: 300px;
   }
   .school-list{
     width:400px;
@@ -111,8 +114,5 @@ function login() {
             color: white;
             cursor: pointer;
             font-size: 14px;
-        }
-        .search-container button:hover {
-            background-color: darkorange;
         }
   </style>
