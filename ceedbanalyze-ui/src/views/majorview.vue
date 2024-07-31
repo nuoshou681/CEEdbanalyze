@@ -11,8 +11,7 @@
       <div class="search-container">
     <input type="text" placeholder="输入院校名称">
     <button type="submit">搜索</button>
-    
-</div>
+    </div>
      <searchMajor/>
     </div>
     <el-scrollbar height="600px">
@@ -47,14 +46,19 @@ function login() {
 
 <style>
 .major-search {
-  background-color: blanchedalmond;
-  width: 400px;
-  height: 300px;
+  width: auto;
+  height: auto;
+  max-width: 100%; /* 防止超出父容器 */
+  max-height: 100%; /* 防止超出父容器 */
+  margin-left: 20px;
+  overflow: hidden; /* 隐藏溢出的内容 */
+  transition:  height 0.5s ease; /* 过渡动画 */
 }
 
 .major-list {
   width: 400px;
   height: 600px;
+  margin-left: 20px;
 }
 
 .major-detal {
@@ -77,7 +81,7 @@ function login() {
   background-color: azure;
   width: 1200px;
   position: relative;
-  left: 150px;
+  left: 130px;
 }
 
 .scrollbar-demo-item {
@@ -92,13 +96,14 @@ function login() {
   color: var(--el-color-primary);
 }
 .search-container {
-            margin-top: 10px;
+            margin-top: 20px;
             display: flex;
             align-items: center;
-            border: 2px solid orange;
+            border: 2px solid rgb(47, 106, 244);
             border-radius: 5px;
             overflow: hidden;
             width: 300px;
+            margin-left: 10px;
         }
         .search-container input {
             border: none;
@@ -110,7 +115,7 @@ function login() {
             outline: none;
         }
         .search-container button {
-            background-color: orange;
+            background-color: rgb(47, 106, 244);
             border: none;
             padding: 10px 20px;
             color: white;

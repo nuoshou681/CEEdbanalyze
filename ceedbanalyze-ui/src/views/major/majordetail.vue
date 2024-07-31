@@ -1,6 +1,6 @@
 <template>
             <div class="major-name">
-        <h1>哲学</h1>
+        哲学
     </div>
     <div class="major-intro">
         <h2>
@@ -29,6 +29,9 @@
   }
   .major-name {
         text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 30px;
+        font-weight: bold;
     }
     .major-flex {
         display: flex;

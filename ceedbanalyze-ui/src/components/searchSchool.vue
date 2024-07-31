@@ -65,10 +65,7 @@
   </script>
   
   <style scoped>
-  body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-  }
+
   .filter-container {
     margin: 20px;
   }
@@ -83,6 +80,7 @@
     margin-right: 10px;
     color: black;
     cursor: pointer;
+    line-height: 25px;
   }
   .filter-group span.option.selected {
     color: orange;

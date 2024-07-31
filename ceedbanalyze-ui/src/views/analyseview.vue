@@ -43,6 +43,6 @@
   background-color: azure;
   width: 1200px;
   position: relative;
-  left: 150px;
+  left: 130px;
   }
   </style>
