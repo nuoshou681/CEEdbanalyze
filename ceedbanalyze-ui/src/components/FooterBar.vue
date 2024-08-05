@@ -17,8 +17,6 @@
 </script>
 <style>
 .bottom {
-  position: relative;
-  top: 100%;
   height: 50px;
   width: 1200px;
   background-color: antiquewhite;

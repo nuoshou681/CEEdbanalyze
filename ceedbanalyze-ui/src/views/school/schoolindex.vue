@@ -13,7 +13,6 @@
        <router-link to="/school/detail" class="school-tag" active-class="active-link">基本详情</router-link>
         <router-link to="/school/scoreplan" class="school-tag" active-class="active-link">分数计划</router-link>
         <router-link to="/school/schoolmajor" class="school-tag" active-class="active-link">开设专业</router-link>
-        
     </div>
     </div>
 </template>
@@ -44,11 +43,12 @@ p{
     .school-more{
         display: flex;
         justify-content: space-around;
-
+        margin-bottom: 0;
     }
     .school-information{
         background-color: #f0f0f0;
         width: 700px;
-        padding: 25px;
+        padding: 10px 25px 5px 25px;
+        border-radius: 10px 10px 0 0;
     }
 </style>

@@ -1,11 +1,10 @@
 <template>
     <div class="page_main">
     
-    <top_menu_bar @update:activeMenu = "updateActiveMenu"
-      @login="login"
-      :isLoggedIn="isLoggedIn"
-      :userAvatar="userAvatar"
-    :activeMenu="activeMenu"/>
+      <el-affix :offset="0">
+          <top_menu_bar @update:activeMenu="updateActiveMenu" @login="login" :isLoggedIn="isLoggedIn" :userAvatar="userAvatar"
+      :activeMenu="activeMenu" />
+  </el-affix>
     <Login v-if="isLoggedIn" @close="isLoggedIn = false"/>
       <div class="school-detal">
        <schoolindex/>
@@ -20,16 +19,14 @@
    </div>
    <searchSchool/>
   </div>
-
-<el-scrollbar height="600px">
-    <!-- <p v-for="item in 20" :key="item" class="scrollbar-demo-item">{{ item }}</p> -->
-    <p class="scrollbar-demo-item">济南大学</p>
+  <div class="scroll-bar">
+  <el-scrollbar height="500px">
+    <p v-for="item in 20" :key="item" class="scrollbar-demo-item">{{ item }}</p>
+    <!-- <p class="scrollbar-demo-item">济南大学</p>
     <p class="scrollbar-demo-item">山东大学</p>
-    <p class="scrollbar-demo-item">中国海洋大学</p>
+    <p class="scrollbar-demo-item">中国海洋大学</p> -->
   </el-scrollbar>
-  
-
-<FooterBar/>
+  </div>
 </div>
   </template>
   
@@ -37,7 +34,6 @@
   import { ref } from 'vue';
   import top_menu_bar from '@/components/top_menu_bar.vue';
   import Login from '@/components/Login.vue';
-  import FooterBar from '@/components/FooterBar.vue';
   import schoolindex from './school/schoolindex.vue';
   import searchSchool from '@/components/searchSchool.vue';
   const activeMenu = ref('school');
@@ -53,21 +49,28 @@ function login() {
   </script>
   
   <style scoped>
+  .scroll-bar{
+    width: 400px;
+    height: 500px;
+  }
   .nav-item.active {
     color: #42b983; /* 示例: 激活状态的文本颜色 */
     font-weight: bold;
   }
   .page_main {
+  margin-top: 0;
   background-color: azure;
   width: 1200px;
   position: relative;
-  left: 130px;
+  left: 138px;
+  height: 1200px;
   }
   .scrollbar-demo-item {
   display: flex;
   align-items: center;
   padding-left:20px ;
   height: 50px;
+  width: 350px;
   margin: 10px;
   border-radius: 4px;
   background: var(--el-color-primary-light-9);
@@ -82,10 +85,6 @@ function login() {
   overflow: hidden; /* 隐藏溢出的内容 */
   transition:  height 0.5s ease; /* 过渡动画 */
   }
-  .school-list{
-    width:400px;
-    height: 600px;
-  }
   .school-detal{
     width:750px;
     padding: 25px;
@@ -98,7 +97,7 @@ function login() {
             margin-top: 10px;
             display: flex;
             align-items: center;
-            border: 2px solid orange;
+            border: 2px solid rgb(47, 106, 244);
             border-radius: 5px;
             overflow: hidden;
             width: 300px;
@@ -114,7 +113,7 @@ function login() {
             outline: none;
         }
         .search-container button {
-            background-color: orange;
+            background-color: rgb(47, 106, 244);
             border: none;
             padding: 10px 20px;
             color: white;

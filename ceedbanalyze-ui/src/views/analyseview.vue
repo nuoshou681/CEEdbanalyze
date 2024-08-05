@@ -1,22 +1,22 @@
 <template>
     <div class="page_main">
-    
-    <top_menu_bar @update:activeMenu = "updateActiveMenu"
-    :activeMenu="activeMenu"/>
+      <el-affix :offset="0">
+          <top_menu_bar @update:activeMenu="updateActiveMenu" @login="login" :isLoggedIn="isLoggedIn" :userAvatar="userAvatar"
+      :activeMenu="activeMenu" />
+  </el-affix>
     <div class="analyse-page">
     <router-view/>
     </div>
     <div class="sidebar">
      
     </div>
-     <FooterBar/>
+
     </div>
   </template>
   
   <script setup>
   import { ref } from 'vue';
   import top_menu_bar from '@/components/top_menu_bar.vue';
-  import FooterBar from '@/components/FooterBar.vue';
   const activeMenu = ref('analyse');
   function updateActiveMenu(menu) {
   activeMenu.value = menu;
@@ -43,6 +43,6 @@
   background-color: azure;
   width: 1200px;
   position: relative;
-  left: 130px;
+  left: 138px;
   }
   </style>

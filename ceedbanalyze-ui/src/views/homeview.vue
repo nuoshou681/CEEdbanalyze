@@ -1,11 +1,12 @@
 <template>
     <div class="page_main">
-    
+      <el-affix :offset="0">
       <top_menu_bar @update:activeMenu = "updateActiveMenu"
       @login="login"
       :isLoggedIn="isLoggedIn"
       :userAvatar="userAvatar"
     :activeMenu="activeMenu"/>
+  </el-affix>
     <Login v-if="isLoggedIn" @close="isLoggedIn = false"/>
     <div class="basic_information">
        <div class="data_analyse">
@@ -19,7 +20,6 @@
     <div class="more_option">
   
     </div> 
-    <FooterBar/>
     </div>
   </template>
   
@@ -28,7 +28,6 @@
   const activeMenu = ref('home');
   import top_menu_bar from '@/components/top_menu_bar.vue';
   import Login from '@/components/Login.vue';
-  import FooterBar from '@/components/FooterBar.vue';
   const isLoggedIn = ref(false);
   const userAvatar = ref('');
 function updateActiveMenu(menu) {
@@ -54,7 +53,6 @@ function login() {
     height: 200px;
     width: 1200px;
     background-color: #0cbb55;
-  
   }
   .carousel {
     height: 400px;
@@ -72,6 +70,6 @@ function login() {
   background-color: azure;
   width: 1200px;
   position: relative;
-  left: 130px;
+  left: 138px;
   }
   </style>

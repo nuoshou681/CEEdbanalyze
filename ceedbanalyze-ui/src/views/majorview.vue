@@ -1,8 +1,10 @@
 <template>
   <div class="page_main">
-
-    <top_menu_bar @update:activeMenu="updateActiveMenu" @login="login" :isLoggedIn="isLoggedIn" :userAvatar="userAvatar"
+    <el-affix :offset="0">
+          <top_menu_bar @update:activeMenu="updateActiveMenu" @login="login" :isLoggedIn="isLoggedIn" :userAvatar="userAvatar"
       :activeMenu="activeMenu" />
+  </el-affix>
+
     <Login v-if="isLoggedIn" @close="isLoggedIn = false" />
     <el-scrollbar height="700px" class="major-detal">
       <majordetail/>
@@ -14,12 +16,12 @@
     </div>
      <searchMajor/>
     </div>
-    <el-scrollbar height="600px">
+    <el-scrollbar height="500px">
       <p v-for="item in 20" :key="item" class="scrollbar-demo-item">{{ item }}</p>
     </el-scrollbar>
+    <div class="more-detal">
 
-    <div class="more-detal"></div>
-    <FooterBar />
+    </div>
   </div>
 
 </template>
@@ -28,7 +30,6 @@
 import { ref } from 'vue';
 import top_menu_bar from '@/components/top_menu_bar.vue';
 import Login from '@/components/Login.vue';
-import FooterBar from '@/components/FooterBar.vue';
 import majordetail from './major/majordetail.vue';
 import searchMajor from '@/components/searchMajor.vue';
 const activeMenu = ref('major');
@@ -81,7 +82,7 @@ function login() {
   background-color: azure;
   width: 1200px;
   position: relative;
-  left: 130px;
+  left: 138px;
 }
 
 .scrollbar-demo-item {
