@@ -1,7 +1,7 @@
 <template>
     <div class="page_main">
       <el-affix :offset="0">
-          <top_menu_bar @update:activeMenu="updateActiveMenu" @login="login" :isLoggedIn="isLoggedIn" :userAvatar="userAvatar"
+      <top_menu_bar @update:activeMenu="updateActiveMenu" @login="login" :isLoggedIn="isLoggedIn" :userAvatar="userAvatar"
       :activeMenu="activeMenu" />
   </el-affix>
     <div class="analyse-page">

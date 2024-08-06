@@ -3,9 +3,14 @@
         <div class="plan">
           <span style="font-size: 20px;font-weight: 1000;">专业分数线</span>
           <div class="select-box">
-            <el-select v-model="value" placeholder="年份" style="width: 100px">
+            <el-select
+      v-model="value"
+      placeholder="年份"
+      size="small"
+      style="width: 65px"
+    >
       <el-option
-        v-for="item in option1"
+        v-for="item in options"
         :key="item.value"
         :label="item.label"
         :value="item.value"
@@ -19,11 +24,17 @@
     <el-table-column prop="address" label="录取概率" />
   </el-table>
         </div>
+        <div class="pagination">
+          <div>
+          <el-pagination layout="prev, pager, next" :total="100" :pager-count="5"  :page-size="20" size = "small" />
+        </div>  
+          </div>
+          
+        
     </div>
     </template>
 <script setup>
 import { ref } from 'vue'
-const value = ref('')
     const tableData = [
   {
     date: '2016-05-03',
@@ -46,30 +57,32 @@ const value = ref('')
     address: 'No. 189, Grove St, Los Angeles',
   },
 ]
-    const option1 = [
+const value = ref('')
+
+const options = [
   {
-    value: '2024',
+    value: 'Option1',
     label: '2024',
   },
   {
-    value: '2023',
+    value: 'Option2',
     label: '2023',
   },
   {
-    value: '2022',
+    value: 'Option3',
     label: '2022',
   },
   {
-    value: '2021',
+    value: 'Option4',
     label: '2021',
   },
   {
-    value: '2020',
+    value: 'Option5',
     label: '2020',
-  }
+  },
 ]
     </script>
-    <style scoped>
+<style scoped>
     .score-page{
         background-color: #f0f0f0;
         width: 730px;
@@ -82,6 +95,22 @@ const value = ref('')
     }
     .select-box{
      float:right;
-
+   
     }
+    .example-pagination-block + .example-pagination-block {
+  margin-top: 10px;
+}
+.example-pagination-block .example-demonstration {
+  
+  margin-bottom: 16px;
+}
+.pagination{
+  position: relative;
+  width: 730px;
+  background-color: #ffffff;
+   & > div {
+    position: relative;
+    left:300px;
+}
+}
     </style>

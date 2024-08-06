@@ -10,6 +10,11 @@
     <el-table-column prop="address" label="录取概率"/>
   </el-table>
         </div>
+        <div class="pagination">
+          <div>
+          <el-pagination layout="prev, pager, next" :total="100" :pager-count="5"  :page-size="20" size = "small" />
+        </div>  
+          </div>
        </div>
     </div>
     </template>
@@ -63,5 +68,21 @@
     }
 .major-list{
     background-color: #ffffff;;
+}
+.example-pagination-block + .example-pagination-block {
+  margin-top: 10px;
+}
+.example-pagination-block .example-demonstration {
+  
+  margin-bottom: 16px;
+}
+.pagination{
+  position: relative;
+  width: 730px;
+  background-color: #ffffff;
+   & > div {
+    position: relative;
+    left:300px;
+}
 }
     </style>

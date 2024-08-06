@@ -62,7 +62,7 @@
     console.log('新密码:', newPassword.value);
   };
 
-  const emits = defineEmits(['close']);
+const emits = defineEmits(['close']);
 const closeLogin = () => {
   emits('close');
 }; 
