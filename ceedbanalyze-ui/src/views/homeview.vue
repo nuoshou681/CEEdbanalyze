@@ -1,8 +1,13 @@
 <template>
     <div class="page_main">
-    
-    <top_menu_bar @update:activeMenu = "updateActiveMenu"
+      <el-affix :offset="0">
+      <top_menu_bar @update:activeMenu = "updateActiveMenu"
+      @login="login"
+      :isLoggedIn="isLoggedIn"
+      :userAvatar="userAvatar"
     :activeMenu="activeMenu"/>
+  </el-affix>
+    <Login v-if="isLoggedIn" @close="isLoggedIn = false"/>
     <div class="basic_information">
        <div class="data_analyse">
   
@@ -22,8 +27,15 @@
   import { ref } from 'vue';
   const activeMenu = ref('home');
   import top_menu_bar from '@/components/top_menu_bar.vue';
+  import Login from '@/components/Login.vue';
+  const isLoggedIn = ref(false);
+  const userAvatar = ref('');
 function updateActiveMenu(menu) {
     activeMenu.value = menu;
+}
+function login() {
+    isLoggedIn.value = true;
+    userAvatar.value = 'https://avatars.githubusercontent.com/u/6791502?v=4';
 }
   </script>
   
@@ -41,7 +53,6 @@ function updateActiveMenu(menu) {
     height: 200px;
     width: 1200px;
     background-color: #0cbb55;
-  
   }
   .carousel {
     height: 400px;
@@ -59,6 +70,6 @@ function updateActiveMenu(menu) {
   background-color: azure;
   width: 1200px;
   position: relative;
-  left: 150px;
+  left: 138px;
   }
   </style>
