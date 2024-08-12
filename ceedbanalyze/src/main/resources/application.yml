@@ -3,7 +3,7 @@ spring:
     name=ceedbanalyze
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/big_event
+    url: jdbc:mysql://localhost:3306/gaokao
     username: root
     password: 123456
   data:
@@ -13,4 +13,12 @@ spring:
 
 mybatis:
   configuration:
-    map-underscore-to-camel-case: true   #??????????????
+    map-underscore-to-camel-case: true   #驼峰
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+
+
+#  1: "本科"
+#  2: "专科（高职）"
+#  3: "本科（职业教育）"
