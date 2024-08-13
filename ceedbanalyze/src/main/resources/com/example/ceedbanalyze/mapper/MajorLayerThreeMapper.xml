@@ -19,7 +19,7 @@
             <if test="secondLayer != null and secondLayer != '' ">
                 second_layer = #{secondLayer}
             </if>
-            <if test="rank != null andrank != '' ">
+            <if test="rank != null and rank != '' ">
                 and rank = #{rank}
             </if>
             <if test="name != null and name != '' ">
