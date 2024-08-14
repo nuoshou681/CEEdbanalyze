@@ -21,6 +21,7 @@ import { ref ,onMounted} from 'vue';
 onMounted(() => {
 // 默认加载第一个子组件
 })
+
 </script>
 <style scoped>
 .school-tag{
