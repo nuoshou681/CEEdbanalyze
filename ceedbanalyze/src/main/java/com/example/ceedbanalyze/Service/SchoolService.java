@@ -8,7 +8,6 @@ package com.example.ceedbanalyze.Service;
  */
 
 import com.example.ceedbanalyze.entity.School;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
