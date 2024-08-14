@@ -26,98 +26,80 @@
 
     <!-- 交互 专业列表 -->
     <el-scrollbar height="500px">
-      <p v-for="item in MajorList" :key="item.id" class="scrollbar-demo-item"
-        :class="{ 'selected-item': item.selected }" @click="handleItemClick(item)">{{ item.name }}</p>
+      <div>
+        <p v-for="item in paginatedMajorList" :key="item.id" class="scrollbar-demo-item"
+          :class="{ 'selected-item': item.selected }" @click="handleItemClick(item)">{{ item.name }}</p>
+        <el-pagination class="Pagination" @current-change="handleCurrentChange" :current-page="currentPage"
+          :page-sizes="[10, 20, 30, 40]" :page-size="pageSize" layout="prev, pager, next, jumper"
+          :total="MajorList.length" />
+      </div>
     </el-scrollbar>
-
-
   </div>
 
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import top_menu_bar from '@/components/top_menu_bar.vue';
 import Login from '@/components/Login.vue';
 import majordetail from './major/majordetail.vue';
 import searchMajor from '@/components/searchMajor.vue';
 import userApi from '@/api/user'
+import { computed } from 'vue';
+
 
 const activeMenu = ref('major');
 const isLoggedIn = ref(false);
 const userAvatar = ref('');
-const MajorList = ref([
-  {
-    name: '计算机科学与技术', id: 1, selected: false, introduction: '计算机科学与技术是一门研究计算机系统、计算机软件及其应用的学科。', year: '四年',
-    id: '020109T',
-    degree: '工学学士',
-  },
-  {
-    name: '软件工程', id: 2, selected: false, introduction: '软件工程是一门研究软件开发的学科。', year: '四年',
-    id: '020109T',
-    degree: '工学学士',
-  },
-  {
-    name: '信息安全', id: 3, selected: false, introduction: '信息安全是一门研究信息保护的学科。', year: '四年',
-    id: '020109T',
-    degree: '工学学士',
-  },
-  {
-    name: '物联网工程', id: 4, selected: false, introduction: '物联网工程是一门研究物联网技术的学科。', year: '四年',
-    id: '020109T',
-    degree: '工学学士',
-  },
-  {
-    name: '数字媒体技术', id: 5, selected: false, introduction: '数字媒体技术是一门研究数字媒体技术的学科。', year: '四年',
-    id: '020109T',
-    degree: '工学学士',
-  },
-  {
-    name: '网络工程', id: 6, selected: false, introduction: '网络工程是一门研究网络技术的学科。', year: '四年',
-    id: '020109T',
-    degree: '工学学士',
-  },
-  {
-    name: '电子信息工程', id: 7, selected: false, introduction: '电子信息工程是一门研究电子信息技术的学科。', year: '四年',
-    id: '020109T',
-    degree: '工学学士',
-  },
-  {
-    name: '通信工程', id: 8, selected: false, introduction: '通信工程是一门研究通信技术的学科。', year: '四年',
-    id: '020109T',
-    degree: '工学学士',
-  },
-]);
-const MajorDetail = ref({
-  name: '计算机科学与技术',
-  introduction: '计算机科学与技术是一门研究计算机系统、计算机软件及其应用的学科。',
-  year: '四年',
-  id: '020109T',
-  degree: '工学学士',
+const MajorList = ref([]);
+const MajorDetail = ref({});
+const currentPage = ref(1);
+const pageSize = ref(10);
+// 分页专业列表
+const paginatedMajorList = computed(() => {
+  const start = (currentPage.value - 1) * pageSize.value;
+  const end = start + pageSize.value;
+  return MajorList.value.slice(start, end);
 });
 
-function updateActiveMenu(menu) {
-  activeMenu.value = menu;
-}
 
+// 函数1: 登陆函数
 function login() {
   isLoggedIn.value = true;
   userAvatar.value = 'https://avatars.githubusercontent.com/u/6791502?v=4';
 }
-
-// 专业列表点击事件
+function updateActiveMenu(menu) {
+  activeMenu.value = menu;
+}
+// 函数2: 专业列表点击事件
 const handleItemClick = (item) => {
   MajorList.value.forEach((major) => {
     major.selected = false;
   });
   item.selected = true;
+  // 异步请求2: 专业详情点击事件: 请求后端发送专业详情数据 将数据reponse以参数形式传入 handleDetailClick(response)
+
   handleDetailClick(item);
 };
-
-// 专业详情点击事件
+// 函数3: 专业详情点击事件
 const handleDetailClick = (item) => {
   MajorDetail.value = item;
 };
+// 函数4: 改变页码
+const handleCurrentChange = (page) => {
+  currentPage.value = page;
+};
+// 异步请求1: 钩子函数
+onMounted(() => {
+  // 请求后端发送专业列表数据
+  // 请求后端发送专业详情数据
+  userApi.getByPage(1, 20).then((response) => {
+    MajorList.value = response.data;
+    MajorDetail.value = response.data[0];
+    MajorList.value[0].selected = true;
+  });
+});
+// 异步请求2: 专业详情点击事件: 请求后端发送专业详情数据 将数据reponse以参数形式传入 handleDetailClick(response)
 
 </script>
 
@@ -211,5 +193,11 @@ const handleDetailClick = (item) => {
 .selected-item {
   background: #42b983;
   color: #fff;
+}
+
+.Pagination {
+  margin: 10px;
+  display: flex;
+  justify-content: center;
 }
 </style>

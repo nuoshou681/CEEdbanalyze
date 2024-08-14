@@ -1,15 +1,22 @@
 import apiClient from "./request";
+
 export default {
     // 获取所有专业信息
-    getAllMajorInformation() {
-        return apiClient.get('/major/all');
+    getByPage(page, size) {
+        return apiClient.get('/major/getByPage', {
+            params: { page: page, size: size }
+        });
     },
     // 根据专业名字获取专业信息
-    getMajorByName(data) {
-        return apiClient.get('/major/getByName',{name : data });
+    search(data) {
+        return apiClient.get('/major/getByName', {
+            params: { name: data, page: 1, size: 10 }
+        });
     },
     // 根据专业层次和专业分类获取专业信息
-    getByType() {
-        return apiClient.post('/major/getByType', { type, category } );
-    },
+    findByName(name) {
+        return apiClient.get('/major/getByType', {
+            params: { name: name }
+        });
+    }
 };
