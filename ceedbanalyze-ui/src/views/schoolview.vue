@@ -4,7 +4,7 @@
       <el-affix :offset="0">
           <top_menu_bar @update:activeMenu="updateActiveMenu" @login="login" :isLoggedIn="isLoggedIn" :userAvatar="userAvatar"
       :activeMenu="activeMenu" />
-  </el-affix>
+      </el-affix>
     <Login v-if="isLoggedIn" @close="isLoggedIn = false"/>
       <div class="school-detal">
        <schoolindex/>
@@ -21,10 +21,7 @@
   </div>
   <div class="scroll-bar">
   <el-scrollbar height="500px">
-    <p v-for="item in 20" :key="item" class="scrollbar-demo-item">{{ item }}</p>
-    <!-- <p class="scrollbar-demo-item">济南大学</p>
-    <p class="scrollbar-demo-item">山东大学</p>
-    <p class="scrollbar-demo-item">中国海洋大学</p> -->
+    <p v-for="item in schoolitems" :key="item.id" class="scrollbar-demo-item" :class="{ 'selected-item ': item.select == true}"  @click="handleItemClick(item)">{{ item }}</p>
   </el-scrollbar>
   </div>
 </div>
@@ -36,6 +33,9 @@
   import Login from '@/components/Login.vue';
   import schoolindex from './school/schoolindex.vue';
   import searchSchool from '@/components/searchSchool.vue';
+  import { onMounted } from 'vue';
+  import {getAllSchool} from '@/api/school';
+
   const activeMenu = ref('school');
   function updateActiveMenu(menu) {
   activeMenu.value = menu;
@@ -46,6 +46,21 @@ function login() {
    isLoggedIn.value = true;
     userAvatar.value = 'https://avatars.githubusercontent.com/u/6791502?v=4';
 }
+const schoolitems = ref([]);
+const handleItemClick = (item) => {
+
+  handleDetailClick(item);
+};
+
+// 专业详情点击事件
+const handleDetailClick = (item) => {
+  schoolitems.value = item;
+};
+onMounted(() => {
+  getAllSchool().then((res) => {
+    schoolitems.value = res.data;
+    console.log(res.data);
+})}); 
   </script>
   
   <style scoped>
@@ -120,4 +135,8 @@ function login() {
             cursor: pointer;
             font-size: 14px;
         }
+        .selected-item {
+  background: #42b983;
+  color: #fff;
+}
   </style>

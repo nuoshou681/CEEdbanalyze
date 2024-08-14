@@ -1,5 +1,4 @@
 import apiClient from "./request";
-
 export default {
     // 获取所有专业信息
     getAllMajorInformation() {
@@ -12,5 +11,5 @@ export default {
     // 根据专业层次和专业分类获取专业信息
     getByType() {
         return apiClient.post('/major/getByType', { type, category } );
-    }
+    },
 };
