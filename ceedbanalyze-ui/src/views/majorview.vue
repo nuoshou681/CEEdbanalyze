@@ -21,7 +21,7 @@
         <button type="submit">搜索</button>
       </div>
       <!-- 专业分类 -->
-      <searchMajor />
+      <searchMajor @update:selected-category="handleSelectedCategory"/>
     </div>
 
     <!-- 交互 专业列表 -->
@@ -55,6 +55,7 @@ const MajorList = ref([]);
 const MajorDetail = ref({});
 const currentPage = ref(1);
 const pageSize = ref(10);
+const selectedCategory = ref('全部')
 // 分页专业列表
 const paginatedMajorList = computed(() => {
   const start = (currentPage.value - 1) * pageSize.value;
@@ -89,15 +90,25 @@ const handleDetailClick = (item) => {
 const handleCurrentChange = (page) => {
   currentPage.value = page;
 };
+// 函数5: 搜索专业的专业门类
+function handleSelectedCategory(category) {
+  selectedCategory.value = category
+  console.log('-传递的参数selectedCategory为: ',selectedCategory.value)
+}
 // 异步请求1: 钩子函数
 onMounted(() => {
-  // 请求后端发送专业列表数据
-  // 请求后端发送专业详情数据
-  userApi.getByPage(1, 20).then((response) => {
+  // 1-1 请求后端发送专业列表数据 专业详情数据
+  userApi.getByPage(1, 468).then((response) => {
     MajorList.value = response.data;
     MajorDetail.value = response.data[0];
     MajorList.value[0].selected = true;
   });
+  // 1-2 请求后端发送根据searchMajor传递的参数selectedCategory搜索专业列表数据
+  // userApi.search(selectedCategory.value).then((response) => {
+  //   MajorList.value = response.data;
+  //   MajorDetail.value = response.data[0];
+  //   MajorList.value[0].selected = true;
+  // });
 });
 // 异步请求2: 专业详情点击事件: 请求后端发送专业详情数据 将数据reponse以参数形式传入 handleDetailClick(response)
 
