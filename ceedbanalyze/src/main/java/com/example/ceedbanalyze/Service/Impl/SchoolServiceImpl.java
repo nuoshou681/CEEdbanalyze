@@ -10,7 +10,6 @@ package com.example.ceedbanalyze.Service.Impl;
 import com.example.ceedbanalyze.Service.SchoolService;
 import com.example.ceedbanalyze.entity.School;
 import com.example.ceedbanalyze.mapper.SchoolMapper;
-import com.github.pagehelper.PageHelper;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

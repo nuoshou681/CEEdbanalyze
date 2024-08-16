@@ -13,7 +13,7 @@
 		<div class="filter-group" v-if="selectedLevel">
 			<span class="label">专业门类:</span>
 			<span v-for="category in categories[selectedLevel]" :key="category" class="option"
-				:class="{ selected: selectedCategory === category }" @click="selectedCategory = category">
+				:class="{ selected: selectedCategory === category }" @click="updateCategory(category)">
 				{{ category }}
 			</span>
 		</div>
@@ -21,10 +21,14 @@
 </template>
 
 <script setup>
+
 import { ref } from 'vue'
+import { onMounted } from 'vue'
+
+const emit = defineEmits(['update:selectedCategory'])
+
 const selectedLevel = ref('undergraduate')
 const selectedCategory = ref('全部')
-const selectedRule = ref('')
 const categories = ref({
 	undergraduate: [
 		'全部', '哲学', '经济学', '法学', '教育学', '文学', '历史学', '理学', '工学', '农学', '医学', '管理学', '艺术学'
@@ -35,10 +39,39 @@ const categories = ref({
 		'财经商贸大类', '文化艺术大类', '新闻传播大类', '教育与体育大类', '公安与司法大类', '公共管理与服务大类'
 	]
 })
+
+function AudioParam(level,category) {
+	if(category ==='全部') {
+		if(level === 'undergraduate') {
+			emit('update:selectedCategory', '本科')
+			// console.log('1-传递的参数selectedCategory为: ','本科')
+		}else {
+			emit('update:selectedCategory', '专科')
+			// console.log('2-传递的参数selectedCategory为: ','专科')
+		}		
+	}else{
+		emit('update:selectedCategory', category)
+		// console.log('3-传递的参数selectedCategory为: ',category)
+	}
+}
+
 function selectLevel(level) {
 	selectedLevel.value = level;
-	selectedCategory.value = ''; // 清空选中的专业门类
+	selectedCategory.value = '全部'; // 清空选中的专业门类
+	AudioParam(level,selectedCategory.value);
+	// console.log('传递的参数selectedCategory为: ',selectedCategory.value)
 }
+
+function updateCategory(category) {
+  selectedCategory.value = category
+  AudioParam(selectedLevel.value,category);
+//   console.log('传递的参数selectedCategory为: ',selectedCategory.value)
+}
+
+onMounted(() => {
+	AudioParam(selectedLevel.value,selectedCategory.value);
+})
+
 </script>
 
 <style scoped>
