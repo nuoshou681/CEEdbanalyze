@@ -4,6 +4,8 @@ import com.example.ceedbanalyze.entity.SchoolRankMap;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.File;
+
 @SpringBootTest
 class CeedbanalyzeApplicationTests {
 
@@ -17,6 +19,7 @@ class CeedbanalyzeApplicationTests {
 
 	@Test
 	void test(){
-		System.out.println("48674684684684");
+		File file = new File("");
+		System.out.println(file.getAbsoluteFile());
 	}
 }
