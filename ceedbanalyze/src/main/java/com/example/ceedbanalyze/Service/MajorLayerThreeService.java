@@ -15,5 +15,5 @@ public interface MajorLayerThreeService {
 
     List<MajorLayerThree> findByName(String name, int page, int size);
 
-    List<MajorLayerThree> search(String secondLayer, String rank, String name, int page, int size);
+    List<MajorLayerThree> search(Integer level, String type, String name, int page, int size);
 }

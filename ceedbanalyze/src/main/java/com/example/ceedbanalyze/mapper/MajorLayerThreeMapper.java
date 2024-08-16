@@ -20,5 +20,5 @@ public interface MajorLayerThreeMapper {
 
     List<MajorLayerThree> findByName(String name, RowBounds rowBounds);
 
-    List<MajorLayerThree> search(String secondLayer, String rank, String name, RowBounds rowBounds);
+    List<MajorLayerThree> search(Integer level, String type, String name, RowBounds rowBounds);
 }
