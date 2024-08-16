@@ -17,7 +17,7 @@
     <div class="major-search">
       <!-- 搜索框 -->
       <div class="search-container">
-        <input type="text" placeholder="输入院校名称" v-model="schoolName">
+        <input type="text" placeholder="输入专业名称" v-model="schoolName">
         <button type="submit" @click="handleSearch">搜索</button>
       </div>
       <!-- 专业分类 -->
