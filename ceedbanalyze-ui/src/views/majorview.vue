@@ -17,8 +17,8 @@
     <div class="major-search">
       <!-- 搜索框 -->
       <div class="search-container">
-        <input type="text" placeholder="输入院校名称">
-        <button type="submit">搜索</button>
+        <input type="text" placeholder="输入院校名称" v-model="schoolName">
+        <button type="submit" @click="handleSearch">搜索</button>
       </div>
       <!-- 专业分类 -->
       <searchMajor @update:selected-category="handleSelectedCategory"/>
@@ -53,6 +53,7 @@ const isLoggedIn = ref(false);
 const userAvatar = ref('');
 const MajorList = ref([]);
 const MajorDetail = ref({});
+const schoolName = ref('');
 const currentPage = ref(1);
 const pageSize = ref(10);
 const selectedCategory = ref('全部')
@@ -94,6 +95,16 @@ const handleCurrentChange = (page) => {
 function handleSelectedCategory(category) {
   selectedCategory.value = category
   console.log('-传递的参数selectedCategory为: ',selectedCategory.value)
+}
+// 函数6: 按照专业名字搜索
+function handleSearch() {
+  console.log('搜索的院校名字', schoolName.value);
+  userApi.fingByName(schoolName.value,0,468).then((response) => {
+    MajorList.value = response.data;
+    console.log('搜索的院校集合', MajorList.value);
+    MajorDetail.value = response.data[0];
+    MajorList.value[0].selected = true;
+  });
 }
 // 异步请求1: 钩子函数
 onMounted(() => {

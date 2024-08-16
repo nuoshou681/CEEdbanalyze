@@ -23,7 +23,6 @@
 <script setup>
 
 import { ref } from 'vue'
-import { defineEmits } from 'vue'
 import { onMounted } from 'vue'
 
 const emit = defineEmits(['update:selectedCategory'])
