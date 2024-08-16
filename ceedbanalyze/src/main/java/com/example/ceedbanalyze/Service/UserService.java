@@ -10,4 +10,6 @@ import com.example.ceedbanalyze.entity.User;
  */
 public interface UserService {
     User getByUsername(String username);
+
+    void register(User user);
 }
