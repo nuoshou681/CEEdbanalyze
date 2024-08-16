@@ -29,7 +29,7 @@ public class MajorLayerThreeServiceImpl implements MajorLayerThreeService {
     public List<MajorLayerThree> findByName(String name, int page, int size) {
         return majorLayerThreeMapper.findByName(name,new RowBounds(page,size));
     }
-
+ 
     @Override
     public List<MajorLayerThree> search(String secondLayer, String rank, String name, int page, int size) {
         return majorLayerThreeMapper.search(secondLayer,rank,name,new RowBounds(page,size));
