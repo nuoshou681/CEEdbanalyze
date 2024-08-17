@@ -40,36 +40,27 @@ const categories = ref({
 	]
 })
 
-function AudioParam(level,category) {
-	if(category ==='全部') {
-		if(level === 'undergraduate') {
-			emit('update:selectedCategory', '本科')
-			// console.log('1-传递的参数selectedCategory为: ','本科')
-		}else {
-			emit('update:selectedCategory', '专科')
-			// console.log('2-传递的参数selectedCategory为: ','专科')
-		}		
-	}else{
-		emit('update:selectedCategory', category)
-		// console.log('3-传递的参数selectedCategory为: ',category)
+function AudioParam(level, category) {
+	if(level === 'undergraduate') {
+		emit('update:selectedCategory', '本科', category)
+	} else {
+		emit('update:selectedCategory', '专科', category)
 	}
 }
 
 function selectLevel(level) {
 	selectedLevel.value = level;
 	selectedCategory.value = '全部'; // 清空选中的专业门类
-	AudioParam(level,selectedCategory.value);
-	// console.log('传递的参数selectedCategory为: ',selectedCategory.value)
+	AudioParam(level, selectedCategory.value);
 }
 
 function updateCategory(category) {
-  selectedCategory.value = category
-  AudioParam(selectedLevel.value,category);
-//   console.log('传递的参数selectedCategory为: ',selectedCategory.value)
+	selectedCategory.value = category
+	AudioParam(selectedLevel.value, category);
 }
 
 onMounted(() => {
-	AudioParam(selectedLevel.value,selectedCategory.value);
+	AudioParam(selectedLevel.value, selectedCategory.value);
 })
 
 </script>

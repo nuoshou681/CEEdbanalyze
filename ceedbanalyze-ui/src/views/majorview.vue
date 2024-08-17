@@ -56,7 +56,8 @@ const MajorDetail = ref({});
 const schoolName = ref('');
 const currentPage = ref(1);
 const pageSize = ref(10);
-const selectedCategory = ref('全部')
+const selectedlevel = ref('本科');
+const selectedcategory = ref('全部');
 // 分页专业列表
 const paginatedMajorList = computed(() => {
   const start = (currentPage.value - 1) * pageSize.value;
@@ -92,14 +93,27 @@ const handleCurrentChange = (page) => {
   currentPage.value = page;
 };
 // 函数5: 搜索专业的专业门类
-function handleSelectedCategory(category) {
-  selectedCategory.value = category
-  console.log('-传递的参数selectedCategory为: ',selectedCategory.value)
+function handleSelectedCategory(level, category ) {
+  console.log('-传递的参数level为: ',level)
+  console.log('-传递的参数category为: ',category)
+  if(category == '全部'){
+    selectedcategory.value = '';
+  }else{
+    selectedcategory.value = category;
+  }
+  selectedlevel.value = level;
+  console.log('搜索的专业门类', selectedlevel.value, selectedcategory.value);
+  userApi.search(selectedlevel.value, selectedcategory.value).then((response) => {
+    console.log('搜索的专业门类', response.data);
+    MajorList.value = response.data;
+    MajorDetail.value = response.data[0];
+    MajorList.value[0].selected = true;
+  });
 }
 // 函数6: 按照专业名字搜索
 function handleSearch() {
   console.log('搜索的院校名字', schoolName.value);
-  userApi.fingByName(schoolName.value,0,468).then((response) => {
+  userApi.fingByName(schoolName.value,0,600).then((response) => {
     MajorList.value = response.data;
     console.log('搜索的院校集合', MajorList.value);
     MajorDetail.value = response.data[0];
@@ -109,13 +123,14 @@ function handleSearch() {
 // 异步请求1: 钩子函数
 onMounted(() => {
   // 1-1 请求后端发送专业列表数据 专业详情数据
-  userApi.getByPage(1, 468).then((response) => {
-    MajorList.value = response.data;
-    MajorDetail.value = response.data[0];
-    MajorList.value[0].selected = true;
-  });
+  // userApi.getByPage(0, 530).then((response) => {
+  //   MajorList.value = response.data;
+  //   MajorDetail.value = response.data[0];
+  //   MajorList.value[0].selected = true;
+  // });
   // 1-2 请求后端发送根据searchMajor传递的参数selectedCategory搜索专业列表数据
-  // userApi.search(selectedCategory.value).then((response) => {
+  // userApi.search(selectedlevel.value, selectedcategory.value).then((response) => {
+  //   console.log('搜索的专业门类', response.data);
   //   MajorList.value = response.data;
   //   MajorDetail.value = response.data[0];
   //   MajorList.value[0].selected = true;
