@@ -14,16 +14,20 @@
     </select>
 
     <select id="search" resultType="com.example.ceedbanalyze.entity.MajorLayerThree">
-        select * from major_layer_three
+        SELECT * FROM major_layer_three
+        JOIN major_layer_two
+        ON major_layer_three.second_layer=major_layer_two.`name`
+        JOIN major_layer_one
+        ON major_layer_two.preId=major_layer_one.id
         <where>
-            <if test="secondLayer != null and secondLayer != '' ">
-                second_layer = #{secondLayer}
+            <if test="level != null">
+                major_layer_one.first_id = #{level}
             </if>
-            <if test="rank != null and rank != '' ">
-                and rank = #{rank}
+            <if test="type != null and type != '' ">
+                and major_layer_one.`name` = #{type}
             </if>
             <if test="name != null and name != '' ">
-                and name like concat('%',#{name},'%')
+                and major_layer_three.name like concat('%',#{name},'%')
             </if>
         </where>
     </select>

@@ -1,17 +1,16 @@
 package com.example.ceedbanalyze.entity;
 
+import lombok.Data;
+
 /*
  * @author      潘广成
- * @data        2024/8/11 17:42
+ * @data        2024/8/16 19:09
  * @version     1.0
  * @description
  */
-
-import lombok.Data;
-
 @Data
-public class MajorLayerTwo {
+public class MajorLayerOne {
     private Integer id;
     private String name;
-    private Integer preId;
+    private Integer firstId;
 }

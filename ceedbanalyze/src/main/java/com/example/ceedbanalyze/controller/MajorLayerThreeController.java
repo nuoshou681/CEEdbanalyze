@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/major")
@@ -28,8 +29,11 @@ public class MajorLayerThreeController {
     }
 
     @GetMapping("/search")
-    public List<MajorLayerThree> search(String secondLayer, String rank, String name,int page, int size) {
-        return majorLayerThreeService.search(secondLayer, rank, name,page, size);
+    public List<MajorLayerThree> search(String level, String type, String name,int page, int size) {
+        int Intlevel = 0;
+        if (Objects.equals(level, "本科")) Intlevel=1;
+        else if (Objects.equals(level, "专科")) Intlevel=2;
+        return majorLayerThreeService.search(Intlevel, type, name,page, size);
     }
 
     @GetMapping("/findByName")
