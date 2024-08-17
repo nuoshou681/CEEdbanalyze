@@ -31,7 +31,7 @@ public class MajorLayerThreeServiceImpl implements MajorLayerThreeService {
     }
  
     @Override
-    public List<MajorLayerThree> search(String secondLayer, String rank, String name, int page, int size) {
-        return majorLayerThreeMapper.search(secondLayer,rank,name,new RowBounds(page,size));
+    public List<MajorLayerThree> search(Integer level, String type, String name, int page, int size) {
+        return majorLayerThreeMapper.search(level,type,name,new RowBounds(page,size));
     }
 }
