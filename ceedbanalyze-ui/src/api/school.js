@@ -3,10 +3,10 @@ export function getAllSchool() {
     return apiClient.get('/school/getAll');
 }
 export function getSchoolByName(data) {
-    return apiClient.post('/school/getByName',{name : data });
+    return apiClient.get('/school/searchbyname',{ data });
 }
 export function getSchool(page,pageSize){
-    return apiClient.post('/school/getByPage',{page,pageSize});
+    return apiClient.get('/school/getByPage',{page,pageSize});
 
 }
 export function SchoolSearch(name,city,type2,type3,page,pageSize){

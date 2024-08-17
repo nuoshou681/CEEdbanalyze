@@ -30,7 +30,7 @@
         <p v-for="item in paginatedMajorList" :key="item.id" class="scrollbar-demo-item"
           :class="{ 'selected-item': item.selected }" @click="handleItemClick(item)">{{ item.name }}</p>
         <el-pagination class="Pagination" @current-change="handleCurrentChange" :current-page="currentPage"
-          :page-sizes="[10, 20, 30, 40]" :page-size="pageSize" layout="prev, pager, next, jumper"
+          :page-sizes="[10, 20, 30, 40]" :page-size="pageSize" layout="prev, pager, next, jumper" size="small"
           :total="MajorList.length" />
       </div>
     </el-scrollbar>

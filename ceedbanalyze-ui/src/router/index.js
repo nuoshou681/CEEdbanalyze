@@ -20,17 +20,7 @@ const router = createRouter({
           {
             path:'detail',
             name: 'detail',
-            component: () => import('../views/school/schooldetail/basicinformation.vue')
-      },
-      {
-        path:'schoolmajor',
-        name: 'schoolmajor',
-        component: () => import('../views/school/schooldetail/majorinformation.vue')
-      },
-      {
-        path:'scoreplan',
-        name: 'scoreplan',
-        component: () => import('../views/school/schooldetail/scoreandplan.vue')
+            component: () => import('../views/school/schoolindex.vue')
       }
     ]},
       {

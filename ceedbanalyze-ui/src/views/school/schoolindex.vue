@@ -7,10 +7,31 @@
     <p>招生电话：{{ schoolitem.phone }}</p>
     <p>招生邮箱：{{ schoolitem.website }}</p>
     <div class="school-more">
-       <router-link to="/school/detail" class="school-tag" active-class="active-link" @click=" sendSchooldata()">基本详情</router-link>
-        <router-link to="/school/scoreplan" class="school-tag" active-class="active-link" @click=" sendSchooldata()">分数计划</router-link>
-        <router-link to="/school/schoolmajor" class="school-tag" active-class="active-link" @click=" sendSchooldata()">开设专业</router-link>
+    <div
+      class="school-tag"
+      :class="{ 'active-link': activeTab === '基本详情' }"
+      @click="setActiveTab('基本详情')"
+    >
+      基本详情
     </div>
+    <div
+      class="school-tag"
+      :class="{ 'active-link': activeTab === '分数计划' }"
+      @click="setActiveTab('分数计划')"
+    >
+      分数计划
+    </div>
+    <div
+      class="school-tag"
+      :class="{ 'active-link': activeTab === '开设专业' }"
+      @click="setActiveTab('开设专业')"
+    >
+      开设专业
+    </div>
+  </div>
+    <basicinformation v-if="activeTab === '基本详情'" :schoolitem="schoolitem"/>
+    <majorinformation v-if="activeTab === '开设专业'" :schoolitem="schoolitem"/>
+    <scoreandplan v-if="activeTab === '分数计划'" :schoolitem="schoolitem"/>
     </div>
     <div v-else>
         <div class="school-information">
@@ -21,17 +42,47 @@
     <p>招生电话：0531-59626977</p>
     <p>招生邮箱：sdbkzs@email.sdu.edu.cn</p>
     <div class="school-more">
-        <router-link to="/school/detail" class="school-tag" active-class="active-link" @click=" sendSchooldata()">基本详情</router-link>
-        <router-link to="/school/scoreplan" class="school-tag" active-class="active-link" @click=" sendSchooldata()">分数计划</router-link>
-        <router-link to="/school/schoolmajor" class="school-tag" active-class="active-link" @click=" sendSchooldata()">开设专业</router-link>
+    <div
+      class="school-tag"
+      :class="{ 'active-link': activeTab === '基本详情' }"
+      @click="setActiveTab('基本详情')"
+    >
+      基本详情
     </div>
+    <div
+      class="school-tag"
+      :class="{ 'active-link': activeTab === '分数计划' }"
+      @click="setActiveTab('分数计划')"
+    >
+      分数计划
+    </div>
+    <div
+      class="school-tag"
+      :class="{ 'active-link': activeTab === '开设专业' }"
+      @click="setActiveTab('开设专业')"
+    >
+      开设专业
+    </div>
+  </div>
+  <basicinformation v-if="activeTab === '基本详情'" :schoolitem="schoolitem"/>
+    <majorinformation v-if="activeTab === '开设专业'" :schoolitem="schoolitem"/>
+    <scoreandplan v-if="activeTab === '分数计划'" :schoolitem="schoolitem"/>
     </div>
     </div>
 
 </template>
 <script setup>
-import { computed, watch } from 'vue';
+import { computed, watch,ref } from 'vue';
 import eventBus from '@/api/eventBus';
+import {onMounted} from 'vue';
+import basicinformation from '@/views/school/schooldetail/basicinformation.vue';
+import majorinformation from '@/views/school/schooldetail/majorinformation.vue';
+import scoreandplan from '@/views/school/schooldetail/scoreandplan.vue';
+const activeTab = ref('基本详情');
+const setActiveTab = (tab) => {
+  activeTab.value = tab;
+};
+
 // props
 const props = defineProps({
     schoolitem:{
@@ -39,29 +90,25 @@ const props = defineProps({
         required: true
     }
 })
-function sendSchooldata(){
-    eventBus.emit('schooldata', props.schoolitem);
-}
-// 计算属性，检测schoolitem是否发生变化，如果发生变化，发送schoolitem数据
-const schoolitemWatcher = computed(() => props.schoolitem);
 
-// 监听计算属性的变化
-watch(schoolitemWatcher, (newVal, oldVal) => {
-    if (newVal !== oldVal) {
-        sendSchooldata();
-    }
-});
 
 </script>
 <style scoped>
-.school-tag{
-    text-decoration: none; 
-    color: inherit; 
+
+
+.school-tag {
+  padding: 0 20px 0 20px;
+  cursor: pointer;
+  border-radius: 10px;
 }
-.school-tag.active-link {
-  font-weight: bold; /* 激活状态的样式，可以根据需要调整 */
-  color: rgb(21, 208, 130); /* 激活状态的颜色，可以根据需要调整 */
+
+.active-link {
+  background-color:  rgb(21, 208, 130);
+  color: rgb(255, 255, 255);
+  font-weight: bold;
 }
+
+
 h1{
     margin-top: 0;
     margin-bottom: 2px;
