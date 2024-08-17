@@ -122,7 +122,7 @@ function handleSearch() {
 }
 // 异步请求1: 钩子函数
 onMounted(() => {
-  // 1-1 请求后端发送专业列表数据 专业详情数据
+  // 1-1 测试: 请求后端发送专业列表数据 专业详情数据
   // userApi.getByPage(0, 530).then((response) => {
   //   MajorList.value = response.data;
   //   MajorDetail.value = response.data[0];
