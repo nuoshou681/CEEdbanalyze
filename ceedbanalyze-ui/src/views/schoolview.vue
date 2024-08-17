@@ -7,7 +7,7 @@
       </el-affix>
     <Login v-if="isLoggedIn" @close="isLoggedIn = false"/>
       <div class="school-detal">
-       <schoolindex/>
+       <schoolindex :schoolitem="schoolitem"/>
        <router-view/>
       </div>
 
@@ -21,7 +21,7 @@
   </div>
   <div class="scroll-bar">
   <el-scrollbar height="500px">
-    <p v-for="item in schoolitems" :key="item.id" class="scrollbar-demo-item" :class="{ 'selected-item ': item.select == true}"  @click="handleItemClick(item)">{{ item }}</p>
+    <p v-for="item in schoolitems" :key="item.id" class="scrollbar-demo-item" :class="{ 'selected-item': item.selected }"  @click="handleItemClick(item)">{{ item.name }}</p>
   </el-scrollbar>
   </div>
 </div>
@@ -34,7 +34,7 @@
   import schoolindex from './school/schoolindex.vue';
   import searchSchool from '@/components/searchSchool.vue';
   import { onMounted } from 'vue';
-  import {getAllSchool} from '@/api/school';
+  import {getAllSchool,} from '@/api/school';
 
   const activeMenu = ref('school');
   function updateActiveMenu(menu) {
@@ -47,20 +47,27 @@ function login() {
     userAvatar.value = 'https://avatars.githubusercontent.com/u/6791502?v=4';
 }
 const schoolitems = ref([]);
+const schoolitem = ref({
+});
 const handleItemClick = (item) => {
-
+  schoolitems.value.forEach(schoolitem =>{
+    schoolitem.selected = false;
+  })
+  item.selected = true;
   handleDetailClick(item);
 };
 
 // 专业详情点击事件
 const handleDetailClick = (item) => {
-  schoolitems.value = item;
+  schoolitem.value = item;
 };
-onMounted(() => {
-  getAllSchool().then((res) => {
+onMounted (() => {
+ getAllSchool().then((res) => {
     schoolitems.value = res.data;
-    console.log(res.data);
-})}); 
+  });
+  //将第一个学校信息显示在页面上
+  schoolitem.value = schoolitems.value[0];
+}); 
   </script>
   
   <style scoped>
