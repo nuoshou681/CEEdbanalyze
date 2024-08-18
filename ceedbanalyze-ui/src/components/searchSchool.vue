@@ -19,7 +19,7 @@
           :key="type"
           class="option"
           :class="{ selected: selectedType === type }"
-          @click="selectedType = type"
+          @click="selectedType = type"   
         >
           {{ type }}
         </span>
@@ -39,31 +39,31 @@
 
     </div>
   </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        selectedRegion: '全部',
-        selectedType: '全部',
-        selectedCategory: '全部',
-        selectedFeature: '全部',
-        regions: [
+  <script setup>
+  import { ref ,watch} from 'vue';
+        const selectedRegion=  ref('全部')
+        const selectedType = ref('全部')
+        const selectedCategory = ref('全部')
+        const regions = ref([
           '全部', '济南', '青岛', '烟台', '潍坊', '威海', '日照', '济宁', '泰安', '淄博', '枣庄', '东营', '临沂', '德州', '聊城',
           '聊城', '滨州', '菏泽', '莱芜', '其他'
-        ],
-        types: [
+        ])
+        const types = ref([
           '全部', '综合', '理工', '农林', '医药', '师范', '语言', '财经', '政法', '体育', '艺术', '民族', '军事', '其他'
-        ],
-        categories: [
-          '全部', '本科', '专科(高职)', '公办', '民办'
-        ],
-
-      };
-    }
-  };
+        ])
+        const categories = ref([
+          '全部', '公办', '民办'
+        ])
+ //props接受父组件传递的函数
+const props = defineProps({
+  schooltag: Function
+})
+//监听selectedRegion,selectedType,selectedCategory的变化
+watch([selectedRegion,selectedType,selectedCategory],(newValue)=>{
+  const [region,type,category] = newValue
+  props.schooltag(region,type,category)
+})
   </script>
-  
   <style scoped>
 
   .filter-container {

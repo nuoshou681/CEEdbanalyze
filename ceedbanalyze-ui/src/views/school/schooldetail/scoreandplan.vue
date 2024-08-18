@@ -88,6 +88,7 @@ const options = [
         width: 700px;
         height: auto;
         border-radius:  0 0 10px 10px;
+        margin-top: 20px;
     }
     .plan{
         background-color: #ffffff;

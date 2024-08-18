@@ -11,16 +11,19 @@
     </div>
 
     <div class="school-search">
-      <searchSchool />
+      <searchSchool :schooltag="getschooltag"/>
     </div>
     <div class="scroll-bar">
-      <el-scrollbar height="500px">
+      <el-scrollbar height="550px">
         <p v-for="item in paginatedSchoolList" :key="item.id" class="scrollbar-demo-item"
           :class="{ 'selected-item': item.selected }" @click="handleItemClick(item)">{{ item.name }}</p>
       </el-scrollbar>
-      <el-pagination class="Pagination" @current-change="handleCurrentChange" :current-page="currentPage"
+   
+         <el-pagination v-if="schoolitems.length>0" class="Pagination" @current-change="handleCurrentChange"  :current-page="currentPage"
           :page-size="pageSize" layout="prev, pager, next, jumper"
-          :total="schoolitems.length" size = "small"/>
+          :total="num" size = "small"/>
+
+
     </div>
   </div>
 </template>
@@ -32,11 +35,13 @@ import Login from '@/components/Login.vue';
 import schoolindex from './school/schoolindex.vue';
 import searchSchool from '@/components/searchSchool.vue';
 import { onMounted,computed } from 'vue';
-import { getAllSchool, getSchool } from '@/api/school';
-
+import { getAllSchool, getSchool,SchoolSearch } from '@/api/school';
+const tag1 = ref('');
+const tag2 = ref('');
+const tag3 = ref('');
 const currentPage = ref(1);
 const pageSize = ref(10);
-const selectedCategory = ref('全部')
+const num = ref(165);
 const paginatedSchoolList = computed(() => {
   const start = (currentPage.value - 1) * pageSize.value;
   const end = start + pageSize.value;
@@ -44,9 +49,30 @@ const paginatedSchoolList = computed(() => {
 });
 const handleCurrentChange = (page) => {
   currentPage.value = page;
+  SchoolSearch('',tag1.value,tag2.value,tag3.value,currentPage.value,pageSize.value).then((res) => {
+  schoolitems.value = schoolitems.value.concat(res.data);
+});
 };
 
+function getschooltag(lay1,lay2,lay3){
+  tag1.value = lay1
+  tag2.value = lay2
+  tag3.value = lay3
+  if(tag1.value == '全部'){
+    tag1.value = ''
+  }
+  if(tag2.value == '全部'){
+    tag2.value = ''
+  }
+  if(tag3.value == '全部'){
+    tag3.value = ''
+  }
 
+SchoolSearch('',tag1.value,tag2.value,tag3.value,currentPage.value,pageSize.value).then((res) => {
+  schoolitems.value = res.data;
+  console.log(res.data)
+});
+}
 
 const activeMenu = ref('school');
 function updateActiveMenu(menu) {
@@ -68,19 +94,23 @@ const handleItemClick = (item) => {
   handleDetailClick(item);
 };
 
-// 专业详情点击事件
+
 const handleDetailClick = (item) => {
   schoolitem.value = item;
+  getSchool(currentPage,pageSize).then((res) => {
+    schoolitems.value = res.data;
+  });
 };
 function getschool(){
-  getSchool(1,10).then((res) => {
+  getSchool(currentPage,pageSize).then((res) => {
     schoolitems.value = res.data;
   });
 }
 onMounted(() => {
-  getAllSchool().then((res) => {
-    schoolitems.value = res.data;
-  });
+
+getAllSchool().then((res) => {
+  schoolitems.value = res.data;
+});
   //将第一个学校信息显示在页面上
   schoolitem.value = schoolitems.value[0];
 });
@@ -89,7 +119,7 @@ onMounted(() => {
 <style scoped>
 .scroll-bar {
   width: 400px;
-  height: 500px;
+  height: 550px;
 }
 
 .nav-item.active {
@@ -110,6 +140,8 @@ onMounted(() => {
 .scrollbar-demo-item {
   display: flex;
   align-items: center;
+  text-align: center;
+  justify-content: center;
   padding-left: 20px;
   height: 50px;
   width: 350px;

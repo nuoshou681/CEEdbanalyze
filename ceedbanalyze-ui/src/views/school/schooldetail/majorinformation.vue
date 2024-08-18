@@ -66,7 +66,8 @@
         border-radius:  0 0 10px 10px;
     }
 .major-list{
-    background-color: #ffffff;;
+    background-color: #ffffff;
+    margin-top: 20px;
 }
 .example-pagination-block + .example-pagination-block {
   margin-top: 10px;

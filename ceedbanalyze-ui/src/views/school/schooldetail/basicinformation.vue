@@ -13,10 +13,9 @@
 
 </template>
 <script setup>
-import { onBeforeMount, ref} from 'vue';
+import {  ref} from 'vue';
 import { computed,watch } from 'vue';
 import schoolintro from '@/components/schoolintro.vue';
-import eventBus from '@/api/eventBus';
 const isCollapsed = ref(false);
 
 const toggleText = () => {
