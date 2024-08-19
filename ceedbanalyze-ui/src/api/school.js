@@ -3,12 +3,12 @@ export function getAllSchool() {
     return apiClient.get('/school/getAll');
 }
 export function getSchoolByName(data) {
-    return apiClient.post('/school/getByName',{name : data });
+    return apiClient.get('/school/searchbyname',{params:{data}} );
 }
-export function getSchool(page,pageSize){
-    return apiClient.post('/school/getByPage',{page:1,pageSize:10});
+export function getSchool(page,size){
+    return apiClient.get('/school/getByPage',{params: { page: page, size: size }});
 
 }
 export function SchoolSearch(name,city,type2,type3,page,pageSize){
-    return apiClient.post('/school/search',{name,city,type2,type3,page,pageSize});
+    return apiClient.get('/school/search',{params:{name:name,city:city,type2:type2,type3:type3,page:page,size:pageSize}});
 }

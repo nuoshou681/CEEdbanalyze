@@ -14,9 +14,9 @@ export default {
         });
     },
     // 根据专业层次和专业分类获取专业信息
-    search(data) {
+    search(level , category) {
         return apiClient.get('/major/search', {
-            params: { secondLayer: data, page: 1, size: 10 }
+            params: {level: level, type : category , page: 0, size: 600 }
         });
     }
 };

@@ -61,13 +61,13 @@
     <style scoped>
     .major-page{
         background-color: #f0f0f0;
-        width: 730px;
+        width: 700px;
         height: auto;
-        padding: 10px;
         border-radius:  0 0 10px 10px;
     }
 .major-list{
-    background-color: #ffffff;;
+    background-color: #ffffff;
+    margin-top: 20px;
 }
 .example-pagination-block + .example-pagination-block {
   margin-top: 10px;
@@ -78,7 +78,7 @@
 }
 .pagination{
   position: relative;
-  width: 730px;
+  width: 700px;
   background-color: #ffffff;
    & > div {
     position: relative;
