@@ -14,7 +14,7 @@
       <searchSchool :schooltag="getschooltag"/>
     </div>
     <div class="scroll-bar">
-      <el-scrollbar height="550px">
+      <el-scrollbar height="610px">
         <p v-for="item in paginatedSchoolList" :key="item.id" class="scrollbar-demo-item"
           :class="{ 'selected-item': item.selected }" @click="handleItemClick(item)">{{ item.name }}</p>
       </el-scrollbar>
@@ -22,8 +22,6 @@
          <el-pagination v-if="schoolitems.length>0" class="Pagination" @current-change="handleCurrentChange"  :current-page="currentPage"
           :page-size="pageSize" layout="prev, pager, next, jumper"
           :total="num" size = "small"/>
-
-
     </div>
   </div>
 </template>
@@ -97,20 +95,13 @@ const handleItemClick = (item) => {
 
 const handleDetailClick = (item) => {
   schoolitem.value = item;
-  getSchool(currentPage,pageSize).then((res) => {
-    schoolitems.value = res.data;
-  });
+
 };
-function getschool(){
-  getSchool(currentPage,pageSize).then((res) => {
-    schoolitems.value = res.data;
-  });
-}
 onMounted(() => {
 
-getAllSchool().then((res) => {
-  schoolitems.value = res.data;
-});
+getSchool(1,10).then((res) => {
+    schoolitems.value = res.data;
+  });
   //将第一个学校信息显示在页面上
   schoolitem.value = schoolitems.value[0];
 });

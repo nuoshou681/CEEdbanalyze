@@ -3,60 +3,38 @@
        <div class="major-list">
         <span style="font-size: 20px;font-weight: 1000;">学校专业</span>
         <div>
-<el-table :data="tableData" height="500" style="width: 100%">
-    <el-table-column prop="date" label="专业名称" width="180" />
-    <el-table-column prop="name" label="学制" width="180" />
-    <el-table-column prop="address" label="学费" />
-    <el-table-column prop="address" label="录取概率"/>
+<el-table :data="MajorData" height="500" style="width: 100%">
+    <el-table-column prop="majorName" label="专业名称" width="180" />
+    <el-table-column prop="majorLimit" label="专业限制" width="180" />
+    <el-table-column prop="address" label="学费" width="180" />
+    <el-table-column prop="address" label="录取概率" width="150"/>
   </el-table>
         </div>
-        <div class="pagination">
-          <div>
-          <el-pagination layout="prev, pager, next" :total="100" :pager-count="5"  :page-size="20" size = "small" />
-        </div>  
-          </div>
+
        </div>
     </div>
     </template>
     <script setup>
-
-    const tableData = [
-  {
-    date: '2016-05-03',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-02',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-04',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-08',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-06',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-07',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-]
+import { ref,onMounted ,watch} from 'vue'
+import {getMajorById} from '@/api/school'
+const props = defineProps({
+    schoolid:{
+        type: Number,
+        required: true
+    }
+})
+watch(() => props.schoolid, (newVal) => {
+    getMajorById(newVal).then((res) => {
+        MajorData.value = res.data;
+    });
+});
+const MajorData = ref([])
+onMounted(() => {
+ getMajorById(props.schoolid).then(res => {
+     MajorData.value = res.data
+     console.log(res.data)
+ })
+})
     </script>
     <style scoped>
     .major-page{
@@ -76,13 +54,5 @@
   
   margin-bottom: 16px;
 }
-.pagination{
-  position: relative;
-  width: 700px;
-  background-color: #ffffff;
-   & > div {
-    position: relative;
-    left:300px;
-}
-}
+
     </style>

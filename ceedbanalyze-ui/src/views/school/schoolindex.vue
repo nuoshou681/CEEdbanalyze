@@ -30,7 +30,7 @@
     </div>
   </div>
     <basicinformation v-if="activeTab === '基本详情'" :schoolitem="schoolitem"/>
-    <majorinformation v-if="activeTab === '开设专业'" :schoolitem="schoolitem"/>
+    <majorinformation v-if="activeTab === '开设专业'" :schoolid="schoolitem.id"/>
     <scoreandplan v-if="activeTab === '分数计划'" :schoolitem="schoolitem"/>
     </div>
     <div v-else>
@@ -64,9 +64,9 @@
       开设专业
     </div>
   </div>
-  <basicinformation v-if="activeTab === '基本详情'" :schoolitem="schoolitem"/>
-    <majorinformation v-if="activeTab === '开设专业'" :schoolitem="schoolitem"/>
-    <scoreandplan v-if="activeTab === '分数计划'" :schoolitem="schoolitem"/>
+  <basicinformation v-if="activeTab === '基本详情'"/>
+  <majorinformation v-if="activeTab === '开设专业'"/>
+  <scoreandplan v-if="activeTab === '分数计划'"/>
     </div>
     </div>
 
