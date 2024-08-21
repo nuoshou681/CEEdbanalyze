@@ -14,51 +14,73 @@
         :key="item.value"
         :label="item.label"
         :value="item.value"
+        @click="getScorePlan(item.value)"
       />
     </el-select>
-          </div>
-          <el-table :data="tableData" stripe style="width: 100%">
-    <el-table-column prop="date" label="专业名称" />
-    <el-table-column prop="name" label="录取批次"/>
-    <el-table-column prop="address" label="专业分数" />
+</div>
+    <el-table :data="tableData" height="500" style="width: 100%">
+    <el-table-column prop="majorName" label="专业名称" />
+    <el-table-column prop="type" label="录取批次"/>
+    <el-table-column :prop="year" label="专业分数" />
     <el-table-column prop="address" label="录取概率" />
   </el-table>
-        </div>
-        <div class="pagination">
-          <div>
-          <el-pagination layout="prev, pager, next" :total="100" :pager-count="5"  :page-size="20" size = "small" />
-        </div>  
-          </div>
-          
-        
-    </div>
-    </template>
+</div>
+</div>
+</template>
 <script setup>
-import { ref } from 'vue'
-    const tableData = [
-  {
-    date: '2016-05-03',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-02',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-04',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-]
-const value = ref('')
+import { onMounted, ref,watch } from 'vue'
+import {getMajorById} from '@/api/school'
+const props = defineProps({
+  schoolitem: {
+    type: Object,
+    required: true,
+    default: () => ({
+      name: '山东大学',
+      introduction: '山东大学是一所历史悠久、学科齐全、实力雄厚、特色鲜明的教育部直属重点综合性大学，在国内外具有重要影响，2017年顺利迈入世界一流大学建设高校（A类）行列。山东大学前身是1901年创办的山东大学堂，被誉为中国近代高等教育起源性大学。其医学学科起源于1864年，开启近代中国高等医学教育之先河。从诞生起，学校先后历经了山东大学堂、国立青岛大学、国立山东大学、山东大学以及由原山东大学、山东医科大学、山东',
+      id:3,
 
+    }),
+  },
+});
+onMounted(() => {
+  getMajorById(props.schoolitem.id).then((res) => {
+    tableData.value = res.data;
+  });
+})
+watch(() => props.schoolitem, (newVal) => {
+  getMajorById(newVal.id).then((res) => {
+    tableData.value = res.data;
+  });
+});
+const year = ref('score2023')
+const value = ref('')
+const tableData = ref([])
+const getScorePlan = (value) => {
+  getMajorById(props.schoolitem.id).then((res) => {
+    tableData.value = res.data;
+  });
+  if(value == 'Option2'){
+     //遍历tableData，将年份为2024的数据筛选出来重新赋值给tableData
+      tableData.value = tableData.value.filter(item => item.score2023 !== null)
+      year.value = 'score2023'
+      console.log(tableData.value)
+  }
+  if(value == 'Option3'){
+    tableData.value = tableData.value.filter(item => item.score2022 !== null)
+    year.value = 'score2022'
+    console.log(tableData.value)
+  }
+  if(value == 'Option4'){
+    tableData.value = tableData.value.filter(item => item.score2021 !== null)
+    year.value = 'score2021'
+    console.log(tableData.value)
+  }
+  if(value == 'Option5'){
+    tableData.value = tableData.value.filter(item => item.score2020 !== null)
+    year.value = 'score2020'
+    console.log(tableData.value)
+  }
+}
 const options = [
   {
     value: 'Option1',
@@ -92,25 +114,11 @@ const options = [
     }
     .plan{
         background-color: #ffffff;
+        height: 600px;
     }
     .select-box{
      float:right;
    
     }
-    .example-pagination-block + .example-pagination-block {
-  margin-top: 10px;
-}
-.example-pagination-block .example-demonstration {
-  
-  margin-bottom: 16px;
-}
-.pagination{
-  position: relative;
-  width: 700px;
-  background-color: #ffffff;
-   & > div {
-    position: relative;
-    left:300px;
-}
-}
+
     </style>
