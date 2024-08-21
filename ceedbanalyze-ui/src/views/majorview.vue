@@ -21,7 +21,7 @@
         <button type="submit" @click="handleSearch">搜索</button>
       </div>
       <!-- 专业分类 -->
-      <searchMajor @update:selected-category="handleSelectedCategory"/>
+      <searchMajor @update:selected-category="handleSelectedCategory" />
     </div>
 
     <!-- 交互 专业列表 -->
@@ -93,17 +93,22 @@ const handleCurrentChange = (page) => {
   currentPage.value = page;
 };
 // 函数5: 搜索专业的专业门类
-function handleSelectedCategory(level, category ) {
-  console.log('-传递的参数level为: ',level)
-  console.log('-传递的参数category为: ',category)
-  if(category == '全部'){
+function handleSelectedCategory(level, category) {
+  console.log('-传递的参数level为: ', level)
+  console.log('-传递的参数category为: ', category)
+  if (category == '全部') {
     selectedcategory.value = '';
-  }else{
+  } else {
     selectedcategory.value = category;
   }
   selectedlevel.value = level;
   console.log('搜索的专业门类', selectedlevel.value, selectedcategory.value);
   userApi.search(selectedlevel.value, selectedcategory.value).then((response) => {
+    if(response.data == ''){
+      console.log('搜索的专业门类为空');
+      MajorList.value = [];
+      return;
+    }
     console.log('搜索的专业门类', response.data);
     MajorList.value = response.data;
     MajorDetail.value = response.data[0];
@@ -113,7 +118,7 @@ function handleSelectedCategory(level, category ) {
 // 函数6: 按照专业名字搜索
 function handleSearch() {
   console.log('搜索的院校名字', schoolName.value);
-  userApi.fingByName(schoolName.value,0,600).then((response) => {
+  userApi.fingByName(schoolName.value, 0, 600).then((response) => {
     MajorList.value = response.data;
     console.log('搜索的院校集合', MajorList.value);
     MajorDetail.value = response.data[0];
