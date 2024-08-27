@@ -9,7 +9,10 @@
     <div class="school-detal">
       <schoolindex :schoolitem="schoolitem" />
     </div>
-
+    <div class="search-container">
+        <input type="text" placeholder="输入学校名称" v-model="schoolName">
+        <button type="submit" @click="handleSearch">搜索</button>
+      </div>
     <div class="school-search">
       <searchSchool :schooltag="getschooltag"/>
     </div>
@@ -37,6 +40,7 @@ import {  getSchool,SchoolSearch } from '@/api/school';
 const tag1 = ref('');
 const tag2 = ref('');
 const tag3 = ref('');
+const schoolName = ref('');
 const currentPage = ref(1);
 const pageSize = ref(10);
 const num = ref(165);
@@ -65,13 +69,16 @@ function getschooltag(lay1,lay2,lay3){
   if(tag3.value == '全部'){
     tag3.value = ''
   }
-
 SchoolSearch('',tag1.value,tag2.value+'类',tag3.value,currentPage.value,pageSize.value).then((res) => {
   schoolitems.value = res.data;
-  console.log(res.data)
 });
 }
-
+function handleSearch() {
+  SchoolSearch(schoolName.value,'','','',0,10).then((res) => {
+    schoolitems.value = res.data;
+    console.log(res.data)
+  });
+}
 const activeMenu = ref('school');
 function updateActiveMenu(menu) {
   activeMenu.value = menu;
@@ -167,14 +174,15 @@ getSchool(1,10).then((res) => {
 }
 
 .search-container {
-  margin-top: 10px;
+  margin-top: 20px;
   display: flex;
   align-items: center;
   border: 2px solid rgb(47, 106, 244);
   border-radius: 5px;
   overflow: hidden;
   width: 300px;
-  margin-left: 20px;
+  margin-left: 40px;
+  margin-bottom: 0;
 }
 
 .search-container input {

@@ -3,9 +3,10 @@
         {{MajorDetail.name}}
     </div>
     <div class="major-main">
-        <h2 class="headline">
-            专业介绍
-        </h2>
+        <div class="title-container">
+        <div class="title-marker"></div>
+        <h2 class="title-text">专业介绍</h2>
+      </div>
         <div class="major-flex">
             <div class="major-box">
                 <p class="fontSize">{{ type }}</p>{{ MajorDetail.name }}
@@ -20,7 +21,10 @@
                 <p class="fontSize">专业代码</p>{{ MajorDetail.id}}
             </div>
         </div>
-        <h2 class="headline">详解</h2>
+        <div class="title-container">
+        <div class="title-marker"></div>
+        <h2 class="title-text">详情</h2>
+      </div>
         <div class="major-detail">
             <p class="major-information">{{ MajorDetail.introduction }}</p>
         </div>
@@ -43,7 +47,7 @@ const props = defineProps({
 <style scoped>
 .fontSize {
     font-size: 20px;
-    margin-bottom: 0;
+    margin-bottom: 0;   
 }
 
 .major-name {
@@ -60,6 +64,7 @@ const props = defineProps({
 .major-flex {
     display: flex;
     justify-content: space-around;
+    background-color: #f0f0f0;
 }
 
 .major-box {
@@ -71,12 +76,15 @@ const props = defineProps({
 }
 
 .major-detail {
-    width: 700px;
+    width: 730px;
+    height: auto;
     padding: 0 10px 10px 10px;
     border-radius: 0 0 10px 10px;
+    background-color: #f0f0f0;
 }
 
 .major-information {
+    margin-top: 0;
     padding: 10px;
     background-color: #fff;
     border-radius: 0 0 10px 10px;
@@ -89,6 +97,31 @@ const props = defineProps({
 
 .headline {
     margin: 0;
-    padding: 10px;
+    padding: 10px 10px 0 10px;
+    background-color: #f0f0f0;
+}
+.title-container {
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f0;
+  .title-marker {
+    width: 5px;
+    height: 24px;
+    background-color:rgb(21, 208, 130); /* 蓝色标记的颜色 */
+    margin-right: 8px;
+    margin-left: 0;
+  }
+
+  .title-text {
+    font-weight: bold;
+    margin-right: 16px;
+    
+  }
+
+  .title-line {
+    flex-grow: 1;
+    height: 1px;
+    background-color: #ccc; /* 线条的颜色 */
+  }
 }
 </style>

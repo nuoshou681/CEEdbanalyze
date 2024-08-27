@@ -20,7 +20,8 @@ import { getMajorById } from '@/api/school'
 const props = defineProps({
     schoolid: {
         type: Number,
-        required: true
+        required: true,
+        default: () => (3),
     }
 })
 watch(() => props.schoolid, (newVal) => {
