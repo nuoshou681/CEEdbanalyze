@@ -16,7 +16,7 @@ export default {
     // 根据专业层次和专业分类获取专业信息
     search(level , category) {
         return apiClient.get('/major/search', {
-            params: {level: level, type : category , page: 0, size: 600 }
+            params: {level: level, type : category , page: 0, size: 1560 }
         });
     }
 };

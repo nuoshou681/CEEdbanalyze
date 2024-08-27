@@ -8,7 +8,7 @@
         </h2>
         <div class="major-flex">
             <div class="major-box">
-                <p class="fontSize">本科</p>{{ MajorDetail.name }}
+                <p class="fontSize">{{ type }}</p>{{ MajorDetail.name }}
             </div>
             <div class="major-box">
                 <p class="fontSize">{{ MajorDetail.year }}</p>修学年限
@@ -35,7 +35,9 @@ const props = defineProps({
         year: String,
         id: String,
         degree: String,        
-    }
+    },
+    // 本科还是专科
+    type: String
 })
 </script>
 <style scoped>

@@ -10,7 +10,7 @@
     <div class="more-detal">
       <!-- 交互 专业详情 -->
       <el-scrollbar height="700px" class="major-detal">
-        <majordetail :MajorDetail="MajorDetail" />
+        <majordetail :MajorDetail="MajorDetail" :type="selectedlevel"/>
       </el-scrollbar>
     </div>
 
@@ -118,7 +118,7 @@ function handleSelectedCategory(level, category) {
 // 函数6: 按照专业名字搜索
 function handleSearch() {
   console.log('搜索的院校名字', schoolName.value);
-  userApi.fingByName(schoolName.value, 0, 600).then((response) => {
+  userApi.fingByName(schoolName.value, 0, 1560).then((response) => {
     MajorList.value = response.data;
     console.log('搜索的院校集合', MajorList.value);
     MajorDetail.value = response.data[0];
