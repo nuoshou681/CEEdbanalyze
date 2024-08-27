@@ -33,7 +33,7 @@ import Login from '@/components/Login.vue';
 import schoolindex from './school/schoolindex.vue';
 import searchSchool from '@/components/searchSchool.vue';
 import { onMounted,computed } from 'vue';
-import { getAllSchool, getSchool,SchoolSearch } from '@/api/school';
+import {  getSchool,SchoolSearch } from '@/api/school';
 const tag1 = ref('');
 const tag2 = ref('');
 const tag3 = ref('');
@@ -66,7 +66,7 @@ function getschooltag(lay1,lay2,lay3){
     tag3.value = ''
   }
 
-SchoolSearch('',tag1.value,tag2.value,tag3.value,currentPage.value,pageSize.value).then((res) => {
+SchoolSearch('',tag1.value,tag2.value+'类',tag3.value,currentPage.value,pageSize.value).then((res) => {
   schoolitems.value = res.data;
   console.log(res.data)
 });
@@ -101,6 +101,7 @@ onMounted(() => {
 
 getSchool(1,10).then((res) => {
     schoolitems.value = res.data;
+    console.log(res.data)
   });
   //将第一个学校信息显示在页面上
   schoolitem.value = schoolitems.value[0];
