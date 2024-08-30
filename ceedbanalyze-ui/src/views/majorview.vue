@@ -2,15 +2,15 @@
   <div class="page_main">
     <!-- 顶部菜单栏 -->
     <el-affix :offset="0">
-      <top_menu_bar @update:activeMenu="updateActiveMenu" @login="login" :isLoggedIn="isLoggedIn"
+      <top_menu_bar @update:activeMenu="updateActiveMenu" @login="login" :isLoggedIn="userStore.logintags"
         :userAvatar="userAvatar" :activeMenu="activeMenu" />
     </el-affix>
-    <Login v-if="isLoggedIn" @close="isLoggedIn = false" />
-
+    <Login v-if="isLoggedIn" @close="isLoggedIn = false"  :getlogintag="getlogintag"/>
+    <LoginSuccess v-if="logintag"/>
     <div class="more-detal">
       <!-- 交互 专业详情 -->
       <el-scrollbar height="700px" class="major-detal">
-        <majordetail :MajorDetail="MajorDetail" :type="selectedlevel"/>
+        <majordetail :MajorDetail="MajorDetail" :type="selectedlevel" :degree="selectedcategory"/>
       </el-scrollbar>
     </div>
 
@@ -46,8 +46,10 @@ import majordetail from './major/majordetail.vue';
 import searchMajor from '@/components/searchMajor.vue';
 import userApi from '@/api/user'
 import { computed } from 'vue';
-
-
+import { useUserStore } from '@/store/user';
+import LoginSuccess from '@/components/LoginSuccess.vue';
+import user from '@/api/user';
+const userStore = useUserStore();
 const activeMenu = ref('major');
 const isLoggedIn = ref(false);
 const userAvatar = ref('');
@@ -58,13 +60,19 @@ const currentPage = ref(1);
 const pageSize = ref(10);
 const selectedlevel = ref('本科');
 const selectedcategory = ref('全部');
+const logintag = ref(false);
 // 分页专业列表
 const paginatedMajorList = computed(() => {
   const start = (currentPage.value - 1) * pageSize.value;
   const end = start + pageSize.value;
   return MajorList.value.slice(start, end);
 });
-
+function getlogintag(data){
+   logintag.value = data;
+   if(logintag.value){
+     isLoggedIn.value = false;
+   }
+}
 
 // 函数1: 登陆函数
 function login() {

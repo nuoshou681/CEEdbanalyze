@@ -3,7 +3,7 @@
       <el-affix :offset="0">
       <top_menu_bar @update:activeMenu = "updateActiveMenu"
       @login="login"
-      :isLoggedIn="isLoggedIn"
+      :isLoggedIn="userStore.logintags"
       :userAvatar="userAvatar"
     :activeMenu="activeMenu"/>
   </el-affix>
@@ -25,11 +25,15 @@
   
   <script setup>
   import { ref } from 'vue';
-  const activeMenu = ref('home');
+  
   import top_menu_bar from '@/components/top_menu_bar.vue';
   import Login from '@/components/Login.vue';
+  import { useUserStore } from '@/store/user';
+import user from '@/api/user';
+const userStore = useUserStore();
   const isLoggedIn = ref(false);
   const userAvatar = ref('');
+  const activeMenu = ref('home');
 function updateActiveMenu(menu) {
     activeMenu.value = menu;
 }

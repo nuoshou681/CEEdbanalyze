@@ -26,7 +26,13 @@ const router = createRouter({
       {
         path:'/analyse',
         name: 'analyse',
-        component: () => import('../views/analyseview.vue')
+        component: () => import('../views/analyseview.vue'),
+        children: [
+          {
+             path:'analyzedetail',
+              name: 'analyzedetail',
+              component: () => import('../views/analyse/analyze1.vue')
+          }]
       },
 
     ]
