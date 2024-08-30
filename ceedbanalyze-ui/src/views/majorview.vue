@@ -10,7 +10,7 @@
     <div class="more-detal">
       <!-- 交互 专业详情 -->
       <el-scrollbar height="700px" class="major-detal">
-        <majordetail :MajorDetail="MajorDetail" :type="selectedlevel"/>
+        <majordetail :MajorDetail="MajorDetail" :type="selectedlevel" />
       </el-scrollbar>
     </div>
 
@@ -31,7 +31,7 @@
           :class="{ 'selected-item': item.selected }" @click="handleItemClick(item)">{{ item.name }}</p>
         <el-pagination class="Pagination" @current-change="handleCurrentChange" :current-page="currentPage"
           :page-sizes="[10, 20, 30, 40]" :page-size="pageSize" layout="prev, pager, next, jumper" size="small"
-          :total="MajorList.length" />
+          :total="majorlen" />
       </div>
     </el-scrollbar>
   </div>
@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, watch } from 'vue';
 import top_menu_bar from '@/components/top_menu_bar.vue';
 import Login from '@/components/Login.vue';
 import majordetail from './major/majordetail.vue';
@@ -58,6 +58,7 @@ const currentPage = ref(1);
 const pageSize = ref(10);
 const selectedlevel = ref('本科');
 const selectedcategory = ref('全部');
+const majorlen = ref(10);
 // 分页专业列表
 const paginatedMajorList = computed(() => {
   const start = (currentPage.value - 1) * pageSize.value;
@@ -102,9 +103,13 @@ function handleSelectedCategory(level, category) {
     selectedcategory.value = category;
   }
   selectedlevel.value = level;
+  // 获取专业的数量并渲染成分页
+  userApi.cout(selectedlevel.value, selectedcategory.value).then((response) => {
+    majorlen.value = response.data;
+  });
   console.log('搜索的专业门类', selectedlevel.value, selectedcategory.value);
-  userApi.search(selectedlevel.value, selectedcategory.value).then((response) => {
-    if(response.data == ''){
+  userApi.search(selectedlevel.value, selectedcategory.value, 0, currentPage.value * 10).then((response) => {
+    if (response.data == '') {
       console.log('搜索的专业门类为空');
       MajorList.value = [];
       return;
@@ -115,33 +120,29 @@ function handleSelectedCategory(level, category) {
     MajorList.value[0].selected = true;
   });
 }
+watch(currentPage, (oldVal, newVal) => {
+  userApi.search(selectedlevel.value, selectedcategory.value, 0, oldVal*10).then((response) => {
+    if (response.data == '') {
+      console.log('搜索的专业门类为空');
+      MajorList.value = [];
+      return;
+    }
+    console.log('搜索的专业门类', response.data);
+    MajorList.value = response.data;
+    MajorDetail.value = response.data[0];
+    MajorList.value[0].selected = true;
+  });
+})
 // 函数6: 按照专业名字搜索
 function handleSearch() {
   console.log('搜索的院校名字', schoolName.value);
   userApi.fingByName(schoolName.value, 0, 1560).then((response) => {
     MajorList.value = response.data;
-    console.log('搜索的院校集合', MajorList.value);
     MajorDetail.value = response.data[0];
     MajorList.value[0].selected = true;
+    majorlen.value = MajorList.value.length;
   });
 }
-// 异步请求1: 钩子函数
-onMounted(() => {
-  // 1-1 测试: 请求后端发送专业列表数据 专业详情数据
-  // userApi.getByPage(0, 530).then((response) => {
-  //   MajorList.value = response.data;
-  //   MajorDetail.value = response.data[0];
-  //   MajorList.value[0].selected = true;
-  // });
-  // 1-2 请求后端发送根据searchMajor传递的参数selectedCategory搜索专业列表数据
-  // userApi.search(selectedlevel.value, selectedcategory.value).then((response) => {
-  //   console.log('搜索的专业门类', response.data);
-  //   MajorList.value = response.data;
-  //   MajorDetail.value = response.data[0];
-  //   MajorList.value[0].selected = true;
-  // });
-});
-// 异步请求2: 专业详情点击事件: 请求后端发送专业详情数据 将数据reponse以参数形式传入 handleDetailClick(response)
 
 </script>
 

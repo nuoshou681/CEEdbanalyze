@@ -14,9 +14,15 @@ export default {
         });
     },
     // 根据专业层次和专业分类获取专业信息
-    search(level , category) {
+    search(level , category, page, size) {
         return apiClient.get('/major/search', {
-            params: {level: level, type : category , page: 0, size: 1560 }
+            params: {level: level, type : category , page: page, size: size }
+        });
+    },
+    // 根据专业层次和专业分类获取专业数量
+    cout(level , category) {
+        return apiClient.get('/major/count', {
+            params: {level: level, type : category }
         });
     }
 };

@@ -9,6 +9,9 @@ package com.example.ceedbanalyze.controller;
 
 import com.example.ceedbanalyze.Service.MajorLayerThreeService;
 import com.example.ceedbanalyze.entity.MajorLayerThree;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Objects;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/major")
@@ -29,15 +33,33 @@ public class MajorLayerThreeController {
     }
 
     @GetMapping("/search")
-    public List<MajorLayerThree> search(String level, String type, String name,int page, int size) {
+    public List<MajorLayerThree> search(String level, String type, String name, int page, int size) {
         int Intlevel = 0;
-        if (Objects.equals(level, "本科")) Intlevel=1;
-        else if (Objects.equals(level, "专科")) Intlevel=2;
-        return majorLayerThreeService.search(Intlevel, type, name,page, size);
+        if (Objects.equals(level, "本科"))
+            Intlevel = 1;
+        else if (Objects.equals(level, "专科"))
+            Intlevel = 2;
+        return majorLayerThreeService.search(Intlevel, type, name, page, size);
     }
 
     @GetMapping("/findByName")
-    public List<MajorLayerThree> findByName(String name,int page, int size) {
-        return majorLayerThreeService.findByName(name,page, size);
+    public List<MajorLayerThree> findByName(String name, int page, int size) {
+        return majorLayerThreeService.findByName(name, page, size);
     }
+
+    private static final Logger logger = LoggerFactory.getLogger(MajorLayerThreeController.class);
+
+    @GetMapping("/count")
+    public int coutMajor(String level, String type) {
+        int Intlevel = 0;
+        if (Objects.equals(level, "本科"))
+            Intlevel = 1;
+        else if (Objects.equals(level, "专科"))
+            Intlevel = 2;
+        int res = majorLayerThreeService.cout(Intlevel, type);
+        logger.info("coutMajor result: {}", res);
+        return res;
+
+    }
+
 }
