@@ -15,7 +15,7 @@
                 <p class="fontSize">{{ MajorDetail.year }}</p>修学年限
             </div>
             <div class="major-box">
-                <p class="fontSize">{{ MajorDetail.degree }}</p>授予学位
+                <p class="fontSize">{{ degree }}</p>授予学位
             </div>
             <div class="major-box">
                 <p class="fontSize">专业代码</p>{{ MajorDetail.id}}
@@ -37,11 +37,11 @@ const props = defineProps({
         name: String,
         introduction: String,
         year: String,
-        id: String,
-        degree: String,        
+        id: String,  
     },
     // 本科还是专科
-    type: String
+    type: String,
+    degree: String, 
 })
 </script>
 <style scoped>

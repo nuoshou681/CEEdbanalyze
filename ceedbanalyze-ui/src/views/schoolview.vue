@@ -2,10 +2,11 @@
   <div class="page_main">
 
     <el-affix :offset="0">
-      <top_menu_bar @update:activeMenu="updateActiveMenu" @login="login" :isLoggedIn="isLoggedIn"
+      <top_menu_bar @update:activeMenu="updateActiveMenu" @login="login" :isLoggedIn="userStore.logintags"
         :userAvatar="userAvatar" :activeMenu="activeMenu" />
     </el-affix>
-    <Login v-if="isLoggedIn" @close="isLoggedIn = false" />
+    <Login v-if="isLoggedIn" @close="isLoggedIn = false" :getlogintag="getlogintag"/>
+    <LoginSuccess v-if="logintag"/>
     <div class="school-detal">
       <schoolindex :schoolitem="schoolitem" />
     </div>
@@ -18,7 +19,7 @@
     </div>
     <div class="scroll-bar">
       <el-scrollbar height="610px">
-        <p v-for="item in paginatedSchoolList" :key="item.id" class="scrollbar-demo-item"
+        <p v-for="item in schoolitems" :key="item.id" class="scrollbar-demo-item"
           :class="{ 'selected-item': item.selected }" @click="handleItemClick(item)">{{ item.name }}</p>
       </el-scrollbar>
    
@@ -37,6 +38,9 @@ import schoolindex from './school/schoolindex.vue';
 import searchSchool from '@/components/searchSchool.vue';
 import { onMounted,computed } from 'vue';
 import {  getSchool,SchoolSearch } from '@/api/school';
+import { useUserStore } from '@/store/user';
+import LoginSuccess from '@/components/LoginSuccess.vue';
+const userStore = useUserStore();
 const tag1 = ref('');
 const tag2 = ref('');
 const tag3 = ref('');
@@ -44,16 +48,24 @@ const schoolName = ref('');
 const currentPage = ref(1);
 const pageSize = ref(10);
 const num = ref(165);
-const paginatedSchoolList = computed(() => {
-  const start = (currentPage.value - 1) * pageSize.value;
-  const end = start + pageSize.value;
-  return schoolitems.value.slice(start, end);
-});
+// const paginatedSchoolList = computed(() => {
+//   const start = (currentPage.value - 1) * pageSize.value;
+//   const end = start + pageSize.value;
+//   return schoolitems.value.slice(start, end);
+// });
 const handleCurrentChange = (page) => {
   currentPage.value = page;
-  SchoolSearch('',tag1.value,tag2.value,tag3.value,currentPage.value,pageSize.value).then((res) => {
-  schoolitems.value = schoolitems.value.concat(res.data);
+  if(schoolName.value=='')
+    {SchoolSearch('',tag1.value,tag2.value,tag3.value,(currentPage.value-1)*10,pageSize.value).then((res) => {
+  // schoolitems.value = schoolitems.value.concat(res.data);
+  schoolitems.value = res.data;
 });
+    }
+    else{
+      SchoolSearch(schoolName.value,'','','',(currentPage.value-1)*10,pageSize.value).then((res) => {
+           schoolitems.value = res.data;
+    })
+  }
 };
 
 function getschooltag(lay1,lay2,lay3){
@@ -66,17 +78,20 @@ function getschooltag(lay1,lay2,lay3){
   if(tag2.value == '全部'){
     tag2.value = ''
   }
+  else{
+    tag2.value = tag2.value+'类'
+  }
   if(tag3.value == '全部'){
     tag3.value = ''
   }
-SchoolSearch('',tag1.value,tag2.value+'类',tag3.value,currentPage.value,pageSize.value).then((res) => {
-  schoolitems.value = res.data;
+
+    SchoolSearch(schoolName.value,tag1.value,tag2.value,tag3.value,currentPage.value-1,pageSize.value).then((res) => {
+    schoolitems.value = res.data;
 });
 }
 function handleSearch() {
   SchoolSearch(schoolName.value,'','','',0,10).then((res) => {
     schoolitems.value = res.data;
-    console.log(res.data)
   });
 }
 const activeMenu = ref('school');
@@ -84,10 +99,17 @@ function updateActiveMenu(menu) {
   activeMenu.value = menu;
 }
 const isLoggedIn = ref(false);
+const logintag = ref(false);
 const userAvatar = ref('');
 function login() {
   isLoggedIn.value = true;
   userAvatar.value = 'https://avatars.githubusercontent.com/u/6791502?v=4';
+}
+function getlogintag(data){
+   logintag.value = data;
+   if(logintag.value){
+     isLoggedIn.value = false;
+   }
 }
 const schoolitems = ref([]);
 const schoolitem = ref({});
@@ -106,9 +128,12 @@ const handleDetailClick = (item) => {
 };
 onMounted(() => {
 
-getSchool(1,10).then((res) => {
+getSchool(0,10).then((res) => {
     schoolitems.value = res.data;
-    console.log(res.data)
+    console.log('0',res.data)
+  });
+  getSchool(10,10).then((res) => {
+    console.log('10',res.data)
   });
   //将第一个学校信息显示在页面上
   schoolitem.value = schoolitems.value[0];

@@ -43,17 +43,29 @@
   
   <script setup>
   import { ref } from 'vue';
-  
+  import{useUserStore} from '@/store/user';
+  import{userlogin} from '@/api/login';
+  const props = defineProps({
+    getlogintag:{
+      type:Function,
+      required:true
+    }
+  });
   const isLogin = ref(true);
   const username = ref('');
   const password = ref('');
   const newUsername = ref('');
   const newPassword = ref('');
   const confirmPassword = ref('');
+  const userStore = useUserStore();
   const login = () => {
-    // 登录逻辑
-    console.log('用户名:', username.value);
-    console.log('密码:', password.value);
+      userlogin(username.value, password.value).then((res) => {
+      userStore.logintags = true
+      props.getlogintag(userStore.logintags);
+    }).catch((err) => {
+      alert('登录失败');
+    });
+      
   };
   
   const register = () => {

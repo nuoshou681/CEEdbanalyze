@@ -27,7 +27,6 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-const input = ref('');
 const props = defineProps({
   activeMenu: String,
   isLoggedIn: Boolean,
