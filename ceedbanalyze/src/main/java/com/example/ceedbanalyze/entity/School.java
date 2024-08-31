@@ -16,10 +16,11 @@ public class School {
     private String introduction;
     private String city;
     private String address;
-    private String website;
+    private String email;
     private String rank;
     private String type1;
     private String type2;
     private String type3;
     private String phone;
+    private String website;
 }
