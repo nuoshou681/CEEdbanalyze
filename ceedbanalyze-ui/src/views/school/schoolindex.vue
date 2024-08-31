@@ -7,9 +7,9 @@
     <div>
       {{ schoolitem.type1 }} {{ schoolitem.type2 }} {{ schoolitem.type3 }}
     </div>
-    <p>招生官网：www.baidu.com</p>
+    <p>招生官网：<a :href=schoolitem.website>{{ schoolitem.website }}</a></p>
     <p>招生电话：{{ schoolitem.phone }}</p>
-    <p>招生邮箱：{{ schoolitem.website }}</p>
+    <p>招生邮箱：{{ schoolitem.email}}</p>
     <div class="school-more">
       <div class="school-tag" :class="{ 'active-link': activeTab === '基本详情' }" @click="setActiveTab('基本详情')">
         基本详情
@@ -29,14 +29,14 @@
     <div class="school-information">
       <div class="title-container">
         <div class="title-marker"></div>
-        <h1 class="title-text">山东大学</h1>
+        <h1 class="title-text">滨州医学院</h1>
       </div>
       <div class="types">
-        本科 综合类 公办 211工程 985工程 双一流
+        本科 医药类 公办
       </div>
-      <p>招生官网：www.baidu.com</p>
-      <p>招生电话：0531-59626977</p>
-      <p>招生邮箱：sdbkzs@email.sdu.edu.cn</p>
+      <p>招生官网：<a href="http://zb.bzmc.edu.cn/">http://zb.bzmc.edu.cn/</a></p>
+      <p>招生电话：0535-6913058</p>
+      <p>招生邮箱：zkb@bzmc.edu.cn</p>
       <div class="school-more">
         <div class="school-tag" :class="{ 'active-link': activeTab === '基本详情' }" @click="setActiveTab('基本详情')">
           基本详情

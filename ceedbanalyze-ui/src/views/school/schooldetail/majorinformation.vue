@@ -6,10 +6,8 @@
       </div>
         <div class="major-list">
             <el-table :data="MajorData" height="500" style="width: 100%">
-                <el-table-column prop="majorName" label="专业名称" width="180" />
-                <el-table-column prop="majorLimit" label="专业限制" width="180" />
-                <el-table-column prop="address" label="学费" width="180" />
-                <el-table-column prop="address" label="录取概率" width="150" />
+                <el-table-column prop="majorName" label="专业名称" />
+                <el-table-column prop="majorLimit" label="专业限制" />
             </el-table>
         </div>
     </div>
@@ -21,7 +19,7 @@ const props = defineProps({
     schoolid: {
         type: Number,
         required: true,
-        default: () => (3),
+        default: () => (1),
     }
 })
 watch(() => props.schoolid, (newVal) => {

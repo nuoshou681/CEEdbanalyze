@@ -22,7 +22,6 @@
         <p v-for="item in schoolitems" :key="item.id" class="scrollbar-demo-item"
           :class="{ 'selected-item': item.selected }" @click="handleItemClick(item)">{{ item.name }}</p>
       </el-scrollbar>
-   
          <el-pagination v-if="schoolitems.length>0" class="Pagination" @current-change="handleCurrentChange"  :current-page="currentPage"
           :page-size="pageSize" layout="prev, pager, next, jumper"
           :total="num" size = "small"/>
@@ -36,7 +35,7 @@ import top_menu_bar from '@/components/top_menu_bar.vue';
 import Login from '@/components/Login.vue';
 import schoolindex from './school/schoolindex.vue';
 import searchSchool from '@/components/searchSchool.vue';
-import { onMounted,computed } from 'vue';
+import { onMounted} from 'vue';
 import {  getSchool,SchoolSearch } from '@/api/school';
 import { useUserStore } from '@/store/user';
 import LoginSuccess from '@/components/LoginSuccess.vue';
@@ -58,7 +57,10 @@ const handleCurrentChange = (page) => {
   if(schoolName.value=='')
     {SchoolSearch('',tag1.value,tag2.value,tag3.value,(currentPage.value-1)*10,pageSize.value).then((res) => {
   // schoolitems.value = schoolitems.value.concat(res.data);
-  schoolitems.value = res.data;
+  if(res.data.length>0){
+    schoolitems.value = res.data;
+    console.log('res.data',res.data)
+  }
 });
     }
     else{
@@ -131,9 +133,6 @@ onMounted(() => {
 getSchool(0,10).then((res) => {
     schoolitems.value = res.data;
     console.log('0',res.data)
-  });
-  getSchool(10,10).then((res) => {
-    console.log('10',res.data)
   });
   //将第一个学校信息显示在页面上
   schoolitem.value = schoolitems.value[0];

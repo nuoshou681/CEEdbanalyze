@@ -20,6 +20,7 @@
               <label for="password"></label>
               <input type="password" id="password" v-model="password" placeholder="请输入密码" required>
             </div>
+            <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
             <button type="submit" class="login-button">登录</button>
           </form>
           <form @submit.prevent="register" v-else>
@@ -37,6 +38,7 @@
             </div>
             <button type="submit" class="register-button">注册</button>
           </form>
+          
         </div>
       </div>
   </template>
@@ -58,12 +60,15 @@
   const newPassword = ref('');
   const confirmPassword = ref('');
   const userStore = useUserStore();
+  const errorMessage = ref(''); // 用于存储错误信息
   const login = () => {
       userlogin(username.value, password.value).then((res) => {
       userStore.logintags = true
       props.getlogintag(userStore.logintags);
+      console.log('登录成功:', res);
     }).catch((err) => {
-      alert('登录失败');
+      errorMessage.value = '密码错误，请重试'; // 设置错误信息
+      console.log('登录失败:', err);
     });
       
   };
@@ -81,6 +86,12 @@ const closeLogin = () => {
   </script>
   
   <style scoped>
+  .error-message {
+  color: red;
+  position: relative;
+  left:7%;
+  font-size: smaller;
+}
   .close-button {
     left: 90%;
     position: relative;

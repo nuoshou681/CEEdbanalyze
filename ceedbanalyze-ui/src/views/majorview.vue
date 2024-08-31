@@ -13,7 +13,7 @@
         <majordetail :MajorDetail="MajorDetail" :type="selectedlevel"/>
       </el-scrollbar>
     </div>
-
+    
     <div class="major-search">
       <!-- 搜索框 -->
       <div class="search-container">
@@ -60,6 +60,8 @@ const currentPage = ref(1);
 const pageSize = ref(10);
 const selectedlevel = ref('本科');
 const selectedcategory = ref('全部');
+const majorlen = ref(0);
+const logintag = ref(false);
 // 分页专业列表
 const paginatedMajorList = computed(() => {
   const start = (currentPage.value - 1) * pageSize.value;
