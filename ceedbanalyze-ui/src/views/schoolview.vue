@@ -2,28 +2,30 @@
   <div class="page_main">
 
     <el-affix :offset="0">
-      <top_menu_bar @update:activeMenu="updateActiveMenu" @login="login" :isLoggedIn="isLoggedIn"
+      <top_menu_bar @update:activeMenu="updateActiveMenu" @login="login" :isLoggedIn="userStore.logintags"
         :userAvatar="userAvatar" :activeMenu="activeMenu" />
     </el-affix>
-    <Login v-if="isLoggedIn" @close="isLoggedIn = false" />
+    <Login v-if="isLoggedIn" @close="isLoggedIn = false" :getlogintag="getlogintag"/>
+    <LoginSuccess v-if="logintag"/>
     <div class="school-detal">
       <schoolindex :schoolitem="schoolitem" />
     </div>
-
+    <div class="search-container">
+        <input type="text" placeholder="输入学校名称" v-model="schoolName">
+        <button type="submit" @click="handleSearch">搜索</button>
+      </div>
     <div class="school-search">
       <searchSchool :schooltag="getschooltag"/>
     </div>
     <div class="scroll-bar">
-      <el-scrollbar height="550px">
-        <p v-for="item in paginatedSchoolList" :key="item.id" class="scrollbar-demo-item"
+      <el-scrollbar height="610px">
+        <p v-for="item in schoolitems" :key="item.id" class="scrollbar-demo-item"
           :class="{ 'selected-item': item.selected }" @click="handleItemClick(item)">{{ item.name }}</p>
       </el-scrollbar>
    
          <el-pagination v-if="schoolitems.length>0" class="Pagination" @current-change="handleCurrentChange"  :current-page="currentPage"
           :page-size="pageSize" layout="prev, pager, next, jumper"
           :total="num" size = "small"/>
-
-
     </div>
   </div>
 </template>
@@ -35,23 +37,35 @@ import Login from '@/components/Login.vue';
 import schoolindex from './school/schoolindex.vue';
 import searchSchool from '@/components/searchSchool.vue';
 import { onMounted,computed } from 'vue';
-import { getAllSchool, getSchool,SchoolSearch } from '@/api/school';
+import {  getSchool,SchoolSearch } from '@/api/school';
+import { useUserStore } from '@/store/user';
+import LoginSuccess from '@/components/LoginSuccess.vue';
+const userStore = useUserStore();
 const tag1 = ref('');
 const tag2 = ref('');
 const tag3 = ref('');
+const schoolName = ref('');
 const currentPage = ref(1);
 const pageSize = ref(10);
 const num = ref(165);
-const paginatedSchoolList = computed(() => {
-  const start = (currentPage.value - 1) * pageSize.value;
-  const end = start + pageSize.value;
-  return schoolitems.value.slice(start, end);
-});
+// const paginatedSchoolList = computed(() => {
+//   const start = (currentPage.value - 1) * pageSize.value;
+//   const end = start + pageSize.value;
+//   return schoolitems.value.slice(start, end);
+// });
 const handleCurrentChange = (page) => {
   currentPage.value = page;
-  SchoolSearch('',tag1.value,tag2.value,tag3.value,currentPage.value,pageSize.value).then((res) => {
-  schoolitems.value = schoolitems.value.concat(res.data);
+  if(schoolName.value=='')
+    {SchoolSearch('',tag1.value,tag2.value,tag3.value,(currentPage.value-1)*10,pageSize.value).then((res) => {
+  // schoolitems.value = schoolitems.value.concat(res.data);
+  schoolitems.value = res.data;
 });
+    }
+    else{
+      SchoolSearch(schoolName.value,'','','',(currentPage.value-1)*10,pageSize.value).then((res) => {
+           schoolitems.value = res.data;
+    })
+  }
 };
 
 function getschooltag(lay1,lay2,lay3){
@@ -64,25 +78,38 @@ function getschooltag(lay1,lay2,lay3){
   if(tag2.value == '全部'){
     tag2.value = ''
   }
+  else{
+    tag2.value = tag2.value+'类'
+  }
   if(tag3.value == '全部'){
     tag3.value = ''
   }
 
-SchoolSearch('',tag1.value,tag2.value,tag3.value,currentPage.value,pageSize.value).then((res) => {
-  schoolitems.value = res.data;
-  console.log(res.data)
+    SchoolSearch(schoolName.value,tag1.value,tag2.value,tag3.value,currentPage.value-1,pageSize.value).then((res) => {
+    schoolitems.value = res.data;
 });
 }
-
+function handleSearch() {
+  SchoolSearch(schoolName.value,'','','',0,10).then((res) => {
+    schoolitems.value = res.data;
+  });
+}
 const activeMenu = ref('school');
 function updateActiveMenu(menu) {
   activeMenu.value = menu;
 }
 const isLoggedIn = ref(false);
+const logintag = ref(false);
 const userAvatar = ref('');
 function login() {
   isLoggedIn.value = true;
   userAvatar.value = 'https://avatars.githubusercontent.com/u/6791502?v=4';
+}
+function getlogintag(data){
+   logintag.value = data;
+   if(logintag.value){
+     isLoggedIn.value = false;
+   }
 }
 const schoolitems = ref([]);
 const schoolitem = ref({});
@@ -97,20 +124,17 @@ const handleItemClick = (item) => {
 
 const handleDetailClick = (item) => {
   schoolitem.value = item;
-  getSchool(currentPage,pageSize).then((res) => {
-    schoolitems.value = res.data;
-  });
+
 };
-function getschool(){
-  getSchool(currentPage,pageSize).then((res) => {
-    schoolitems.value = res.data;
-  });
-}
 onMounted(() => {
 
-getAllSchool().then((res) => {
-  schoolitems.value = res.data;
-});
+getSchool(0,10).then((res) => {
+    schoolitems.value = res.data;
+    console.log('0',res.data)
+  });
+  getSchool(10,10).then((res) => {
+    console.log('10',res.data)
+  });
   //将第一个学校信息显示在页面上
   schoolitem.value = schoolitems.value[0];
 });
@@ -175,14 +199,15 @@ getAllSchool().then((res) => {
 }
 
 .search-container {
-  margin-top: 10px;
+  margin-top: 20px;
   display: flex;
   align-items: center;
   border: 2px solid rgb(47, 106, 244);
   border-radius: 5px;
   overflow: hidden;
   width: 300px;
-  margin-left: 20px;
+  margin-left: 40px;
+  margin-bottom: 0;
 }
 
 .search-container input {

@@ -21,4 +21,6 @@ public interface MajorLayerThreeMapper {
     List<MajorLayerThree> findByName(String name, RowBounds rowBounds);
 
     List<MajorLayerThree> search(Integer level, String type, String name, RowBounds rowBounds);
+
+    int cout(Integer level, String type);
 }

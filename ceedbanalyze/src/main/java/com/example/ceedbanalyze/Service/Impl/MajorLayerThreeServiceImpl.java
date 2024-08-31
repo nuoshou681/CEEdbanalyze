@@ -34,4 +34,9 @@ public class MajorLayerThreeServiceImpl implements MajorLayerThreeService {
     public List<MajorLayerThree> search(Integer level, String type, String name, int page, int size) {
         return majorLayerThreeMapper.search(level,type,name,new RowBounds(page,size));
     }
+
+    @Override
+    public int cout(Integer level, String type){
+        return majorLayerThreeMapper.cout(level, type);
+    }
 }

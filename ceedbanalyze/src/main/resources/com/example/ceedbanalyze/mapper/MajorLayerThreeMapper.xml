@@ -31,4 +31,20 @@
             </if>
         </where>
     </select>
+
+    <select id="cout" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM major_layer_three
+        JOIN major_layer_two
+        ON major_layer_three.second_layer=major_layer_two.`name`
+        JOIN major_layer_one
+        ON major_layer_two.preId=major_layer_one.id
+        <where>
+            <if test="level != null">
+                major_layer_one.first_id = #{level}
+            </if>
+            <if test="type != null and type != '' ">
+                and major_layer_one.`name` = #{type}
+            </if>
+        </where>
+    </select>
 </mapper>
