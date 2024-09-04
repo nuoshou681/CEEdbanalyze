@@ -10,12 +10,6 @@
         @click="activateMenu('major')">查专业</router-link>
       <router-link to="/analyse" class="nav-item" :class="{ active: activeMenu === 'analyse' }"
         @click="activateMenu('analyse')">高考志愿分析</router-link>
-      <!-- <div class="search-box">
-        <el-input v-model="input" placeholder="查学校，查专业" size="large" class="search-txt" />
-        <el-button icon="Search" size="large" @click="handleSearch" class="search-btn">
-        </el-button>
-      </div> -->
-      <!-- 登录之后显示用户头像 -->
       <div v-if="isLoggedIn">
         <img :src="userAvatar" alt="用户头像" style="width: 30px; height: 30px; border-radius: 50%;" />
       </div>
@@ -50,6 +44,7 @@ function login() {
 
 .top_group {
   background-color: #f5f5f5;
+  z-index: 300;
 }
 
 .img-item img {

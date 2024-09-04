@@ -36,6 +36,10 @@
             <label for="confirm-password"></label>
            <input type="password" id="confirm-password" v-model="confirmPassword" placeholder="请再次输入密码" required>
             </div>
+            <div class="confirm-code">
+              <input type="text" id="confirm-code" placeholder="请输入验证码" v-model="confirmcode" required >
+              <img :src="captcha" @click="getcaptcha" class="captcha-code"/>
+            </div>
             <button type="submit" class="register-button">注册</button>
           </form>
           
@@ -44,15 +48,18 @@
   </template>
   
   <script setup>
-  import { ref } from 'vue';
+  import { ref,onMounted } from 'vue';
   import{useUserStore} from '@/store/user';
-  import{userlogin} from '@/api/login';
+  import{userlogin,GetCaptcha,userregister} from '@/api/login';
+import user from '@/api/user';
+
   const props = defineProps({
     getlogintag:{
       type:Function,
       required:true
     }
   });
+  const confirmcode = ref('');
   const isLogin = ref(true);
   const username = ref('');
   const password = ref('');
@@ -61,6 +68,23 @@
   const confirmPassword = ref('');
   const userStore = useUserStore();
   const errorMessage = ref(''); // 用于存储错误信息
+  const captcha = ref(''); // 用于存储验证码图片地址
+  const emits = defineEmits(['close']);
+const closeLogin = () => {
+  emits('close');
+}; 
+  const getcaptcha = () => {
+      GetCaptcha().then((res) => { 
+      captcha.value = window.URL.createObjectURL(res.data)
+      console.log('获取验证码成功:', res);
+      
+      let code = sessionStorage.getItem("code");
+      console.log('code:', code);
+    });
+  };
+  onMounted(() => {
+    getcaptcha();
+  });
   const login = () => {
       userlogin(username.value, password.value).then((res) => {
       userStore.logintags = true
@@ -72,20 +96,37 @@
     });
       
   };
-  
-  const register = () => {
-    // 注册逻辑
-    console.log('新用户名:', newUsername.value);
-    console.log('新密码:', newPassword.value);
-  };
 
-const emits = defineEmits(['close']);
-const closeLogin = () => {
-  emits('close');
-}; 
+
+function register(){
+
+
+   userregister(newUsername.value, newPassword.value,confirmcode.value).then((res) => {
+    console.log('注册成功:', res);
+  }).catch((err) => {
+    console.log('注册失败:', err);
+  });
+}
   </script>
   
   <style scoped>
+  .captcha-code {
+    
+    width: 120px;
+    height: 30px;
+    position: relative;
+    left: 10px;
+  }
+  #confirm-code {
+    width: 30%;
+  }
+  .confirm-code {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    position: relative;
+    left:5%;
+  } 
   .error-message {
   color: red;
   position: relative;
@@ -134,7 +175,7 @@ const closeLogin = () => {
     position: fixed;
     left: 30%;
     top:20%;
-    z-index: 100;
+    z-index: 300;
   }
   
   .left-section {

@@ -48,7 +48,6 @@ import userApi from '@/api/user'
 import { computed } from 'vue';
 import { useUserStore } from '@/store/user';
 import LoginSuccess from '@/components/LoginSuccess.vue';
-import user from '@/api/user';
 const userStore = useUserStore();
 const activeMenu = ref('major');
 const isLoggedIn = ref(false);
