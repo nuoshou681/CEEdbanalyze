@@ -28,4 +28,14 @@ public class SchoolMajorScoreServiceImpl implements SchoolMajorScoreService {
     public List<SchoolMajorScore> getBySchoolIdAndMajorName(int schoolId, String majorName) {
         return schoolMajorScoreMapper.getBySchoolIdAndMajorName(schoolId, majorName);
     }
+
+    @Override
+    public List<SchoolMajorScore> findAll() {
+        return schoolMajorScoreMapper.findAll();
+    }
+
+    @Override
+    public List<SchoolMajorScore> getByLimitcode(String subjects) {
+        return schoolMajorScoreMapper.getByLimitcode(subjects);
+    }
 }
