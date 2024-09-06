@@ -12,7 +12,7 @@
         <div class="title-marker"></div>
         <h3 class="title-text">学校地图</h3>
       </div>
-    <div class="text-main" >
+    <div class="text-main2" >
         这里展示学校地图
     </div>
 </div>
@@ -66,11 +66,14 @@ watch(
     border-radius:  0 0 10px 10px;
 
 }
+.text-main2{
+    background-color: #ffffff;
+    padding: 0 10px 0 10px;
+    height: 300px;
+}
 .text-main{
     background-color: #ffffff;
     padding: 0 10px 0 10px;
-    height: auto;
-  
 }
 button {
   margin-top: 10px;

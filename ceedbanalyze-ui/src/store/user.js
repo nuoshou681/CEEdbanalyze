@@ -10,9 +10,19 @@ const logintags = ref(false)
       logintags.value = true
     })
   }
+  function clearUser(){
+    usertags.value=false
+    logintags.value=false
+    
+  }
+  const usertags= ref(false)
    return{
     logintags,
-    login   
+    login,   
+    usertags
+    ,clearUser
    }
 
-})
+},{
+  presist:true
+})//presist:true表示持久化存储

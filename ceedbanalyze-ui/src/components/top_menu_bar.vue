@@ -1,7 +1,7 @@
 <template>
   <div class="top_group">
     <div class="top-nav">
-      <div class="img-item"><img src="../img/高考通.png" alt=""></div>
+      <div class="img-item"><img src="../img/网站名称.png" alt=""></div>
       <router-link to="/" class="nav-item" :class="{ active: activeMenu === 'home' }"
         @click="activateMenu('home')">首页</router-link>
       <router-link to="/school/detail" class="nav-item" :class="{ active: activeMenu === 'school' }"
@@ -10,8 +10,8 @@
         @click="activateMenu('major')">查专业</router-link>
       <router-link to="/analyse" class="nav-item" :class="{ active: activeMenu === 'analyse' }"
         @click="activateMenu('analyse')">高考志愿分析</router-link>
-      <div v-if="isLoggedIn">
-        <img :src="userAvatar" alt="用户头像" style="width: 30px; height: 30px; border-radius: 50%;" />
+      <div v-if="userStore.usertags" @click="clearuser">
+        <img src="../img/人物头像.png" alt="用户头像" style="width: 30px; height: 30px; border-radius: 50%;"  />
       </div>
       <template v-else>
         <button class="login-btn" @click="login">登录</button>
@@ -20,12 +20,13 @@
   </div>
 </template>
 <script setup>
-import { ref } from 'vue';
+import {useUserStore}from '../store/user';
 const props = defineProps({
   activeMenu: String,
   isLoggedIn: Boolean,
   userAvatar: String
 });
+const userStore = useUserStore();
 const emit = defineEmits(['update:activeMenu', 'login']);
 function activateMenu(menu) {
   emit('update:activeMenu', menu);
@@ -33,6 +34,10 @@ function activateMenu(menu) {
 function login() {
   // 模拟登录逻辑
   emit('login');
+
+}
+function clearuser(){
+  userStore.clearUser();
 }
 </script>
 <style>
@@ -48,7 +53,7 @@ function login() {
 }
 
 .img-item img {
-  width: 100px;
+  width: 200px;
   height: 50px;
 }
 

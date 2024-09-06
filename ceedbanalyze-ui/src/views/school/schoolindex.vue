@@ -108,7 +108,8 @@ p {
 .school-information {
   background-color: #f0f0f0;
   width: 700px;
-  padding: 10px 25px 5px 25px;
+  margin-top: 50px;
+  padding: 50px 25px 5px 25px;
   border-radius: 10px 10px 0 0;
 }
 .title-container {

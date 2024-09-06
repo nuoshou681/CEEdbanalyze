@@ -4,8 +4,6 @@
       <top_menu_bar @update:activeMenu="updateActiveMenu" @login="login" :isLoggedIn="userStore.logintags"
         :userAvatar="userAvatar" :activeMenu="activeMenu" />
     </el-affix>
-
-    <div v-if="userStore.logintags">
     <Login v-if="isLoggedIn" @close="isLoggedIn = false" :getlogintag="getlogintag" />
     <LoginSuccess v-if="logintag" />
       <div class="analyse-page">
@@ -28,14 +26,18 @@
           </el-menu>
         </div>
       </div>
-    </div>
-    <div class="perfectmessages" v-if="userStore.logintags==false" >
+      <footer class="footer">
+      <div class="footer-content">
+        <p>&copy; 2023 Your Company. All rights reserved.</p>
+        <p>联系我们: contact@yourcompany.com</p>
+      </div>
+    </footer>
+    <div v-if="userStore.logintags==false" >
     <Login v-if="isLoggedIn" @close="isLoggedIn = false" :getlogintag="getlogintag" />
     <LoginSuccess v-if="logintag" />
     <perfectmessage />
     </div>
-    
-  </div>
+    </div>
 </template>
 
 <script setup>
@@ -52,10 +54,8 @@ const logintag = ref(false);
 function updateActiveMenu(menu) {
   activeMenu.value = menu;
 }
-const userAvatar = ref('');
 function login() {
   isLoggedIn.value = true;
-  userAvatar.value = 'https://avatars.githubusercontent.com/u/6791502?v=4';
 }
 function getlogintag(data) {
   logintag.value = data;
@@ -71,9 +71,6 @@ function selecthetag(index) {
 </script>
 
 <style>
-.perfectmessages{
-height: 100%;
-}
 .menu {
   text-decoration: none;
 }
@@ -89,8 +86,7 @@ height: 100%;
 
 .analyse-page {
   width: 1000px;
-  height: 600px;
-  background-color: #9b1c74;
+  height: auto;
   float: right;
 }
 
@@ -118,5 +114,24 @@ height: 100%;
   max-width: 100%;
   height: auto;
   border: 1px solid #5e5d5d;
+}
+.footer {
+  background-color: #f8f9fa;
+  padding: 30px 0 30px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0;
+}
+
+.footer p {
+  margin: 5px 0;
+  color: #6c757d;
 }
 </style>

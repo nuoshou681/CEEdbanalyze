@@ -18,14 +18,18 @@
       <searchSchool :schooltag="getschooltag"/>
     </div>
     <div class="scroll-bar">
-      <el-scrollbar height="610px">
         <p v-for="item in schoolitems" :key="item.id" class="scrollbar-demo-item"
           :class="{ 'selected-item': item.selected }" @click="handleItemClick(item)">{{ item.name }}</p>
-      </el-scrollbar>
          <el-pagination v-if="schoolitems.length>0" class="Pagination" @current-change="handleCurrentChange"  :current-page="currentPage"
           :page-size="pageSize" layout="prev, pager, next, jumper"
           :total="num" size = "small"/>
     </div>
+    <footer class="footer">
+      <div class="footer-content">
+        <p>&copy; 2023 Your Company. All rights reserved.</p>
+        <p>联系我们: contact@yourcompany.com</p>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -39,6 +43,7 @@ import { onMounted} from 'vue';
 import {  getSchool,SchoolSearch } from '@/api/school';
 import { useUserStore } from '@/store/user';
 import LoginSuccess from '@/components/LoginSuccess.vue';
+import user from '@/api/user';
 const userStore = useUserStore();
 const tag1 = ref('');
 const tag2 = ref('');
@@ -47,16 +52,10 @@ const schoolName = ref('');
 const currentPage = ref(1);
 const pageSize = ref(10);
 const num = ref(165);
-// const paginatedSchoolList = computed(() => {
-//   const start = (currentPage.value - 1) * pageSize.value;
-//   const end = start + pageSize.value;
-//   return schoolitems.value.slice(start, end);
-// });
 const handleCurrentChange = (page) => {
   currentPage.value = page;
   if(schoolName.value=='')
     {SchoolSearch('',tag1.value,tag2.value,tag3.value,(currentPage.value-1)*10,pageSize.value).then((res) => {
-  // schoolitems.value = schoolitems.value.concat(res.data);
   if(res.data.length>0){
     schoolitems.value = res.data;
     console.log('res.data',res.data)
@@ -102,13 +101,12 @@ function updateActiveMenu(menu) {
 }
 const isLoggedIn = ref(false);
 const logintag = ref(false);
-const userAvatar = ref('');
 function login() {
   isLoggedIn.value = true;
-  userAvatar.value = 'https://avatars.githubusercontent.com/u/6791502?v=4';
 }
 function getlogintag(data){
    logintag.value = data;
+   userStore.usertags = data;
    if(logintag.value){
      isLoggedIn.value = false;
    }
@@ -142,7 +140,6 @@ getSchool(0,10).then((res) => {
 <style scoped>
 .scroll-bar {
   width: 400px;
-  height: 550px;
 }
 
 .nav-item.active {
@@ -157,7 +154,6 @@ getSchool(0,10).then((res) => {
   width: 1200px;
   position: relative;
   left: 138px;
-  height: 1200px;
 }
 
 .scrollbar-demo-item {
@@ -192,9 +188,6 @@ getSchool(0,10).then((res) => {
   width: 750px;
   padding: 25px;
   float: right;
-  /* position:relative;
-    left:400px;
-    bottom: 700px; */
 }
 
 .search-container {
@@ -237,5 +230,24 @@ getSchool(0,10).then((res) => {
   display: flex;
   justify-content: center;
   margin-top: 10px;
+}
+.footer {
+  background-color: #f8f9fa;
+  padding: 30px 0 30px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0;
+}
+
+.footer p {
+  margin: 5px 0;
+  color: #6c757d;
 }
 </style>

@@ -1,7 +1,6 @@
 <template>
       <div class="modal-content">
         <div class="left-section">
-          <p>这里是介绍内容。</p>
         </div>
         
         <div class="right-section">
@@ -51,7 +50,7 @@
   import { ref,onMounted } from 'vue';
   import{useUserStore} from '@/store/user';
   import{userlogin,GetCaptcha,userregister} from '@/api/login';
-import user from '@/api/user';
+  import axios from 'axios';
 
   const props = defineProps({
     getlogintag:{
@@ -100,12 +99,23 @@ const closeLogin = () => {
 
 function register(){
 
-
-   userregister(newUsername.value, newPassword.value,confirmcode.value).then((res) => {
-    console.log('注册成功:', res);
-  }).catch((err) => {
-    console.log('注册失败:', err);
+ const response =  axios.post('http://localhost:5173/user/login',{
+    username:newUsername.value,
+    password:newPassword.value,
+    inputCode:confirmcode.value
+  },{
+    headers:{
+      'Content-Type':'application/x-www-form-urlencoded'
+    },
+    withCredentials:true
   });
+  console.log('response:',response);
+  //  userregister(newUsername.value, newPassword.value,confirmcode.value).then((res) => {
+  //   console.log('注册成功:', res);
+  // }).catch((err) => {
+  //   console.log('注册失败:', err);
+  // });
+
 }
   </script>
   
@@ -136,8 +146,12 @@ function register(){
   .close-button {
     left: 90%;
     position: relative;
+    background: rgb(213, 212, 212);
+    border:none;
   }
-
+.close-button:hover {
+  background: #ccc;
+}
   .login-model ,.register-model{
     margin-bottom: 20px;
     
@@ -166,8 +180,8 @@ function register(){
   }
   
   .modal-content {
-    background: rgb(92, 90, 90);
-    padding: 20px;
+    background: rgb(213, 212, 212);
+
     border-radius: 5px;
     width: 600px;
     height: 400px;
@@ -180,8 +194,9 @@ function register(){
   
   .left-section {
     flex: 1;
-    padding: 20px;
-    background-color: #007bff;
+
+    background-image: url(../img/登录背景图.png);
+    overflow: hidden;
   }
   
   
@@ -196,7 +211,7 @@ function register(){
   }
   
   .tabs button {
-    background: none;
+    background: rgb(213, 212, 212);
     border: none;
     padding: 10px 20px;
     cursor: pointer;

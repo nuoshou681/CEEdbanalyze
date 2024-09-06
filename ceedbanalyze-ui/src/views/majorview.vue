@@ -9,9 +9,9 @@
     <LoginSuccess v-if="logintag"/>
     <div class="more-detal">
       <!-- 交互 专业详情 -->
-      <el-scrollbar height="700px" class="major-detal">
+      <div class="major-detal">
         <majordetail :MajorDetail="MajorDetail" :type="selectedlevel"/>
-      </el-scrollbar>
+      </div>
     </div>
     
     <div class="major-search">
@@ -25,15 +25,20 @@
     </div>
 
     <!-- 交互 专业列表 -->
-    <el-scrollbar height="500px">
-      <div>
+
+      <div class="sider-bar">
         <p v-for="item in paginatedMajorList" :key="item.id" class="scrollbar-demo-item"
           :class="{ 'selected-item': item.selected }" @click="handleItemClick(item)">{{ item.name }}</p>
         <el-pagination class="Pagination" @current-change="handleCurrentChange" :current-page="currentPage"
           :page-sizes="[10, 20, 30, 40]" :page-size="pageSize" layout="prev, pager, next, jumper" size="small"
-          :total="majorlen" />
+          :total="majorlen" />   
       </div>
-    </el-scrollbar>
+    <footer class="footer">
+      <div class="footer-content">
+        <p>&copy; 2023 Your Company. All rights reserved.</p>
+        <p>联系我们: contact@yourcompany.com</p>
+      </div>
+    </footer>
   </div>
 
 </template>
@@ -51,7 +56,6 @@ import LoginSuccess from '@/components/LoginSuccess.vue';
 const userStore = useUserStore();
 const activeMenu = ref('major');
 const isLoggedIn = ref(false);
-const userAvatar = ref('');
 const MajorList = ref([]);
 const MajorDetail = ref({});
 const schoolName = ref('');
@@ -77,7 +81,6 @@ function getlogintag(data){
 // 函数1: 登陆函数
 function login() {
   isLoggedIn.value = true;
-  userAvatar.value = 'https://avatars.githubusercontent.com/u/6791502?v=4';
 }
 function updateActiveMenu(menu) {
   activeMenu.value = menu;
@@ -154,6 +157,9 @@ function handleSearch() {
 </script>
 
 <style>
+.sider-bar {
+  width: 380px;
+}
 .major-search {
   width: auto;
   height: auto;
@@ -177,6 +183,7 @@ function handleSearch() {
 .major-detal {
   width: 750px;
   padding: 25px;
+  margin-top: 50px;
   float: right;
   /* position:relative;
     left:400px;
@@ -195,6 +202,7 @@ function handleSearch() {
   width: 1200px;
   position: relative;
   left: 138px;
+  height: 1000px;
 }
 
 .scrollbar-demo-item {
@@ -208,7 +216,6 @@ function handleSearch() {
   background: var(--el-color-primary-light-9);
   color: var(--el-color-primary);
 }
-
 .search-container {
   margin-top: 20px;
   display: flex;
@@ -249,5 +256,24 @@ function handleSearch() {
   margin: 10px;
   display: flex;
   justify-content: center;
+}
+.footer {
+  background-color: #f8f9fa;
+  padding: 30px 0 30px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0;
+}
+
+.footer p {
+  margin: 5px 0;
+  color: #6c757d;
 }
 </style>

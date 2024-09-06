@@ -55,6 +55,7 @@ const props = defineProps({
     font-family: Arial, Helvetica, sans-serif;
     font-size: 30px;
     font-weight: bold;
+    padding-top: 50px;
     width: 750px;
     height: 50px;
     background-color: #f0f0f0;
@@ -77,7 +78,7 @@ const props = defineProps({
 
 .major-detail {
     width: 730px;
-    height: auto;
+    height: 400px;
     padding: 0 10px 10px 10px;
     border-radius: 0 0 10px 10px;
     background-color: #f0f0f0;
@@ -86,6 +87,7 @@ const props = defineProps({
 .major-information {
     margin-top: 0;
     padding: 10px;
+    height: 380px;
     background-color: #fff;
     border-radius: 0 0 10px 10px;
 }
@@ -93,6 +95,7 @@ const props = defineProps({
 /* 将边框粗体显示 */
 .major-main {
     border: 2px solid #f0f0f0;
+    height: 600px;
 }
 
 .headline {

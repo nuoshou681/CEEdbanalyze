@@ -25,11 +25,7 @@
     <div class="more_option">
       <div class="icon-item" onclick="selectIcon(this)">
         <img src="https://via.placeholder.com/50" alt="春考志愿" />
-        <div class="icon-label">春考志愿</div>
-      </div>
-      <div class="icon-item" onclick="selectIcon(this)">
-        <img src="https://via.placeholder.com/50" alt="艺考专区" />
-        <div class="icon-label">艺考专区</div>
+        <div class="icon-label">一分一段表</div>
       </div>
       <div class="icon-item" onclick="selectIcon(this)">
         <img src="https://via.placeholder.com/50" alt="高考小智" />
@@ -39,39 +35,36 @@
         <img src="https://via.placeholder.com/50" alt="招生计划" />
         <div class="icon-label">招生计划</div>
       </div>
-      <div class="icon-item" onclick="selectIcon(this)">
-        <img src="https://via.placeholder.com/50" alt="专家讲志愿" />
-        <div class="icon-label">专家讲志愿</div>
-      </div>
-      <div class="icon-item" onclick="selectIcon(this)">
-        <img src="https://via.placeholder.com/50" alt="高考直播" />
-        <div class="icon-label">高考直播</div>
-      </div>
+
       <div class="icon-item" onclick="selectIcon(this)">
         <img src="https://via.placeholder.com/50" alt="高考知道" />
         <div class="icon-label">高考知道</div>
       </div>
     </div>
+    <footer class="footer">
+      <div class="footer-content">
+        <p>&copy; 2023 Your Company. All rights reserved.</p>
+        <p>联系我们: contact@yourcompany.com</p>
+      </div>
+    </footer>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-
 import top_menu_bar from '@/components/top_menu_bar.vue';
 import Login from '@/components/Login.vue';
 import { useUserStore } from '@/store/user';
 import userInformation from '@/components/userInformation.vue';
 const userStore = useUserStore();
 const isLoggedIn = ref(false);
-const userAvatar = ref('');
 const activeMenu = ref('home');
 function updateActiveMenu(menu) {
   activeMenu.value = menu;
 }
 function login() {
   isLoggedIn.value = true;
-  userAvatar.value = 'https://avatars.githubusercontent.com/u/6791502?v=4';
+
 }
 </script>
 
@@ -167,5 +160,22 @@ function login() {
 .icon-item.selected {
   background-color: #ffe5b4;
   border-radius: 10px;
+}
+.footer {
+  background-color: #f8f9fa;
+  padding: 20px 0 20px 0;
+  text-align: center;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 ;
+}
+
+.footer p {
+  margin: 5px 0;
+  color: #6c757d;
 }
 </style>

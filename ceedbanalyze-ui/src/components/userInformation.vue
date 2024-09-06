@@ -38,8 +38,6 @@
     } else if (selectedOptions.value.length < 3) {
       // Select if less than 3 are selected
       selectedOptions.value.push(option);
-    } else {
-      alert('最多只能选择三个选项');
     }
   };
   </script>

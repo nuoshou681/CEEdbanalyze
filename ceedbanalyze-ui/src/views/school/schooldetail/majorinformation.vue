@@ -52,7 +52,7 @@ onMounted(() => {
 .title-container {
   display: flex;
   align-items: center;
-
+}
   .title-marker {
     width: 5px;
     height: 24px;
@@ -72,5 +72,4 @@ onMounted(() => {
     height: 1px;
     background-color: #ccc; /* 线条的颜色 */
   }
-}
 </style>
