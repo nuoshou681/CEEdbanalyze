@@ -27,9 +27,9 @@
         <img src="https://via.placeholder.com/50" alt="春考志愿" />
         <div class="icon-label">一分一段表</div>
       </div>
-      <div class="icon-item" onclick="selectIcon(this)">
+      <div class="icon-item" onclick="selectIcon(this)" @click="toggleChat">
         <img src="https://via.placeholder.com/50" alt="高考小智" />
-        <div class="icon-label">高考小智</div>
+        <div class="icon-label" >高考小智</div>
       </div>
       <div class="icon-item" onclick="selectIcon(this)">
         <img src="https://via.placeholder.com/50" alt="招生计划" />
@@ -41,6 +41,11 @@
         <div class="icon-label">高考知道</div>
       </div>
     </div>
+
+    <Transition name="chat-window">
+      <ChatWindow v-if="isChatVisible" @closeChatWindow="handleCloseChatWindow"/>
+    </Transition>
+    
     <footer class="footer">
       <div class="footer-content">
         <p>&copy; 2023 Your Company. All rights reserved.</p>
@@ -53,12 +58,24 @@
 <script setup>
 import { ref } from 'vue';
 import top_menu_bar from '@/components/top_menu_bar.vue';
+import ChatWindow from '@/components/ChatWindow.vue';
 import Login from '@/components/Login.vue';
 import { useUserStore } from '@/store/user';
 import userInformation from '@/components/userInformation.vue';
 const userStore = useUserStore();
 const isLoggedIn = ref(false);
 const activeMenu = ref('home');
+const isChatVisible = ref(false);
+
+const toggleChat = () => {
+  isChatVisible.value = !isChatVisible.value;
+};
+const handleCloseChatWindow =()=> {
+  console.log('子组件事件已触发，父组件正在处理...');
+  if(isChatVisible.value) {
+    isChatVisible.value = false;
+  }
+}
 function updateActiveMenu(menu) {
   activeMenu.value = menu;
 }
@@ -178,4 +195,5 @@ function login() {
   margin: 5px 0;
   color: #6c757d;
 }
+
 </style>
