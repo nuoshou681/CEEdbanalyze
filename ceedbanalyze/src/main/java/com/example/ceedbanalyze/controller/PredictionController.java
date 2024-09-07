@@ -54,7 +54,6 @@ public class PredictionController {
             if (actionStr != null) {
                 System.out.println(actionStr);
             }
-
             in.close();
             process.waitFor();
         } catch (IOException e) {
@@ -64,7 +63,6 @@ public class PredictionController {
         }
         System.out.println("完成");
     }
-
     @PostMapping("/receive")
     public List<Map<String, Object>> receiveData(@RequestBody List<Map<String, Object>> result) {
         System.out.println(result);
