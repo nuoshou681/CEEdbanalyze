@@ -6,6 +6,7 @@ import com.example.ceedbanalyze.mapper.SchoolMajorScoreMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
@@ -44,8 +45,8 @@ public class PredictionController {
             throw new RuntimeException(e);
         }
 
-        // python脚本的绝对路径，在windows中用"\\"分隔
-        String pyPath = "E:\\machine\\machineLearning调用模型预测.py";
+        // python脚本的路径，在windows中用"\\"分隔
+        String pyPath = System.getProperty("user.dir")+"\\..\\machine\\machineLearning调用模型预测.py";
 
         // 传入python脚本的参数，参数不能太长
         String[] args1 = new String[]{"\"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python310\\python.exe\"", pyPath,score};
