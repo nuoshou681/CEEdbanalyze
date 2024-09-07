@@ -10,6 +10,5 @@ export function userregister(username, password, code) {
         hearders: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        withCredentials: true 
     });
 }

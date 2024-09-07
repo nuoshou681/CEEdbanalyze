@@ -5,6 +5,7 @@ import App from './App.vue'
 import router from './router'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
 const app = createApp(App)

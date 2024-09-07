@@ -104,7 +104,6 @@ function login() {
 .carousel {
   height: 400px;
   width: 600px;
-  background-color: aqua;
   margin-left: 10px;
 }
 

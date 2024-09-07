@@ -36,7 +36,7 @@
            <input type="password" id="confirm-password" v-model="confirmPassword" placeholder="请再次输入密码" required>
             </div>
             <div class="confirm-code">
-              <input type="text" id="confirm-code" placeholder="请输入验证码" v-model="confirmcode" required >
+              <input type="text" id="confirm-code" placeholder="请输入验证码" v-model="inputCode" required >
               <img :src="captcha" @click="getcaptcha" class="captcha-code"/>
             </div>
             <button type="submit" class="register-button">注册</button>
@@ -51,20 +51,19 @@
   import{useUserStore} from '@/store/user';
   import{userlogin,GetCaptcha,userregister} from '@/api/login';
   import axios from 'axios';
-
   const props = defineProps({
     getlogintag:{
       type:Function,
       required:true
     }
   });
-  const confirmcode = ref('');
   const isLogin = ref(true);
   const username = ref('');
   const password = ref('');
   const newUsername = ref('');
   const newPassword = ref('');
   const confirmPassword = ref('');
+  const inputCode = ref('');
   const userStore = useUserStore();
   const errorMessage = ref(''); // 用于存储错误信息
   const captcha = ref(''); // 用于存储验证码图片地址
@@ -74,11 +73,7 @@ const closeLogin = () => {
 }; 
   const getcaptcha = () => {
       GetCaptcha().then((res) => { 
-      captcha.value = window.URL.createObjectURL(res.data)
-      console.log('获取验证码成功:', res);
-      
-      let code = sessionStorage.getItem("code");
-      console.log('code:', code);
+      captcha.value = window.URL.createObjectURL(res.data);
     });
   };
   onMounted(() => {
@@ -97,25 +92,20 @@ const closeLogin = () => {
   };
 
 
-function register(){
-
- const response =  axios.post('http://localhost:5173/user/login',{
-    username:newUsername.value,
-    password:newPassword.value,
-    inputCode:confirmcode.value
-  },{
-    headers:{
-      'Content-Type':'application/x-www-form-urlencoded'
+const register =async ()=>{
+const response = await axios.post('http://localhost:5173/user/login',
+{
+    username: newUsername.value,
+    password: newPassword.value,
+    inputCode: inputCode.value
+  }, 
+  {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
     },
-    withCredentials:true
-  });
-  console.log('response:',response);
-  //  userregister(newUsername.value, newPassword.value,confirmcode.value).then((res) => {
-  //   console.log('注册成功:', res);
-  // }).catch((err) => {
-  //   console.log('注册失败:', err);
-  // });
-
+    withCredentials: true // 支持 session cookies
+  }
+);
 }
   </script>
   
