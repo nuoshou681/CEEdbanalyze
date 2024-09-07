@@ -35,6 +35,7 @@ public class UserController {
     public ResponseEntity<?> login(@RequestParam String username, @RequestParam String password, @RequestParam String inputCode,HttpSession session) {
         // 获取Session中保存的验证码
         String sessionCode = (String) session.getAttribute("code");
+        inputCode=inputCode.toUpperCase();
         // 验证验证码
         if (!sessionCode.equals(inputCode)) {
             // 验证码错误

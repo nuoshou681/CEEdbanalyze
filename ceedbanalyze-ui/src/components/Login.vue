@@ -73,7 +73,8 @@ const closeLogin = () => {
 }; 
   const getcaptcha = () => {
       GetCaptcha().then((res) => { 
-      captcha.value = window.URL.createObjectURL(res.data);
+      captcha.value = `http://localhost:5173/verify/generateImageCode?t=${Date.now()}`;
+      // captcha.value = window.URL.createObjectURL(res.data);
     });
   };
   onMounted(() => {
@@ -88,7 +89,6 @@ const closeLogin = () => {
       errorMessage.value = '密码错误，请重试'; // 设置错误信息
       console.log('登录失败:', err);
     });
-      
   };
 
 
@@ -106,6 +106,7 @@ const response = await axios.post('http://localhost:5173/user/login',
     withCredentials: true // 支持 session cookies
   }
 );
+console.log(response);
 }
   </script>
   

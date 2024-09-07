@@ -22,13 +22,13 @@ export default defineConfig({
   },
   server: {
     port: 8080,
-    proxy: {
-      '/user/login': {
-        target: 'http://localhost:5173',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/user\/login/, '/user/login')
-      }
-    }
+    // proxy: {
+    //   '/user/login': {
+    //     target: 'http://localhost:5173',
+    //     changeOrigin: true,
+    //     rewrite: (path) => path.replace(/^\/user\/login/, '/user/login')
+    //   }
+    // }
   },
   
 })
