@@ -2,15 +2,12 @@ package com.example.ceedbanalyze.controller;
 
 import com.example.ceedbanalyze.Service.SchoolMajorScoreService;
 import com.example.ceedbanalyze.entity.SchoolMajorScore;
-import com.example.ceedbanalyze.mapper.SchoolMajorScoreMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,16 +19,13 @@ public class PredictionController {
     private SchoolMajorScoreService schoolMajorScoreService;
 
     @Autowired
-    private SchoolMajorScoreMapper schoolMajorScoreMapper;
-
-    @Autowired
     private ObjectMapper objectMapper;
 
     @GetMapping("")
     public void index(@RequestParam String score, @RequestParam String subjects){
         //写入JSON文件
 
-        List<SchoolMajorScore> sas=schoolMajorScoreMapper.getByLimitcode(subjects);
+        List<SchoolMajorScore> sas=schoolMajorScoreService.getByLimitcode(subjects);
 
         try {
             String sasJson=objectMapper.writeValueAsString(sas);
