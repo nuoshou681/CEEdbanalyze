@@ -24,7 +24,6 @@ public class PredictionController {
     @GetMapping("")
     public void index(@RequestParam String score, @RequestParam String subjects){
         //写入JSON文件
-
         List<SchoolMajorScore> sas=schoolMajorScoreService.getByLimitcode(subjects);
 
         try {
@@ -42,7 +41,7 @@ public class PredictionController {
         // python脚本的路径，在windows中用"\\"分隔
         String pyPath = System.getProperty("user.dir")+"\\..\\machine\\machineLearning调用模型预测.py";
 
-        // 传入python脚本的参数，参数不能太长
+        ////////// 传入python脚本的参数，参数不能太长，和Python 解释器的路径
         String[] args1 = new String[]{"\"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python310\\python.exe\"", pyPath,score};
 
         try {
