@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Objects;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/major")
