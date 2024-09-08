@@ -8,7 +8,7 @@
           <div class="select-box">
             <el-select
       v-model="value"
-      placeholder="年份"
+      placeholder="2023"
       size="small"
       style="width: 65px"
     >
@@ -24,8 +24,7 @@
     <el-table :data="tableData" height="500" style="width: 100%">
     <el-table-column prop="majorName" label="专业名称" />
     <el-table-column prop="type" label="录取批次"/>
-    <el-table-column :prop="year" label="专业分数" />
-    <el-table-column prop="address" label="录取概率" />
+    <el-table-column :prop="score" label="专业分数" />
   </el-table>
 </div>
 </div>
@@ -48,40 +47,40 @@ const props = defineProps({
 onMounted(() => {
   getMajorById(props.schoolitem.id).then((res) => {
     tableData.value = res.data;
+    // 将score2023为空的剔除
+    tableData.value = tableData.value.filter(item => item.score2023 !== null)
   });
 })
 watch(() => props.schoolitem, (newVal) => {
   getMajorById(newVal.id).then((res) => {
     tableData.value = res.data;
+    tableData.value = tableData.value.filter(item => item.score2023 !== null)
   });
 });
-const year = ref('score2023')
+const score = ref('score2023')
 const value = ref('')
 const tableData = ref([])
 const getScorePlan = (value) => {
-  getMajorById(props.schoolitem.id).then((res) => {
-    tableData.value = res.data;
-  });
   if(value == 'Option2'){
      //遍历tableData，将年份为2024的数据筛选出来重新赋值给tableData
       tableData.value = tableData.value.filter(item => item.score2023 !== null)
-      year.value = 'score2023'
-      console.log(tableData.value)
+      score.value = 'score2023'
+
   }
   if(value == 'Option3'){
     tableData.value = tableData.value.filter(item => item.score2022 !== null)
-    year.value = 'score2022'
-    console.log(tableData.value)
+    score.value = 'score2022'
+
   }
   if(value == 'Option4'){
     tableData.value = tableData.value.filter(item => item.score2021 !== null)
-    year.value = 'score2021'
-    console.log(tableData.value)
+    score.value = 'score2021'
+
   }
   if(value == 'Option5'){
     tableData.value = tableData.value.filter(item => item.score2020 !== null)
-    year.value = 'score2020'
-    console.log(tableData.value)
+    score.value = 'score2020'
+ 
   }
 }
 const options = [
