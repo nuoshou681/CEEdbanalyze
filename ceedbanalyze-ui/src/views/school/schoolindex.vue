@@ -7,7 +7,7 @@
     <div>
       {{ schoolitem.type1 }} {{ schoolitem.type2 }} {{ schoolitem.type3 }}
     </div>
-    <p>招生官网：<a :href=schoolitem.website>{{ schoolitem.website }}</a></p>
+    <p>招生官网：<a :href=schoolitem.website target="_blank">{{ schoolitem.website }} </a></p>
     <p>招生电话：{{ schoolitem.phone }}</p>
     <p>招生邮箱：{{ schoolitem.email}}</p>
     <div class="school-more">
@@ -34,7 +34,7 @@
       <div class="types">
         本科 医药类 公办
       </div>
-      <p>招生官网：<a href="http://zb.bzmc.edu.cn/">http://zb.bzmc.edu.cn/</a></p>
+      <p>招生官网：<a href="http://zb.bzmc.edu.cn/" target="_blank">http://zb.bzmc.edu.cn/</a></p>
       <p>招生电话：0535-6913058</p>
       <p>招生邮箱：zkb@bzmc.edu.cn</p>
       <div class="school-more">

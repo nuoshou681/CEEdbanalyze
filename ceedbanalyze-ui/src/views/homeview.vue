@@ -2,9 +2,10 @@
   <div class="page_main">
     <el-affix :offset="0">
       <top_menu_bar @update:activeMenu="updateActiveMenu" @login="login" :isLoggedIn="userStore.logintags"
-        :userAvatar="userAvatar" :activeMenu="activeMenu" />
+        :activeMenu="activeMenu" />
     </el-affix>
-    <Login v-if="isLoggedIn" @close="isLoggedIn = false" />
+    <Login v-if="isLoggedIn" @close="isLoggedIn = false" :getlogintag="getlogintag"/>
+    <LoginSuccess v-if="logintag"/>
     <div class="basic_information">
       <div class="data_analyse">
         <div class="block text-center">
@@ -62,6 +63,7 @@ import ChatWindow from '@/components/ChatWindow.vue';
 import Login from '@/components/Login.vue';
 import { useUserStore } from '@/store/user';
 import userInformation from '@/components/userInformation.vue';
+import LoginSuccess from '@/components/LoginSuccess.vue';
 const userStore = useUserStore();
 const isLoggedIn = ref(false);
 const activeMenu = ref('home');
@@ -71,10 +73,16 @@ const toggleChat = () => {
   isChatVisible.value = !isChatVisible.value;
 };
 const handleCloseChatWindow =()=> {
-  console.log('子组件事件已触发，父组件正在处理...');
   if(isChatVisible.value) {
     isChatVisible.value = false;
   }
+}
+const logintag = ref(false);
+function getlogintag(data){
+   logintag.value = data;
+   if(logintag.value){
+     isLoggedIn.value = false;
+   }
 }
 function updateActiveMenu(menu) {
   activeMenu.value = menu;

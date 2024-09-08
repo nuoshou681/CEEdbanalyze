@@ -10,8 +10,8 @@
         @click="activateMenu('major')">查专业</router-link>
       <router-link to="/analyse" class="nav-item" :class="{ active: activeMenu === 'analyse' }"
         @click="activateMenu('analyse')">高考志愿分析</router-link>
-      <div v-if="userStore.usertags" @click="clearuser">
-        <img src="../img/人物头像.png" alt="用户头像" style="width: 30px; height: 30px; border-radius: 50%;"  />
+      <div v-if="userStore.logintags">
+        <img src="../img/人物头像.png" alt="用户头像" style="width: 30px; height: 30px; border-radius: 50%;"  @click="clearuser" />
       </div>
       <template v-else>
         <button class="login-btn" @click="login">登录</button>
@@ -24,7 +24,6 @@ import {useUserStore}from '../store/user';
 const props = defineProps({
   activeMenu: String,
   isLoggedIn: Boolean,
-  userAvatar: String
 });
 const userStore = useUserStore();
 const emit = defineEmits(['update:activeMenu', 'login']);
