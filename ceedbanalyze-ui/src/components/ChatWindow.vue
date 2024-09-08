@@ -10,9 +10,10 @@
         </div>
         <div class="chat-window-body">
             <!-- 历史消息渲染 -->
-            <div v-for="message in HistoryMessages" :key="message.id" :class="getMessageClass(message)">
-                {{ message.message }}
+            <div v-for="message in HistoryMessages" :key="message.id" :class="getMessageClass(message)" v-html="message.message">
             </div>
+            <!-- 机器人回复消息 -->
+            <div class="bot" :class="chat-window-body-message-bot" v-html="renderedMarkdown"></div>
         </div>
         <div class="chat-window-footer">
             <input type="text" class="chat-window-footer-input" v-model="usermessage" placeholder="请输入您的问题...">
@@ -22,8 +23,16 @@
 </template>
 
 <script setup>
-import { defineEmits, ref } from 'vue';
+import { defineEmits, ref, computed } from 'vue';
+import ai from '@/api/ai';
+import { marked } from 'marked';
+
 const usermessage = ref('');
+let Params = '';
+let eventSource = null;
+let isStreamComplete = false;
+let botmessage = ref('');
+
 // 历史消息列表
 const HistoryMessages = ref([
     { id: 1, message: '你好！', type: 'bot' },
@@ -44,8 +53,14 @@ const emit = defineEmits(['closeChatWindow']);
 const toggleChat = () => {
     emit('closeChatWindow');
 };
+// 发送消息
 const sendMessage = () => {
+
     if (usermessage.value.trim() !== '') {
+        // 请求后端
+        Params = usermessage.value;
+        receiveStreamData();
+        // 将用户消息添加到历史消息列表
         HistoryMessages.value.push({
             id: Date.now(),
             message: usermessage.value,
@@ -54,6 +69,37 @@ const sendMessage = () => {
         usermessage.value = ''; // 清空输入框
     }
 };
+// 测试流式输出函数
+// 接受流数据 Params为请求参数(问题)
+const receiveStreamData = () => {
+    if (eventSource) {
+        eventSource.close();
+    }
+    // 重置流数据状态
+    isStreamComplete = false;
+    eventSource = ai.fetchStreamData(Params, (data) => {
+        console.log(data);
+        botmessage.value = botmessage.value + data;
+    }, (error) => {
+        console.log(error);
+        isStreamComplete = true;
+
+        if(botmessage.value === ''){
+            botmessage.value = '对不起，我不明白您的问题，请换个问题试试。';
+        }else{
+            HistoryMessages.value.push({
+                id: Date.now(),
+                message: marked(botmessage.value),
+                type: 'bot'
+            });
+            botmessage.value = '';            
+        }
+    });
+};
+// 将 Markdown 渲染为 HTML
+const renderedMarkdown = computed(() => {
+  return marked(botmessage.value);
+});
 </script>
 
 <style scoped>
@@ -106,13 +152,17 @@ const sendMessage = () => {
     padding: 10px;
     height: 300px;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .chat-window-body-message-bot {
     background-color: #f0f0f0;
     padding: 10px;
-    display: inline-block; /* 使背景宽度根据内容调整 */
-    max-width: 80%; /* 限制最大宽度 */
+    display: inline-block;
+    /* 使背景宽度根据内容调整 */
+    max-width: 80%;
+    /* 限制最大宽度 */
     border-radius: 5px;
     margin-bottom: 10px;
 }
@@ -121,11 +171,14 @@ const sendMessage = () => {
     background-color: #42b983;
     color: white;
     padding: 10px;
-    display: inline-block; /* 使背景宽度根据内容调整 */
-    max-width: 80%; /* 限制最大宽度 */
+    display: inline-block;
+    /* 使背景宽度根据内容调整 */
+    max-width: 80%;
+    /* 限制最大宽度 */
     border-radius: 5px;
     margin-bottom: 10px;
-    margin-left: 15%;
+    align-self: flex-end; /* 使用户消息靠右 */
+    
 }
 
 .chat-window-footer {

@@ -10,7 +10,7 @@
     <div class="more-detal">
       <!-- 交互 专业详情 -->
       <div class="major-detal">
-        <majordetail :MajorDetail="MajorDetail" :type="selectedlevel"/>
+        <majordetail :MajorDetail="MajorDetail" :type="selectedlevel" :category="selectedcategory"/>
       </div>
     </div>
     
