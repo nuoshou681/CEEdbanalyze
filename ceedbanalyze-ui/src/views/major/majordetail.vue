@@ -32,6 +32,8 @@
 
 </template>
 <script setup>
+import { ref, defineProps,watch } from 'vue';
+const degree = ref('学士学位');
 const props = defineProps({
     MajorDetail: {
         name: String,
@@ -41,7 +43,14 @@ const props = defineProps({
     },
     // 本科还是专科
     type: String,
-    degree: String, 
+    category: String
+})
+watch(() => props.MajorDetail, (newVal) => {
+    if(props.type==='本科'){
+        degree.value = '学士学位';
+    }else{
+        degree.value = '无学位';
+    }
 })
 </script>
 <style scoped>
