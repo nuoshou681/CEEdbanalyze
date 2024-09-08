@@ -3,17 +3,17 @@
     <!-- 顶部菜单栏 -->
     <el-affix :offset="0">
       <top_menu_bar @update:activeMenu="updateActiveMenu" @login="login" :isLoggedIn="userStore.logintags"
-        :userAvatar="userAvatar" :activeMenu="activeMenu" />
+        :activeMenu="activeMenu" />
     </el-affix>
     <Login v-if="isLoggedIn" @close="isLoggedIn = false"  :getlogintag="getlogintag"/>
     <LoginSuccess v-if="logintag"/>
     <div class="more-detal">
       <!-- 交互 专业详情 -->
-      <el-scrollbar height="700px" class="major-detal">
+      <div class="major-detal">
         <majordetail :MajorDetail="MajorDetail" :type="selectedlevel"/>
-      </el-scrollbar>
+      </div>
     </div>
-
+    
     <div class="major-search">
       <!-- 搜索框 -->
       <div class="search-container">
@@ -25,15 +25,20 @@
     </div>
 
     <!-- 交互 专业列表 -->
-    <el-scrollbar height="500px">
-      <div>
+
+      <div class="sider-bar">
         <p v-for="item in paginatedMajorList" :key="item.id" class="scrollbar-demo-item"
           :class="{ 'selected-item': item.selected }" @click="handleItemClick(item)">{{ item.name }}</p>
         <el-pagination class="Pagination" @current-change="handleCurrentChange" :current-page="currentPage"
           :page-sizes="[10, 20, 30, 40]" :page-size="pageSize" layout="prev, pager, next, jumper" size="small"
-          :total="majorlen" />
+          :total="majorlen" />   
       </div>
-    </el-scrollbar>
+    <footer class="footer">
+      <div class="footer-content">
+        <p>&copy; 2023 Your Company. All rights reserved.</p>
+        <p>联系我们: contact@yourcompany.com</p>
+      </div>
+    </footer>
   </div>
 
 </template>
@@ -48,11 +53,9 @@ import userApi from '@/api/user'
 import { computed } from 'vue';
 import { useUserStore } from '@/store/user';
 import LoginSuccess from '@/components/LoginSuccess.vue';
-import user from '@/api/user';
 const userStore = useUserStore();
 const activeMenu = ref('major');
 const isLoggedIn = ref(false);
-const userAvatar = ref('');
 const MajorList = ref([]);
 const MajorDetail = ref({});
 const schoolName = ref('');
@@ -60,6 +63,8 @@ const currentPage = ref(1);
 const pageSize = ref(10);
 const selectedlevel = ref('本科');
 const selectedcategory = ref('全部');
+const majorlen = ref(0);
+const logintag = ref(false);
 // 分页专业列表
 const paginatedMajorList = computed(() => {
   const start = (currentPage.value - 1) * pageSize.value;
@@ -76,7 +81,6 @@ function getlogintag(data){
 // 函数1: 登陆函数
 function login() {
   isLoggedIn.value = true;
-  userAvatar.value = 'https://avatars.githubusercontent.com/u/6791502?v=4';
 }
 function updateActiveMenu(menu) {
   activeMenu.value = menu;
@@ -113,14 +117,14 @@ function handleSelectedCategory(level, category) {
   userApi.cout(selectedlevel.value, selectedcategory.value).then((response) => {
     majorlen.value = response.data;
   });
-  console.log('搜索的专业门类', selectedlevel.value, selectedcategory.value);
+  // console.log('搜索的专业门类', selectedlevel.value, selectedcategory.value);
   userApi.search(selectedlevel.value, selectedcategory.value, 0, currentPage.value * 10).then((response) => {
     if (response.data == '') {
-      console.log('搜索的专业门类为空');
+      // console.log('搜索的专业门类为空');
       MajorList.value = [];
       return;
     }
-    console.log('搜索的专业门类', response.data);
+    // console.log('搜索的专业门类', response.data);
     MajorList.value = response.data;
     MajorDetail.value = response.data[0];
     MajorList.value[0].selected = true;
@@ -129,11 +133,11 @@ function handleSelectedCategory(level, category) {
 watch(currentPage, (oldVal, newVal) => {
   userApi.search(selectedlevel.value, selectedcategory.value, 0, oldVal*10).then((response) => {
     if (response.data == '') {
-      console.log('搜索的专业门类为空');
+      // console.log('搜索的专业门类为空');
       MajorList.value = [];
       return;
     }
-    console.log('搜索的专业门类', response.data);
+    // console.log('搜索的专业门类', response.data);
     MajorList.value = response.data;
     MajorDetail.value = response.data[0];
     MajorList.value[0].selected = true;
@@ -141,7 +145,7 @@ watch(currentPage, (oldVal, newVal) => {
 })
 // 函数6: 按照专业名字搜索
 function handleSearch() {
-  console.log('搜索的院校名字', schoolName.value);
+  // console.log('搜索的院校名字', schoolName.value);
   userApi.fingByName(schoolName.value, 0, 1560).then((response) => {
     MajorList.value = response.data;
     MajorDetail.value = response.data[0];
@@ -153,6 +157,9 @@ function handleSearch() {
 </script>
 
 <style>
+.sider-bar {
+  width: 380px;
+}
 .major-search {
   width: auto;
   height: auto;
@@ -176,6 +183,7 @@ function handleSearch() {
 .major-detal {
   width: 750px;
   padding: 25px;
+  margin-top: 50px;
   float: right;
   /* position:relative;
     left:400px;
@@ -194,6 +202,7 @@ function handleSearch() {
   width: 1200px;
   position: relative;
   left: 138px;
+  height: 1000px;
 }
 
 .scrollbar-demo-item {
@@ -207,7 +216,6 @@ function handleSearch() {
   background: var(--el-color-primary-light-9);
   color: var(--el-color-primary);
 }
-
 .search-container {
   margin-top: 20px;
   display: flex;
@@ -248,5 +256,24 @@ function handleSearch() {
   margin: 10px;
   display: flex;
   justify-content: center;
+}
+.footer {
+  background-color: #f8f9fa;
+  padding: 30px 0 30px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0;
+}
+
+.footer p {
+  margin: 5px 0;
+  color: #6c757d;
 }
 </style>

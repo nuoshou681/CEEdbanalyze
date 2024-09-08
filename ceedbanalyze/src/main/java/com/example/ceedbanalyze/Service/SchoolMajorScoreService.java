@@ -16,4 +16,7 @@ public interface SchoolMajorScoreService {
 
     List<SchoolMajorScore> getBySchoolIdAndMajorName(int schoolId, String majorName);
 
+    List<SchoolMajorScore> findAll();
+
+    List<SchoolMajorScore> getByLimitcode(String subjects);
 }

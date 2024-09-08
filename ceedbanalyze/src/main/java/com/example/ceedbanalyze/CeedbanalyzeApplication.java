@@ -10,5 +10,4 @@ public class CeedbanalyzeApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CeedbanalyzeApplication.class, args);
 	}
-
 }

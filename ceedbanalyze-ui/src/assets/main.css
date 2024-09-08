@@ -1,8 +1,8 @@
 body{
   margin: 0;
   padding: 0;
-  background-color: #f5f5f5;
-  background-image: url(../img/background.jpg);
+  background-color: #edfff0;
+
   background-size: cover; /* 背景图片覆盖整个容器 */
   background-repeat: no-repeat; /* 防止背景图片重复 */
   background-position: center; /* 背景图片居中 */
