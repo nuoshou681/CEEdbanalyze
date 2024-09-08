@@ -4,6 +4,8 @@ import com.example.ceedbanalyze.Service.SchoolMajorScoreService;
 import com.example.ceedbanalyze.entity.SchoolMajorScore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +16,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/prediction")
 public class PredictionController {
+    List<Map<String, Object>> data;
 
     @Autowired
     private SchoolMajorScoreService schoolMajorScoreService;
@@ -21,8 +24,13 @@ public class PredictionController {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @PostMapping("/receive")
+    public void receiveData(@RequestBody List<Map<String, Object>> result, HttpServletRequest request) {
+        data = result;
+    }
+
     @GetMapping("")
-    public void index(@RequestParam String score, @RequestParam String subjects){
+    public void index(@RequestParam String score, @RequestParam String subjects, HttpServletRequest request){
         //写入JSON文件
         List<SchoolMajorScore> sas=schoolMajorScoreService.getByLimitcode(subjects);
 
@@ -47,26 +55,18 @@ public class PredictionController {
         try {
             // 执行Python文件，并传入参数
             Process process = Runtime.getRuntime().exec(args1);
-
-            // 获取Python输出字符串作为输入流被Java读取
-            BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String actionStr = in.readLine();
-            if (actionStr != null) {
-                System.out.println(actionStr);
-            }
-            in.close();
             process.waitFor();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
             throw new RuntimeException(e);
         }
         System.out.println("完成");
     }
-    @PostMapping("/receive")
-    public List<Map<String, Object>> receiveData(@RequestBody List<Map<String, Object>> result) {
-        System.out.println(result);
-        return result;
-    }
 
+    @GetMapping("/data")
+    public List<Map<String, Object>> Data(HttpServletRequest request){
+        return data;
+    }
 }
