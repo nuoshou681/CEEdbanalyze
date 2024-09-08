@@ -15,8 +15,9 @@ public class User {
     private String username;
     private String password;
     private String phone;
-    private String score;
+    private Integer score;
     private String subject1;
     private String subject2;
     private String subject3;
+    private Integer ranking;
 }
