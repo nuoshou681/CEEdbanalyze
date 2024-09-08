@@ -2,7 +2,7 @@
   <div class="page_main">
     <el-affix :offset="0">
       <top_menu_bar @update:activeMenu="updateActiveMenu" @login="login" :isLoggedIn="userStore.logintags"
-        :userAvatar="userAvatar" :activeMenu="activeMenu" />
+         :activeMenu="activeMenu" />
     </el-affix>
     <Login v-if="isLoggedIn" @close="isLoggedIn = false" :getlogintag="getlogintag" />
     <LoginSuccess v-if="logintag" />
@@ -11,8 +11,9 @@
       </div>
       <div class="sidebar">
         <div class="personal-image">
-          <img src="../img/用户默认头像1.png" alt="个人头像" class="centered-image" />
-        </div>
+    <img src="../img/用户默认头像1.png" alt="个人头像" class="centered-image" />
+    <p>专一且多情</p>
+  </div>
         <div class="select-page">
           <el-menu :default-active="activeMenugt" class="el-menu-vertical-demo" @select="selecthetag">
             <el-menu-item index="analyse1"><router-link to="/analyse/analyzedetail"
@@ -76,11 +77,24 @@ function selecthetag(index) {
 }
 
 .personal-image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 200px;
+
+padding-top: 20px;
+
+}
+
+
+.centered-image {
+  display: block;
+  margin: 0 auto; /* 确保图片居中 */
+  width: 100px; /* 设置图片宽度 */
+  height: 100px; /* 设置图片高度 */
+  border-radius: 50%; /* 将图片切成圆形 */
+  object-fit: cover; /* 确保图片内容适应容器 */
+}
+
+.personal-image p {
+  margin-top: 10px; 
+  margin-left: 30px;/* 添加一些间距，使文本与图片之间有一定的距离 */
 
 }
 
@@ -91,7 +105,7 @@ function selecthetag(index) {
 }
 
 .sidebar {
-  width: 200px;
+  width: 150px;
   height: 600px;
   background-color: #ffffff;
 }

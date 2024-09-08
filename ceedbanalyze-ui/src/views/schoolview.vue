@@ -3,7 +3,7 @@
 
     <el-affix :offset="0">
       <top_menu_bar @update:activeMenu="updateActiveMenu" @login="login" :isLoggedIn="userStore.logintags"
-        :userAvatar="userAvatar" :activeMenu="activeMenu" />
+         :activeMenu="activeMenu" />
     </el-affix>
     <Login v-if="isLoggedIn" @close="isLoggedIn = false" :getlogintag="getlogintag"/>
     <LoginSuccess v-if="logintag"/>
@@ -43,7 +43,6 @@ import { onMounted} from 'vue';
 import {  getSchool,SchoolSearch } from '@/api/school';
 import { useUserStore } from '@/store/user';
 import LoginSuccess from '@/components/LoginSuccess.vue';
-const userAvatar = ref('')
 const userStore = useUserStore();
 const tag1 = ref('');
 const tag2 = ref('');
@@ -55,7 +54,8 @@ const num = ref(165);
 const handleCurrentChange = (page) => {
   currentPage.value = page;
   if(schoolName.value=='')
-    {SchoolSearch('',tag1.value,tag2.value,tag3.value,(currentPage.value-1)*10,pageSize.value).then((res) => {
+    {
+      SchoolSearch('',tag1.value,tag2.value,tag3.value,(currentPage.value-1)*10,pageSize.value).then((res) => {
   if(res.data.length>0){
     schoolitems.value = res.data;
   }

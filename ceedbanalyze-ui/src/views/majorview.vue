@@ -3,7 +3,7 @@
     <!-- 顶部菜单栏 -->
     <el-affix :offset="0">
       <top_menu_bar @update:activeMenu="updateActiveMenu" @login="login" :isLoggedIn="userStore.logintags"
-        :userAvatar="userAvatar" :activeMenu="activeMenu" />
+        :activeMenu="activeMenu" />
     </el-affix>
     <Login v-if="isLoggedIn" @close="isLoggedIn = false"  :getlogintag="getlogintag"/>
     <LoginSuccess v-if="logintag"/>
@@ -117,14 +117,14 @@ function handleSelectedCategory(level, category) {
   userApi.cout(selectedlevel.value, selectedcategory.value).then((response) => {
     majorlen.value = response.data;
   });
-  console.log('搜索的专业门类', selectedlevel.value, selectedcategory.value);
+  // console.log('搜索的专业门类', selectedlevel.value, selectedcategory.value);
   userApi.search(selectedlevel.value, selectedcategory.value, 0, currentPage.value * 10).then((response) => {
     if (response.data == '') {
-      console.log('搜索的专业门类为空');
+      // console.log('搜索的专业门类为空');
       MajorList.value = [];
       return;
     }
-    console.log('搜索的专业门类', response.data);
+    // console.log('搜索的专业门类', response.data);
     MajorList.value = response.data;
     MajorDetail.value = response.data[0];
     MajorList.value[0].selected = true;
@@ -133,11 +133,11 @@ function handleSelectedCategory(level, category) {
 watch(currentPage, (oldVal, newVal) => {
   userApi.search(selectedlevel.value, selectedcategory.value, 0, oldVal*10).then((response) => {
     if (response.data == '') {
-      console.log('搜索的专业门类为空');
+      // console.log('搜索的专业门类为空');
       MajorList.value = [];
       return;
     }
-    console.log('搜索的专业门类', response.data);
+    // console.log('搜索的专业门类', response.data);
     MajorList.value = response.data;
     MajorDetail.value = response.data[0];
     MajorList.value[0].selected = true;
@@ -145,7 +145,7 @@ watch(currentPage, (oldVal, newVal) => {
 })
 // 函数6: 按照专业名字搜索
 function handleSearch() {
-  console.log('搜索的院校名字', schoolName.value);
+  // console.log('搜索的院校名字', schoolName.value);
   userApi.fingByName(schoolName.value, 0, 1560).then((response) => {
     MajorList.value = response.data;
     MajorDetail.value = response.data[0];

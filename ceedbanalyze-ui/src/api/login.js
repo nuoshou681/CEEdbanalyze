@@ -5,10 +5,6 @@ export function userlogin(username, password) {
 export function GetCaptcha() {
     return apiClient.get("/verify/generateImageCode", { responseType: 'blob' });
 }
-export function userregister(username, password, code) {
-    return apiClient.post("/user/login", { username: username, password: password, inputCode: code }, {
-        hearders: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-    });
+export function UserRegister(username,password,phone,score,object1,object2,object3) {
+    return apiClient.post("/user/register", {username:username,password:password,phone:phone,score:score,object1:object1,object2:object2,object3:object3});
 }
