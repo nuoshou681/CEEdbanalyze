@@ -47,10 +47,13 @@ public class PredictionController {
         }
 
         // python脚本的路径，在windows中用"\\"分隔
-        String pyPath = System.getProperty("user.dir")+"\\..\\machine\\machineLearning调用模型预测.py";
+        String projectDir = System.getProperty("user.dir");
+        String pyPath = projectDir+"\\..\\machine\\machineLearning调用模型预测.py";
+        // Python 解释器的路径相对项目根目录
+        String pythonPath = projectDir + "\\..\\machine\\.venv\\Scripts\\python.exe";
 
-        ////////// 传入python脚本的参数，参数不能太长，和Python 解释器的路径
-        String[] args1 = new String[]{"\"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python310\\python.exe\"", pyPath,score};
+        // 传入python脚本的参数，参数不能太长，和Python 解释器的路径
+        String[] args1 = new String[]{pythonPath, pyPath,score};
 
         try {
             // 执行Python文件，并传入参数
