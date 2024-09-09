@@ -12,6 +12,8 @@
     "@element-plus/icons-vue": "^2.3.1",
     "axios": "^1.7.4",
     "ceedbanalyze-ui": "file:",
+    "chart.js": "^4.4.4",
+    "echarts": "^5.5.1",
     "element-plus": "^2.7.7",
     "lib-flexible": "^0.3.2",
     "lib-flexible-computer": "^1.0.2",

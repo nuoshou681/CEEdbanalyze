@@ -12,4 +12,8 @@ public interface UserService {
     User getByUsername(String username);
 
     void register(User user);
+
+    User saveUserRanking(Integer id, Integer score, Integer ranking);
+
+    User saveSubject(Integer id, String subject1, String subject2, String subject3);
 }

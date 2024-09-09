@@ -27,4 +27,16 @@ public class UserServiceImpl implements UserService {
     public void register(User user) {
         userMapper.register(user);
     }
+
+    @Override
+    public User saveUserRanking(Integer id, Integer score, Integer ranking) {
+        userMapper.saveUserRanking(id,score,ranking);
+        return userMapper.getByUserId(id);
+    }
+
+    @Override
+    public User saveSubject(Integer id, String subject1, String subject2, String subject3) {
+        userMapper.saveSubject(id,subject1,subject2,subject3);
+        return userMapper.getByUserId(id);
+    }
 }
