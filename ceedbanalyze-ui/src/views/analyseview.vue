@@ -33,7 +33,7 @@
         <p>联系我们: contact@yourcompany.com</p>
       </div>
     </footer>
-    <div v-if="userStore.logintags==false" >
+    <div v-if="userStore.logintags==false&&userStore.analyzetags==false" >
     <Login v-if="isLoggedIn" @close="isLoggedIn = false" :getlogintag="getlogintag" />
     <LoginSuccess v-if="logintag" />
     <perfectmessage />
@@ -100,7 +100,7 @@ padding-top: 20px;
 
 .analyse-page {
   width: 1000px;
-  height: auto;
+  height: 700px;
   float: right;
 }
 

@@ -8,7 +8,7 @@
         @click="activateMenu('school')">查学校</router-link>
       <router-link to="/major" class="nav-item" :class="{ active: activeMenu === 'major' }"
         @click="activateMenu('major')">查专业</router-link>
-      <router-link to="/analyse" class="nav-item" :class="{ active: activeMenu === 'analyse' }"
+      <router-link to="/analyse/analyzedetail" class="nav-item" :class="{ active: activeMenu === 'analyse' }"
         @click="activateMenu('analyse')">高考志愿分析</router-link>
       <div v-if="userStore.logintags">
         <img src="../img/人物头像.png" alt="用户头像" style="width: 30px; height: 30px; border-radius: 50%;"  @click="clearuser" />
