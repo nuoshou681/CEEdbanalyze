@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 全局参数 -->
+    <settings>
+        <!-- 使全局的映射器启用或禁用缓存 -->
+        <setting name="cacheEnabled"             value="true"   />
+        <!-- 允许JDBC 支持自动生成主键 -->
+        <setting name="useGeneratedKeys"         value="true"   />
+        <!-- 配置默认的执行器.SIMPLE就是普通执行器;REUSE执行器会重用预处理语句(prepared statements);BATCH执行器将重用语句并执行批量更新 -->
+        <setting name="defaultExecutorType"      value="SIMPLE" />
+        <!-- 指定 MyBatis 所用日志的具体实现 -->
+        <setting name="logImpl"                  value="SLF4J"  />
+        <!-- 使用驼峰命名法转换字段 -->
+        <!-- <setting name="mapUnderscoreToCamelCase" value="true"/> -->
+    </settings>
+
+    <typeAliases>
+        <typeAlias type="com.example.ceedbanalyze.entity.School" alias="School"/>
+    </typeAliases>
+
+
+    <plugins>
+        <!-- com.github.pagehelper为PageHelper类所在包名 -->
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!-- 使用下面的方式配置参数，后面会有所有的参数介绍 -->
+<!--            mysql数据库-->
+            <property name="helperDialect" value="mysql"/>
+<!--            分页参数合理化，默认false-->
+            <property name="reasonable" value="true"/>
+<!--            默认值为false，多数据源时使用-->
+            <property name="autoRuntimeDialect" value="false"/>
+        </plugin>
+    </plugins>
+</configuration>

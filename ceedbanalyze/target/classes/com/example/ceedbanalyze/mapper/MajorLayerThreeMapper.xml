@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ceedbanalyze.mapper.MajorLayerThreeMapper">
+
+    <select id="findByName" resultType="com.example.ceedbanalyze.entity.MajorLayerThree">
+        select * from major_layer_three
+        <where>
+            <if test="name != null and name !='' ">
+                name like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="search" resultType="com.example.ceedbanalyze.entity.MajorLayerThree">
+        SELECT * FROM major_layer_three
+        JOIN major_layer_two
+        ON major_layer_three.second_layer=major_layer_two.`name`
+        JOIN major_layer_one
+        ON major_layer_two.preId=major_layer_one.id
+        <where>
+            <if test="level != null">
+                major_layer_one.first_id = #{level}
+            </if>
+            <if test="type != null and type != '' ">
+                and major_layer_one.`name` = #{type}
+            </if>
+            <if test="name != null and name != '' ">
+                and major_layer_three.name like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="cout" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM major_layer_three
+        JOIN major_layer_two
+        ON major_layer_three.second_layer=major_layer_two.`name`
+        JOIN major_layer_one
+        ON major_layer_two.preId=major_layer_one.id
+        <where>
+            <if test="level != null">
+                major_layer_one.first_id = #{level}
+            </if>
+            <if test="type != null and type != '' ">
+                and major_layer_one.`name` = #{type}
+            </if>
+        </where>
+    </select>
+</mapper>
