@@ -17,6 +17,6 @@ public interface RankingMapper {
     @Select("select `rank` from yifenyiduan where score = #{score}")
     Integer getRanking(int score);
 
-    @Select("select `score`, `num` from yifenyiduan")
+    @Select("select `score`, `num`, `rank` from yifenyiduan")
     List<Map<String, Object>> getNum();
 }
