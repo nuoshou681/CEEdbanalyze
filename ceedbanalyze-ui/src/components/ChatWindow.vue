@@ -10,10 +10,11 @@
         </div>
         <div class="chat-window-body">
             <!-- 历史消息渲染 -->
-            <div v-for="message in HistoryMessages" :key="message.id" :class="getMessageClass(message)" v-html="message.message">
+            <div v-for="message in HistoryMessages" :key="message.id" :class="getMessageClass(message)"
+                v-html="message.message">
             </div>
             <!-- 机器人回复消息 -->
-            <div class="bot" :class="chat-window-body-message-bot" v-html="renderedMarkdown"></div>
+            <div class="bot" :class="chat - window - body - message - bot" v-html="renderedMarkdown"></div>
         </div>
         <div class="chat-window-footer">
             <input type="text" class="chat-window-footer-input" v-model="usermessage" placeholder="请输入您的问题...">
@@ -84,21 +85,27 @@ const receiveStreamData = () => {
         console.log(error);
         isStreamComplete = true;
 
-        if(botmessage.value === ''){
+        if (botmessage.value === '') {
             botmessage.value = '对不起，我不明白您的问题，请换个问题试试。';
-        }else{
             HistoryMessages.value.push({
                 id: Date.now(),
                 message: marked(botmessage.value),
                 type: 'bot'
             });
-            botmessage.value = '';            
+            botmessage.value = '';
+        } else {
+            HistoryMessages.value.push({
+                id: Date.now(),
+                message: marked(botmessage.value),
+                type: 'bot'
+            });
+            botmessage.value = '';
         }
     });
 };
 // 将 Markdown 渲染为 HTML
 const renderedMarkdown = computed(() => {
-  return marked(botmessage.value);
+    return marked(botmessage.value);
 });
 </script>
 
@@ -177,8 +184,9 @@ const renderedMarkdown = computed(() => {
     /* 限制最大宽度 */
     border-radius: 5px;
     margin-bottom: 10px;
-    align-self: flex-end; /* 使用户消息靠右 */
-    
+    align-self: flex-end;
+    /* 使用户消息靠右 */
+
 }
 
 .chat-window-footer {
