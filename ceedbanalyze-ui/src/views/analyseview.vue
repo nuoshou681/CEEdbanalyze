@@ -6,23 +6,35 @@
     </el-affix>
     <Login v-if="isLoggedIn" @close="isLoggedIn = false" :getlogintag="getlogintag" />
     <LoginSuccess v-if="logintag" />
+
       <div class="analyse-page">
-        <router-view />
+        <router-view/>
       </div>
       <div class="sidebar">
-        <div class="personal-image">
-    <img src="../img/用户默认头像1.png" alt="个人头像" class="centered-image" />
+      <div class="personal-image">
+      <img src="../img/用户默认头像1.png" alt="个人头像" class="centered-image" />
     <p>专一且多情</p>
   </div>
         <div class="select-page">
           <el-menu :default-active="activeMenugt" class="el-menu-vertical-demo" @select="selecthetag">
-            <el-menu-item index="analyse1"><router-link to="/analyse/analyzedetail"
-                class="menu">数据分析1</router-link></el-menu-item>
-            <el-menu-item index="analyse2">数据分析2</el-menu-item>
-            <el-menu-item index="analyse3">数据分析3</el-menu-item>
-            <el-menu-item index="analyse4">数据分析4</el-menu-item>
-            <el-menu-item index="analyse5">数据分析5</el-menu-item>
-            <el-menu-item index="report">报告</el-menu-item>
+            <el-menu-item index="analyze1">
+                数据分析1
+            </el-menu-item>
+            <el-menu-item index="analyse2">
+              <router-link to="/analyse/analyzedetail2" class="menu">数据分析2</router-link>
+            </el-menu-item>
+            <el-menu-item index="analyse3">
+              <router-link to="/analyse/analyzedetail3" class="menu">数据分析3</router-link> 
+            </el-menu-item>
+            <el-menu-item index="analyse4">
+              <router-link to="/analyse/analyzedetail4" class="menu">数据分析4</router-link> 
+            </el-menu-item>
+            <el-menu-item index="analyse5">
+              <router-link to="/analyse/analyzedetail5" class="menu">数据分析5</router-link> 
+            </el-menu-item>
+            <el-menu-item index="analyse5">
+              <router-link to="/analyse/analyzedetail6" class="menu">数据分析6</router-link> 
+            </el-menu-item>
             <el-menu-item index="setting">设置</el-menu-item>
           </el-menu>
         </div>
@@ -33,7 +45,7 @@
         <p>联系我们: contact@yourcompany.com</p>
       </div>
     </footer>
-    <div v-if="userStore.logintags==false&&userStore.analyzetags==false" >
+    <div v-if="userStore.logintags==false" >
     <Login v-if="isLoggedIn" @close="isLoggedIn = false" :getlogintag="getlogintag" />
     <LoginSuccess v-if="logintag" />
     <perfectmessage />
@@ -100,7 +112,7 @@ padding-top: 20px;
 
 .analyse-page {
   width: 1000px;
-  height: 700px;
+  height: auto;
   float: right;
 }
 
