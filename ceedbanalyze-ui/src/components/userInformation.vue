@@ -1,7 +1,7 @@
 <template>
     <div class="container">
       <div class="header">
-        <div class="title">信息完善</div>
+        <div class="title">完善个人信息</div>
       </div>
       <div class="options">
         <div v-for="option in options" :key="option" class="option-item">
@@ -14,21 +14,33 @@
         </div>
       </div>
       <div class="score-input">
-        <input type="text" placeholder="输入分数">
-        <input type="text" placeholder="输入位次">
+        <input type="text" placeholder="输入分数" v-model="scores" @input="validateScores">
+        <div v-if="scoresError" class="error-message">{{ scoresError }}</div>
       </div>
+      <div style="width: 350px;height: 200px;" ref="chart">emm</div>
       <div class="recommendation-button">
-        <button>开始分析</button>
+        <button @click = "analyze">开始分析</button>
+        <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
       </div>
     </div>
   </template>
   
   <script setup>
-  import { ref } from 'vue';
+  import { ref ,onMounted} from 'vue';
+  import { useRouter } from 'vue-router';
+  import { StoreuserRank,StoreuserInformation } from '@/api/login';
+  import { useUserStore } from '@/store/user';
+  import * as echarts from 'echarts';
+  import {watch} from 'vue';
   
+const chart = ref(null);
   const options = ['物理', '化学', '生物', '政治', '历史', '地理'];
+  const userStore = useUserStore()
   const selectedOptions = ref([]);
-  
+  const scores= ref('')
+  const scoresError = ref('');
+  const ranks= ref('')
+  const errorMessage = ref('')
   const toggleSelection = (option) => {
     if (selectedOptions.value.includes(option)) {
       // Deselect if already selected
@@ -40,11 +52,83 @@
       selectedOptions.value.push(option);
     }
   };
+  
+const router = useRouter();
+
+const analyze = () => {
+  // 这里可以添加分析逻辑
+    if(selectedOptions.value.length==3)
+    { 
+      StoreuserRank(userStore.userID,scores.value).then((res)=>{
+          console.log('res1',res)
+      });
+      StoreuserInformation(userStore.userID,selectedOptions.value[0],selectedOptions.value[1],selectedOptions.value[2]).then((res)=>{
+        console.log('res2',res)
+        userStore.analyzetags = true;
+      })
+
+      console.log(userStore.analyzetags)
+      router.push('/analyze/analyzedetail1');
+    }
+     else{
+        errorMessage.value = '请选择三门学科'
+     }
+ 
+};
+const validateScores = () => {
+  const score = parseFloat(scores.value);
+  if (!scores.value) {
+    scoresError.value = '分数不能为空';
+  } else if (isNaN(score) || score < 100 || score > 750) {
+    scoresError.value = '分数必须在 100 到 750 之间';
+  } else {
+    scoresError.value = '';
+  }
+};
+
+onMounted(() => {
+  // 初始化，发送请求，获取一分一段表
+
+  const chartInstance = echarts.init(chart.value);
+  const option = {
+    title: {
+    },
+    tooltip: {
+      trigger: 'axis',
+    },
+    xAxis: {
+      type: 'category',
+      data: ['60', '70', '80', '90', '100'], // 示例数据
+      name: '分数',
+    },
+    yAxis: {
+      type: 'value',
+      name: '名次',
+    },
+    series: [
+      {
+        name: '名次',
+        type: 'line',
+        data: [100, 80, 60, 40, 20], // 示例数据
+      },
+    ],
+  };
+
+  chartInstance.setOption(option);
+});
+watch(scores,(newval)=>{
+  //在这里写一个处理分数的函数
+  
+})
   </script>
   
   <style scoped>
+  .error-message {
+  color: red;
+  font-size: 12px;
+}
   .container {
-    width: 550px;
+    width: 350px;
     height: 400px;
     border-radius: 10px;
     background-color: #f5f5f5;

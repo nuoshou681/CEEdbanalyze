@@ -1,5 +1,5 @@
 <template>
-    <div class="chat-window">
+    <div class="chat-window" v-draggable>
         <div class="chat-window-header">
             <div class="chat-window-header-title">
                 <span>高考小智聊天栏</span>
@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import { defineEmits, ref, computed } from 'vue';
+import { ref, computed } from 'vue';
 import ai from '@/api/ai';
 import { marked } from 'marked';
 
@@ -100,14 +100,38 @@ const receiveStreamData = () => {
 const renderedMarkdown = computed(() => {
   return marked(botmessage.value);
 });
+
+const vDraggable = {
+  mounted(el) {
+    el.style.position = 'absolute';
+    el.style.cursor = 'move';
+
+    el.onmousedown = function (e) {
+      const disX = e.clientX - el.offsetLeft;
+      const disY = e.clientY - el.offsetTop;
+
+      document.onmousemove = function (e) {
+        el.style.left = e.clientX - disX + 'px';
+        el.style.top = e.clientY - disY + 'px';
+      };
+
+      document.onmouseup = function () {
+        document.onmousemove = null;
+        document.onmouseup = null;
+      };
+    };
+  },
+};
+
+defineExpose({ vDraggable });
 </script>
 
 <style scoped>
 .chat-window {
     position: fixed;
-    bottom: 0;
-    right: 0;
-    width: 300px;
+    bottom: 30px;
+    right: 0px;
+    width: 400px;
     height: 400px;
     background-color: white;
     border: 1px solid #ccc;
@@ -132,7 +156,7 @@ const renderedMarkdown = computed(() => {
 
 .chat-window-header {
     background-color: #f0f0f0;
-    padding: 10px;
+    padding: 5px;
     border-bottom: 1px solid #ccc;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -149,7 +173,7 @@ const renderedMarkdown = computed(() => {
 }
 
 .chat-window-body {
-    padding: 10px;
+    padding: 15px;
     height: 300px;
     overflow-y: auto;
     display: flex;
@@ -184,6 +208,8 @@ const renderedMarkdown = computed(() => {
 .chat-window-footer {
     padding: 10px;
     display: flex;
+    position: relative;
+    bottom: 10px;
 }
 
 .chat-window-footer-input {

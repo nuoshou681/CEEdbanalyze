@@ -17,23 +17,23 @@
   </div>
         <div class="select-page">
           <el-menu :default-active="activeMenugt" class="el-menu-vertical-demo" @select="selecthetag">
-            <el-menu-item index="analyze1">
-                数据分析1
+            <el-menu-item index="analyze1" >
+              <router-link to="/analyze/analyzedetail1" class="menu">数据分析1</router-link>
             </el-menu-item>
             <el-menu-item index="analyse2">
-              <router-link to="/analyse/analyzedetail2" class="menu">数据分析2</router-link>
+              <router-link to="/analyze/analyzedetail2" class="menu">数据分析2</router-link>
             </el-menu-item>
             <el-menu-item index="analyse3">
-              <router-link to="/analyse/analyzedetail3" class="menu">数据分析3</router-link> 
+              <router-link to="/analyze/analyzedetail3" class="menu">数据分析3</router-link> 
             </el-menu-item>
             <el-menu-item index="analyse4">
-              <router-link to="/analyse/analyzedetail4" class="menu">数据分析4</router-link> 
+              <router-link to="/analyze/analyzedetail4" class="menu">数据分析4</router-link> 
             </el-menu-item>
             <el-menu-item index="analyse5">
-              <router-link to="/analyse/analyzedetail5" class="menu">数据分析5</router-link> 
+              <router-link to="/analyze/analyzedetail5" class="menu">数据分析5</router-link> 
             </el-menu-item>
             <el-menu-item index="analyse5">
-              <router-link to="/analyse/analyzedetail6" class="menu">数据分析6</router-link> 
+              <router-link to="/analyze/analyzedetail6" class="menu">数据分析6</router-link> 
             </el-menu-item>
             <el-menu-item index="setting">设置</el-menu-item>
           </el-menu>
