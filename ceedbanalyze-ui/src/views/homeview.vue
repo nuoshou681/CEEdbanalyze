@@ -8,13 +8,15 @@
     <LoginSuccess v-if="logintag"/>
     <div class="basic_information">
       <div class="data_analyse">
+        <div class="block text-center">
           <span class="demonstration">
           </span>
           <el-carousel height="440px">
-            <el-carousel-item v-for="item in pictureitems" :key="item">
-              <img :src="item" style="width: 100%; height: 100%" />
+            <el-carousel-item v-for="item in 4" :key="item">
+              <h3 class="small justify-center" text="2xl">{{ item }}</h3>
             </el-carousel-item>
           </el-carousel>
+        </div>
       </div>
       <div class="carousel">
         <userInformation />
@@ -22,26 +24,23 @@
     </div>
 
     <div class="more_option">
-      <div class="icon-item" >
-        <a href="https://www.sdzk.cn/Floadup/file/20240625/6385492724297110442689837.xls" target="_blank" style="text-decoration: none;">
-        <img src="../img/表格.png" alt="春考志愿" />
-        <div class="icon-label">一份一段表</div>
-      </a>
+      <div class="icon-item" onclick="selectIcon(this)">
+        <img src="https://via.placeholder.com/50" alt="春考志愿" />
+        <div class="icon-label">一分一段表</div>
       </div>
-      <div class="icon-item"  @click="toggleChat">
-        <img src="../img/aislogo.png" alt="高考小智" />
+      <div class="icon-item" onclick="selectIcon(this)" @click="toggleChat">
+        <img src="https://via.placeholder.com/50" alt="高考小智" />
         <div class="icon-label" >高考小智</div>
       </div>
       <div class="icon-item" onclick="selectIcon(this)">
-        <img src="../img/招生计划.png" alt="招生计划" />
+        <img src="https://via.placeholder.com/50" alt="招生计划" />
         <div class="icon-label">招生计划</div>
       </div>
-      <a href="https://www.sdzk.cn/Consultation.aspx?BCID=1072&CID=1073" style="text-decoration: none;">
+
       <div class="icon-item" onclick="selectIcon(this)">
-        <img src="../img/咨询服务.png" alt="高考知道" />
-        <div class="icon-label">高考资讯</div>
+        <img src="https://via.placeholder.com/50" alt="高考知道" />
+        <div class="icon-label">高考知道</div>
       </div>
-    </a>
     </div>
 
     <Transition name="chat-window">
@@ -69,11 +68,7 @@ const userStore = useUserStore();
 const isLoggedIn = ref(false);
 const activeMenu = ref('home');
 const isChatVisible = ref(false);
-const pictureitems = [
-new URL('@/img/首页1.png', import.meta.url).href,
-  new URL('@/img/首页2.png', import.meta.url).href,
-  new URL('@/img/首页3.png', import.meta.url).href,
-];
+
 const toggleChat = () => {
   isChatVisible.value = !isChatVisible.value;
 };
@@ -96,7 +91,6 @@ function login() {
   isLoggedIn.value = true;
 
 }
-
 </script>
 
 <style>
@@ -117,13 +111,13 @@ function login() {
 
 .carousel {
   height: 400px;
-  width: 200px;
+  width: 600px;
   margin-left: 10px;
 }
 
 .data_analyse {
   height: 440px;
-  width: 750px;
+  width: 600px;
   margin-left: 10px;
 }
 

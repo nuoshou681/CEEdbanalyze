@@ -107,44 +107,43 @@ const options = [
 ]
     </script>
 <style scoped>
-    .score-page{
-        background-color: #f0f0f0;
-        width: 700px;
-        height: auto;
-        border-radius:  0 0 10px 10px;
-        margin-top: 10px;
-    }
-    .plan{
-        background-color: #ffffff;
-        height: 600px;
-        margin-top: 10px;
-    }
-    .select-box{
-     float:right;
-   
-    }
-    .title-container {
-  display: flex;
-  align-items: center;
-
-  .title-marker {
-    width: 5px;
-    height: 24px;
-    background-color:rgb(21, 208, 130); /* 蓝色标记的颜色 */
-    margin-right: 8px;
-    margin-left: 0;
-  }
-
-  .title-text {
-    font-weight: bold;
-    margin: 0;
-    margin-right: 16px;
-  }
-
-  .title-line {
-    flex-grow: 1;
-    height: 1px;
-    background-color: #ccc; /* 线条的颜色 */
-  }
+.score-page{
+    background-color: #f0f0f0;
+    width: 700px;
+    height: auto;
+    border-radius:  0 0 10px 10px;
+    margin-top: 10px;
 }
-    </style>
+.plan{
+    background-color: #ffffff;
+    height: 600px;
+    margin-top: 10px;
+}
+.select-box{
+ float:right;
+
+}
+.title-container {
+display: flex;
+align-items: center;
+}
+.title-marker {
+width: 5px;
+height: 24px;
+background-color:rgb(21, 208, 130); /* 蓝色标记的颜色 */
+margin-right: 8px;
+margin-left: 0;
+}
+
+.title-text {
+font-weight: bold;
+margin: 0;
+margin-right: 16px;
+}
+
+.title-line {
+flex-grow: 1;
+height: 1px;
+background-color: #ccc; /* 线条的颜色 */
+}
+</style>

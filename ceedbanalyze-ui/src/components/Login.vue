@@ -55,7 +55,7 @@
   <script setup>
   import { ref,onMounted } from 'vue';
   import{useUserStore} from '@/store/user';
-  import{GetCaptcha,UserRegister,userlogin} from '@/api/login';
+  import{GetCaptcha,UserRegister} from '@/api/login';
   import axios from 'axios';
   const props = defineProps({
     getlogintag:{
@@ -169,17 +169,14 @@ const login = () => {
   if (isUsernameValid && isPhoneValid && isPasswordValid) {
     // 处理注册逻辑
     UserRegister(username.value,password.value,phone.value,'','','','').then((res) => {
+      console.log('res:', res);
       if (res.status === 200) {
         userStore.logintags = true;
         props.getlogintag(userStore.logintags);
-        userlogin(username.value,password.value).then((res)=>{
-          console.log(res)
-       userStore.userID = res.data.id
-  })
+        console.log('登录成功:', res);
       }
     });
   };
-
   } 
     
 </script>
@@ -260,7 +257,8 @@ const login = () => {
   
   .left-section {
     flex: 1;
-    background-image: url(../img/登录背景.png);
+
+    background-image: url(../img/登录背景图.png);
     overflow: hidden;
   }
   
