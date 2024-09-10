@@ -13,29 +13,30 @@
       <div class="sidebar">
       <div class="personal-image">
       <img src="../img/用户默认头像1.png" alt="个人头像" class="centered-image" />
-    <p>专一且多情</p>
   </div>
+  <p style="font-size: smaller;margin-left: 10px;">选科：{{ userStore.major1 }},{{ userStore.major2 }},{{ userStore.major3 }}</p>
+    <p style="font-size: smaller;margin-left: 10px;">分数：{{ userStore.score }}</p>
+    <p style="font-size: smaller;margin-left: 10px;">排名：{{ userStore.rank }}</p>
         <div class="select-page">
           <el-menu :default-active="activeMenugt" class="el-menu-vertical-demo" @select="selecthetag">
             <el-menu-item index="analyze1" >
-              <router-link to="/analyze/analyzedetail1" class="menu">数据分析1</router-link>
+              <router-link to="/analyze/analyzedetail1" class="menu">志愿分析</router-link>
             </el-menu-item>
             <el-menu-item index="analyse2">
-              <router-link to="/analyze/analyzedetail2" class="menu">数据分析2</router-link>
+              <router-link to="/analyze/analyzedetail2" class="menu">学校地域分析</router-link>
             </el-menu-item>
             <el-menu-item index="analyse3">
-              <router-link to="/analyze/analyzedetail3" class="menu">数据分析3</router-link> 
+              <router-link to="/analyze/analyzedetail3" class="menu">分数排名</router-link> 
             </el-menu-item>
             <el-menu-item index="analyse4">
-              <router-link to="/analyze/analyzedetail4" class="menu">数据分析4</router-link> 
+              <router-link to="/analyze/analyzedetail4" class="menu">专业分析</router-link> 
             </el-menu-item>
             <el-menu-item index="analyse5">
-              <router-link to="/analyze/analyzedetail5" class="menu">数据分析5</router-link> 
+              <router-link to="/analyze/analyzedetail5" class="menu">高考及录取分析</router-link> 
             </el-menu-item>
             <el-menu-item index="analyse5">
-              <router-link to="/analyze/analyzedetail6" class="menu">数据分析6</router-link> 
+              <router-link to="/analyze/analyzedetail6" class="menu">学科分析</router-link> 
             </el-menu-item>
-            <el-menu-item index="setting">设置</el-menu-item>
           </el-menu>
         </div>
       </div>
@@ -45,7 +46,7 @@
         <p>联系我们: contact@yourcompany.com</p>
       </div>
     </footer>
-    <div v-if="userStore.logintags==false" >
+    <div v-if="userStore.logintags==false&&userStore.analyzetags==false">
     <Login v-if="isLoggedIn" @close="isLoggedIn = false" :getlogintag="getlogintag" />
     <LoginSuccess v-if="logintag" />
     <perfectmessage />

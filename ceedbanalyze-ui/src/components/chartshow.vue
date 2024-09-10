@@ -24,6 +24,37 @@
     { name: '项目H', value: 20 },
     { name: '项目I', value: 10 },
     { name: '项目J', value: 100 },
+    { name: '项目k', value: 80 },
+    { name: '项目l', value: 70 },
+    { name: '项目m', value: 60 },
+    { name: '项目m', value: 90 },
+    { name: '项目o', value: 50 },
+    { name: '项目p', value: 40 },
+    { name: '项目q', value: 30 },
+    { name: '项目r', value: 20 },
+    { name: '项目s', value: 10 },
+    { name: '项目t', value: 100 },
+    { name: '项目A', value: 80 },
+    { name: '项目B', value: 70 },
+    { name: '项目C', value: 60 },
+    { name: '项目D', value: 90 },
+    { name: '项目E', value: 50 },
+    { name: '项目F', value: 40 },
+    { name: '项目G', value: 30 },
+    { name: '项目H', value: 20 },
+    { name: '项目I', value: 10 },
+    { name: '项目J', value: 100 },
+    { name: '项目k', value: 80 },
+    { name: '项目l', value: 70 },
+    { name: '项目m', value: 60 },
+    { name: '项目m', value: 90 },
+    { name: '项目o', value: 50 },
+    { name: '项目p', value: 40 },
+    { name: '项目q', value: 30 },
+    { name: '项目r', value: 20 },
+    { name: '项目s', value: 10 },
+    { name: '项目t', value: 100 },
+    
   ];
   const getColor = (value) => {
   if (value >= 80) return '#008000'; // 绿色
@@ -89,12 +120,12 @@
   
   <style scoped>
   .chart-container {
-    width: 400px;
-    height: 600px;
-    overflow-y: auto;
+    width: 800px;
+    height: 500px;
+    overflow-y: scroll;
     border: 1px solid #ccc;
     padding: 10px;
     position:absolute;
-    right:100px;
+    top:100px;
   }
   </style>

@@ -56,13 +56,18 @@ const toggleSelection = (option) => {
     selectedOptions.value.push(option);
   }
 };
-
+const router = useRouter();
 const analyze = async () => {
   if (selectedOptions.value.length === 3) {
     try {
-      await StoreuserRank(userStore.userID, scores.value);
+      const response = await StoreuserRank(userStore.userID, scores.value);
+      userStore.rank = response.data.ranking;
       await StoreuserInformation(userStore.userID, ...selectedOptions.value);
       userStore.analyzetags = true;
+      userStore.major1 = selectedOptions.value[0];
+      userStore.major2 = selectedOptions.value[1];
+      userStore.major3 = selectedOptions.value[2];
+      userStore.score = scores.value;
       router.push('/analyze/analyzedetail1');
     } catch (error) {
       console.error('分析错误:', error);
@@ -78,7 +83,7 @@ const validateScores = () => {
   if (!scores.value) {
     scoresError.value = '分数不能为空';
   } else if (isNaN(score) || score < 100 || score > 750) {
-    scoresError.value = '分数必须在 100 到 750 之间';
+    scoresError.value = '分数必须在 150 到 750 之间';
   } else {
     scoresError.value = '';
     fetchChartData(); // 分数有效时更新图表
@@ -90,7 +95,6 @@ const fetchChartData = async () => {
   try {
     const response = await getNum();
     const data = response.data;
-
     if (Array.isArray(data)) {
       const filteredData = data.filter(
         (item) => item.score >= inputScore - 40 && item.score <= inputScore + 40

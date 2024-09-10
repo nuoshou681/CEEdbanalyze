@@ -33,6 +33,7 @@ const usertags= ref(false)
     ,major2
     ,major3
     ,score
+    ,rank
    }
 
 },{

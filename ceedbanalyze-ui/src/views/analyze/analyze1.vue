@@ -1,6 +1,5 @@
 <template>
-  <div>
-    i am analyze1
+  <div v-if="userStore.analyzetags">
     <LoadingSpinner/>
     <chartshow/>
   </div>
@@ -9,8 +8,8 @@
 import { ref, onMounted } from 'vue';
 import chartshow from '@/components/chartshow.vue';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
-
-
+import { useUserStore } from '@/store/user';
+const userStore = useUserStore();
 const loading = ref(true);
 
 onMounted(() => {
