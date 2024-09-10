@@ -23,9 +23,9 @@
           <el-menu-item index="analyze1">
             <router-link to="/analyze/analyzedetail1" class="menu">志愿分析</router-link>
           </el-menu-item>
-          <el-menu-item index="analyse2">
+          <!-- <el-menu-item index="analyse2">
             <router-link to="/analyze/analyzedetail2" class="menu">学校地域分析</router-link>
-          </el-menu-item>
+          </el-menu-item> -->
           <el-menu-item index="analyse3">
             <router-link to="/analyze/analyzedetail3" class="menu">分数排名</router-link>
           </el-menu-item>
