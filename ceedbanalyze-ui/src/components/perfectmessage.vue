@@ -1,7 +1,7 @@
 <template>
   <div class="overlay">
     <div class="message-box">
-      请先完善个人信息
+      请登陆并完善个人信息
     </div>
   </div>
 </template>

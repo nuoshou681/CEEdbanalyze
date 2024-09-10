@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="header">
-      <div class="title">完善个人信息</div>
+      <div class="title"></div>
     </div>
     <div class="options">
       <div v-for="option in options" :key="option" class="option-item">
