@@ -1,5 +1,5 @@
 <template>
-  <div v-if="userStore.analyzetags">
+  <div v-if="userStore.analyzetags" class="chart">
     <LoadingSpinner/>
     <chartshow/>
   </div>
@@ -20,4 +20,5 @@ onMounted(() => {
 });
 </script>
 <style>
+
 </style>
