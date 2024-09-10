@@ -30,7 +30,7 @@ public class PredictionController {
     }
 
     @GetMapping("")
-    public void index(@RequestParam String score, @RequestParam String subjects, HttpServletRequest request){
+    public String index(@RequestParam String score, @RequestParam String subjects, HttpServletRequest request){
         //写入JSON文件
         List<SchoolMajorScore> sas=schoolMajorScoreService.getByLimitcode(subjects);
 
@@ -66,6 +66,7 @@ public class PredictionController {
             throw new RuntimeException(e);
         }
         System.out.println("完成");
+        return "完成";
     }
 
     @GetMapping("/data")
