@@ -33,8 +33,10 @@
         <div class="icon-label" >高考小智</div>
       </div>
       <div class="icon-item" onclick="selectIcon(this)">
-        <img src="../img/招生计划.png" alt="招生计划" />
-        <div class="icon-label">招生计划</div>
+        <a href="https://mbti9.hzshuf.cn/?bd_vid=11332863634246512541#/home" target="_blank" style="text-decoration: none;">
+        <img src="../img/心理测试.png" alt="心理测试" />
+        <div class="icon-label">心理测试</div>
+      </a>
       </div>
       <a href="https://www.sdzk.cn/Consultation.aspx?BCID=1072&CID=1073" style="text-decoration: none;">
       <div class="icon-item" onclick="selectIcon(this)">

@@ -8,13 +8,7 @@
       <p>{{ truncatedText }}<button @click="toggleText">详情</button></p>
     </div>
     <schoolintro  v-if="isCollapsed" @close="toggleText" :schoolinfromation="schoolitem.introduction"/>
-    <div class="title-container">
-        <div class="title-marker"></div>
-        <h3 class="title-text">学校地图</h3>
-      </div>
-    <div class="text-main2" >
-        这里展示学校地图
-    </div>
+
 </div>
 
 </template>
@@ -42,7 +36,7 @@ const props = defineProps({
 
 const fullText = ref('');
 const truncatedText = computed(() => {
-  return fullText.value.slice(0, 200) + '……';
+  return fullText.value.slice(0, 500) + '……';
 });
 
 // 监听 Props 的变化
@@ -74,6 +68,7 @@ watch(
 .text-main{
     background-color: #ffffff;
     padding: 0 10px 0 10px;
+    height: 500px;
 }
 button {
   margin-top: 10px;
