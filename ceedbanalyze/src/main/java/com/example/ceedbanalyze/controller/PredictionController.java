@@ -47,13 +47,10 @@ public class PredictionController {
         }
 
         // python脚本的路径，在windows中用"\\"分隔
-        // String projectDir = System.getProperty("user.dir");
-        // String pyPath = projectDir+"\\..\\machine\\machineLearning调用模型预测.py";
+        String projectDir = System.getProperty("user.dir");
+        String pyPath = projectDir+"\\..\\machine\\machineLearning调用模型预测.py";
         // Python 解释器的路径相对项目根目录
-        // String pythonPath = projectDir + "\\..\\machine\\.venv\\Scripts\\python.exe";
-
-        String pyPath = "/home/ubuntu/vue3/machine/machineLearning调用模型预测.py";
-        String pythonPath = "/home/ubuntu/myenv/bin/python";
+        String pythonPath = projectDir + "\\..\\machine\\.venv\\Scripts\\python.exe";
 
         // 传入python脚本的参数，参数不能太长，和Python 解释器的路径
         String[] args1 = new String[]{pythonPath, pyPath,score};
@@ -69,7 +66,7 @@ public class PredictionController {
             throw new RuntimeException(e);
         }
         System.out.println("完成");
-        return "完成";
+        return "true";
     }
 
     @GetMapping("/data")

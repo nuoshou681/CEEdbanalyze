@@ -20,7 +20,7 @@ public interface SchoolMajorScoreMapper {
     @Select("select * from school_major_score where school_id = #{schoolId} and major_name like concat('%',#{majorName},'%')")
     List<SchoolMajorScore> getBySchoolIdAndMajorName(int schoolId, String majorName);
 
-    @Select("SELECT * FROM new_school_major_score")
+    @Select("SELECT * FROM school_major_score")
     List<SchoolMajorScore> findAll();
 
     @Select("UPDATE school_major_score SET limit_code = #{limitCode} WHERE id = #{id};")
