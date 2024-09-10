@@ -5,7 +5,6 @@ import com.example.ceedbanalyze.entity.SchoolMajorScore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,10 +46,12 @@ public class PredictionController {
         }
 
         // python脚本的路径，在windows中用"\\"分隔
-        String projectDir = System.getProperty("user.dir");
-        String pyPath = projectDir+"\\..\\machine\\machineLearning调用模型预测.py";
+        // String projectDir = System.getProperty("user.dir");
+        // String pyPath = projectDir+"\\..\\machine\\machineLearning调用模型预测.py";
         // Python 解释器的路径相对项目根目录
-        String pythonPath = projectDir + "\\..\\machine\\.venv\\Scripts\\python.exe";
+        // String pythonPath = projectDir + "\\..\\machine\\.venv\\Scripts\\python.exe";
+        String pyPath = "/home/ubuntu/vue3/machine/machineLearning调用模型预测.py";
+        String pythonPath = "/home/ubuntu/myenv/bin/python";
 
         // 传入python脚本的参数，参数不能太长，和Python 解释器的路径
         String[] args1 = new String[]{pythonPath, pyPath,score};

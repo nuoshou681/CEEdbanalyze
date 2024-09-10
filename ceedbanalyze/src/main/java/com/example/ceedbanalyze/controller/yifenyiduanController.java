@@ -1,7 +1,6 @@
 package com.example.ceedbanalyze.controller;
 
 import com.example.ceedbanalyze.Service.yifenyiduanService;
-import com.example.ceedbanalyze.utils.RankingUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
