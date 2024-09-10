@@ -25,6 +25,7 @@
     <div style="width: 350px; height: 200px;" ref="chart"></div>
     <div class="recommendation-button">
       <button @click="analyze">开始分析</button>
+      <div v-if="loading" class="loading-message">正在分析，时间可能较长，请稍等...</div>
       <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
     </div>
   </div>
@@ -37,6 +38,7 @@ import { StoreuserRank, StoreuserInformation } from '@/api/login';
 import { useUserStore } from '@/store/user';
 import * as echarts from 'echarts';
 import { getNum } from '@/api/yifenyiduan'; // 导入 API 方法
+import { start } from '@/api/prediction'; // 导入 start 函数
 
 const chart = ref(null);
 const options = ['物理', '化学', '生物', '政治', '历史', '地理'];
@@ -45,6 +47,7 @@ const selectedOptions = ref([]);
 const scores = ref('');
 const scoresError = ref('');
 const errorMessage = ref('');
+const loading = ref(false); // 新增 loading 状态
 let chartInstance = null; // 图表实例
 
 const toggleSelection = (option) => {
@@ -56,22 +59,54 @@ const toggleSelection = (option) => {
     selectedOptions.value.push(option);
   }
 };
+
 const router = useRouter();
+
 const analyze = async () => {
   if (selectedOptions.value.length === 3) {
+    loading.value = true; // 开始分析时设置 loading 为 true
     try {
+      // 获取用户排名
       const response = await StoreuserRank(userStore.userID, scores.value);
       userStore.rank = response.data.ranking;
-      await StoreuserInformation(userStore.userID, ...selectedOptions.value);
-      userStore.analyzetags = true;
-      userStore.major1 = selectedOptions.value[0];
-      userStore.major2 = selectedOptions.value[1];
-      userStore.major3 = selectedOptions.value[2];
-      userStore.score = scores.value;
-      router.push('/analyze/analyzedetail1');
+
+      const subjectsMap = {
+        物理: 1,
+        化学: 2,
+        生物: 3,
+        地理: 4,
+        历史: 5,
+        政治: 6,
+      };
+
+      const subjects = selectedOptions.value
+        .map(option => subjectsMap[option])
+        .join('');
+
+      // 调用 start API
+      const predictionResponse = await start(userStore.rank, subjects);
+      console.log('预测结果:', predictionResponse.data); // 输出预测结果
+
+      // 判断 start 的返回值
+      if (String(predictionResponse.data) === 'true') { // 更新判断条件
+        // 存储用户信息
+        await StoreuserInformation(userStore.userID, ...selectedOptions.value);
+        userStore.analyzetags = true;
+        userStore.major1 = selectedOptions.value[0];
+        userStore.major2 = selectedOptions.value[1];
+        userStore.major3 = selectedOptions.value[2];
+        userStore.score = scores.value;
+
+        // 跳转到分析详情页
+        router.push('/analyze/analyzedetail1');
+      } else {
+        errorMessage.value = '分析失败，请重试。';
+      }
     } catch (error) {
       console.error('分析错误:', error);
       errorMessage.value = '分析失败，请重试。';
+    } finally {
+      loading.value = false; // 无论成功与否，结束分析时将 loading 设置为 false
     }
   } else {
     errorMessage.value = '请选择三门学科';
@@ -120,7 +155,7 @@ const updateChart = (data, minRank, maxRank, inputScore) => {
 
     const option = {
       title: {
-        text: '分数与排名',
+        text: '请先登录，否则无法分析',
       },
       tooltip: {
         trigger: 'axis',
@@ -129,8 +164,8 @@ const updateChart = (data, minRank, maxRank, inputScore) => {
         type: 'category',
         data: scoresData, // 分数
         name: '分数',
-        boundaryGap: false, // 禁用边界间隔
-        splitLine: { show: false }, // 隐藏网格线
+        boundaryGap: false, 
+        splitLine: { show: false }, 
       },
       yAxis: {
         type: 'value',
@@ -140,7 +175,7 @@ const updateChart = (data, minRank, maxRank, inputScore) => {
         axisLabel: {
           formatter: '{value}',
         },
-        splitLine: { show: true }, // 显示网格线
+        splitLine: { show: true }, 
       },
       series: [
         {
@@ -153,7 +188,7 @@ const updateChart = (data, minRank, maxRank, inputScore) => {
                 name: '输入分数',
                 xAxis: inputScore, // 添加竖线标记
                 label: {
-                  formatter: '分数: {b}', // 标签显示输入的分数
+                  formatter: '分数: {b}',
                 },
                 lineStyle: {
                   color: 'red',
@@ -176,7 +211,7 @@ const initializeChart = () => {
   }
   chartInstance = echarts.init(chart.value); // 初始化新的实例
   chartInstance.setOption({
-    title: { text: '分数与排名' },
+    title: { text: '请先登录，否则无法分析' },
     xAxis: { type: 'category', data: [] },
     yAxis: { type: 'value', name: '名次' },
     series: [{ name: '名次', type: 'line', data: [] }],
@@ -198,6 +233,11 @@ watch(scores, (newVal) => {
 .error-message {
   color: red;
   font-size: 12px;
+}
+.loading-message {
+  color: orange; 
+  font-size: 22px; 
+  font-weight: bold; 
 }
 .container {
   width: 350px;
@@ -263,3 +303,4 @@ watch(scores, (newVal) => {
   font-size: 16px;
 }
 </style>
+

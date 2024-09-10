@@ -85,7 +85,7 @@ const closeLogin = () => {
 }; 
   const getcaptcha = () => {
       GetCaptcha().then((res) => { 
-      captcha.value = `http://124.223.63.238:5173/verify/generateImageCode?t=${Date.now()}`;
+      captcha.value = `http://localhost:5173/verify/generateImageCode?t=${Date.now()}`;
       
     });
   };
@@ -97,7 +97,7 @@ const closeLogin = () => {
 
 const register =async ()=>{
 
-await axios.post('http://124.223.63.238:5173/user/login',
+await axios.post('http://localhost:5173/user/login',
 {
     username: newUsername.value,
     password: newPassword.value,
@@ -111,6 +111,7 @@ await axios.post('http://124.223.63.238:5173/user/login',
   }
 ).then((res) => {
     userStore.logintags = true;
+    userStore.userID = res.data.id
     props.getlogintag(userStore.logintags);
 }).catch((error) => {
   if(error.response.status === 401) {
